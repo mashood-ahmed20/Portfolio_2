@@ -1,17 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
-
 const HeroSection = () => {
-  return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden section-padding pt-32">
+  return <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden section-padding pt-32">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-glow" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: "1s" }} />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-pulse-glow" style={{
+        animationDelay: "1s"
+      }} />
       </div>
 
       <div className="container mx-auto relative z-10">
-        <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
+        <div className="flex-col text-center max-w-4xl mx-auto flex items-end justify-start">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border/50 text-sm text-muted-foreground animate-fade-in mb-8">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
@@ -19,7 +19,9 @@ const HeroSection = () => {
           </div>
 
           {/* Title */}
-          <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-heading font-bold leading-tight animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-heading font-bold leading-tight animate-fade-in" style={{
+          animationDelay: "0.1s"
+        }}>
             Elevating{" "}
             <span className="gradient-text glow-text">Digital Experiences</span>
             <br />
@@ -29,14 +31,16 @@ const HeroSection = () => {
           </h1>
 
           {/* Description */}
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mt-6 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            Hi, I'm Mashood Ahmed, a passionate Video Editor, Motion Designer, and Web Developer. 
-            I specialize in creating high-quality digital content that helps brands, startups, 
-            and creators stand out online.
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mt-6 animate-fade-in" style={{
+          animationDelay: "0.2s"
+        }}>
+            Hi, I'm Mashood Ahmed, a passionate Video Editor, Motion Designer, and Web Developer. I specialize in creating high-quality digital content that helps brands, startups, and creators stand out online.
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 mt-8 animate-fade-in" style={{ animationDelay: "0.3s" }}>
+          <div className="flex flex-col sm:flex-row gap-4 mt-8 animate-fade-in" style={{
+          animationDelay: "0.3s"
+        }}>
             <Button variant="hero" size="xl" asChild>
               <a href="#portfolio">
                 View Portfolio
@@ -52,7 +56,9 @@ const HeroSection = () => {
           </div>
 
           {/* Stats */}
-          <div className="flex items-center justify-center gap-8 md:gap-12 pt-12 animate-fade-in" style={{ animationDelay: "0.4s" }}>
+          <div className="flex items-center justify-center gap-8 md:gap-12 pt-12 animate-fade-in" style={{
+          animationDelay: "0.4s"
+        }}>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-heading font-bold gradient-text">70+</div>
               <div className="text-sm text-muted-foreground">Happy Clients</div>
@@ -70,8 +76,6 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HeroSection;
