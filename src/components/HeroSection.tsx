@@ -11,7 +11,7 @@ const HeroSection = () => {
       </div>
 
       <div className="container mx-auto relative z-10">
-        <div className="flex-col text-center max-w-4xl mx-auto flex items-end justify-start">
+        <div className="flex-col text-center max-w-4xl mx-auto flex items-center justify-center">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border/50 text-sm text-muted-foreground animate-fade-in mb-8">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
