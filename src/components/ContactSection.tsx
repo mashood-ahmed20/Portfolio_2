@@ -125,12 +125,22 @@ const ContactSection = () => {
             <div className="pt-4">
               <p className="text-sm text-muted-foreground mb-3">Also available on</p>
               <div className="flex gap-3">
-                <span className="px-4 py-2 rounded-full bg-secondary border border-border/50 text-sm font-medium">
+                <a
+                  href="https://www.fiverr.com/mashoodahmed786"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 rounded-full bg-secondary border border-border/50 text-sm font-medium hover:bg-primary/20 hover:border-primary/50 hover:text-primary transition-all duration-300"
+                >
                   Fiverr
-                </span>
-                <span className="px-4 py-2 rounded-full bg-secondary border border-border/50 text-sm font-medium">
+                </a>
+                <a
+                  href="https://www.upwork.com/freelancers/~01ec653de9f0fb0e8a"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 rounded-full bg-secondary border border-border/50 text-sm font-medium hover:bg-primary/20 hover:border-primary/50 hover:text-primary transition-all duration-300"
+                >
                   Upwork
-                </span>
+                </a>
               </div>
             </div>
           </div>
