@@ -110,13 +110,13 @@ const ContactSection = () => {
                 </div>
               </a>
 
-              <div className="glass-card p-4 flex items-center gap-4">
-                <div className="p-3 rounded-xl bg-primary/10">
+              <div className="glass-card p-4 flex items-center gap-4 hover-lift group cursor-default">
+                <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
                   <MapPin className="w-6 h-6 text-primary" />
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Location</p>
-                  <p className="text-foreground font-medium">Pakistan</p>
+                  <p className="text-foreground font-medium group-hover:text-primary transition-colors">Pakistan</p>
                 </div>
               </div>
             </div>
