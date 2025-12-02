@@ -19,7 +19,7 @@ const technicalSkills = [{
   name: "Node.js",
   level: 85
 }, {
-  name: "MongoDB",
+  name: "Python",
   level: 80
 }, {
   name: "TypeScript",
