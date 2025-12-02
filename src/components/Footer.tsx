@@ -1,4 +1,4 @@
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, Linkedin } from "lucide-react";
 
 const FiverrIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
@@ -51,6 +51,15 @@ const Footer = () => {
               aria-label="Upwork"
             >
               <UpworkIcon />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/mashood-ahmed-sheikh-436166250"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg bg-secondary hover:bg-primary/10 transition-colors"
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="w-5 h-5" />
             </a>
             <button
               onClick={scrollToTop}
