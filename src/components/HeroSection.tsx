@@ -20,15 +20,15 @@ const HeroSection = () => {
               Available for Freelance Projects
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-heading font-bold leading-tight animate-fade-in" style={{
+            <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-heading font-bold leading-tight animate-fade-in" style={{
             animationDelay: "0.1s"
           }}>
-              Merging{" "}
-              <span className="gradient-text glow-text">Motion Design</span>
+              Elevating{" "}
+              <span className="gradient-text glow-text">Digital Experiences</span>
               <br />
-              with <span className="gradient-text glow-text">MERN Stack</span>
+              Through <span className="gradient-text glow-text">Content Repurposing</span>,
               <br />
-              Innovation
+              <span className="gradient-text glow-text">Promo Videos</span> & Web Solutions
             </h1>
 
             <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 animate-fade-in" style={{
