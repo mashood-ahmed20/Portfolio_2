@@ -22,7 +22,7 @@ const technicalServices = [
   {
     icon: Code,
     title: "Full-Stack Web Apps",
-    description: "Complete web applications built with the MERN stack for scalability and performance.",
+    description: "Complete web applications built with the MERN & JAVA stack for scalability and performance.",
   },
   {
     icon: Layout,
