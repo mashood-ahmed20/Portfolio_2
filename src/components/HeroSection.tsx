@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
+import profilePhoto from "@/assets/profile-photo.jpg";
 
 const HeroSection = () => {
   return (
@@ -79,14 +80,11 @@ const HeroSection = () => {
               
               {/* Image Container */}
               <div className="relative w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-primary/30 glow-box">
-                <div className="w-full h-full bg-gradient-to-br from-secondary to-muted flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-24 h-24 mx-auto rounded-full bg-primary/20 flex items-center justify-center mb-4">
-                      <span className="text-4xl font-heading font-bold gradient-text">MA</span>
-                    </div>
-                    <p className="text-sm text-muted-foreground">Profile Photo</p>
-                  </div>
-                </div>
+                <img 
+                  src={profilePhoto} 
+                  alt="Mashood Ahmed - Video Editor, Motion Designer & Web Developer" 
+                  className="w-full h-full object-cover"
+                />
               </div>
 
               {/* Floating Elements */}
