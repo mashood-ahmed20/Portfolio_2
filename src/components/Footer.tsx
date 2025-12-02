@@ -39,7 +39,7 @@ const Footer = () => {
               href="https://www.fiverr.com/s/pdYbBdY"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-lg bg-secondary hover:bg-primary/10 transition-colors"
+              className="p-2 rounded-lg bg-secondary hover:bg-primary/10 hover:text-primary transition-colors group"
               aria-label="Fiverr"
             >
               <FiverrIcon />
@@ -48,7 +48,7 @@ const Footer = () => {
               href="https://www.upwork.com/freelancers/~019b9b27ee7d1ec8c4?mp_source=share"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-lg bg-secondary hover:bg-primary/10 transition-colors"
+              className="p-2 rounded-lg bg-secondary hover:bg-primary/10 hover:text-primary transition-colors group"
               aria-label="Upwork"
             >
               <UpworkIcon />
@@ -57,7 +57,7 @@ const Footer = () => {
               href="https://www.linkedin.com/in/mashood-ahmed-sheikh-436166250"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-lg bg-secondary hover:bg-primary/10 transition-colors"
+              className="p-2 rounded-lg bg-secondary hover:bg-primary/10 hover:text-primary transition-colors group"
               aria-label="LinkedIn"
             >
               <Linkedin className="w-5 h-5" />
