@@ -1,4 +1,5 @@
 import { GraduationCap, Briefcase, Award, Star } from "lucide-react";
+import profilePhoto from "@/assets/profile-photo.jpg";
 
 const AboutSection = () => {
   return (
@@ -12,16 +13,20 @@ const AboutSection = () => {
               <div className="absolute -top-4 -left-4 w-full h-full border-2 border-primary/30 rounded-2xl" />
               <div className="absolute -bottom-4 -right-4 w-full h-full bg-primary/10 rounded-2xl" />
               
-              {/* Main Image Container */}
+              {/* Main Image Container with Mask */}
               <div className="relative w-full h-full rounded-2xl overflow-hidden glass-card">
-                <div className="w-full h-full bg-gradient-to-br from-muted to-secondary flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <div className="w-32 h-32 mx-auto rounded-2xl bg-primary/20 flex items-center justify-center mb-4">
-                      <span className="text-5xl font-heading font-bold gradient-text">MA</span>
-                    </div>
-                    <p className="text-muted-foreground">About Photo</p>
-                  </div>
-                </div>
+                <img 
+                  src={profilePhoto} 
+                  alt="Mashood Ahmed - Video Editor, Motion Designer & Web Developer" 
+                  className="w-full h-full object-cover"
+                />
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+              </div>
+
+              {/* Floating Badge */}
+              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-6 py-2 rounded-full glass-card border border-primary/30">
+                <span className="text-sm font-medium gradient-text">Creative Developer</span>
               </div>
             </div>
           </div>
