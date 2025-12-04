@@ -11,7 +11,7 @@ const HeroSection = () => {
       </div>
 
       {/* Social Icons - Left Side */}
-      <div className="hidden md:flex flex-col gap-4 fixed left-6 bottom-1/4 z-20">
+      <div className="hidden md:flex flex-col gap-4 absolute left-6 bottom-1/4 z-20">
         <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-lg bg-secondary/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300">
           <Instagram size={18} />
         </a>
