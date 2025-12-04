@@ -32,7 +32,7 @@ const technicalServices = [
   {
     icon: Smartphone,
     title: "Responsive Design",
-    description: "Beautiful, mobile-first designs that work flawlessly across all devices.",
+    description: "Beautiful, mobile-first designs that work flawlessly across multiple devices.",
   },
 ];
 
