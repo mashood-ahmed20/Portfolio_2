@@ -1,39 +1,63 @@
+import { useState } from "react";
 import { ExternalLink, Play, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import ProjectDetailModal from "@/components/ProjectDetailModal";
+import { Project } from "@/data/projectsData";
 
-const projects = [
+const featuredProjects: Project[] = [
   {
+    id: "askstellar-featured",
     title: "AskStellarAi",
     subtitle: "Personal Health Insurance Assistant",
     description: "Created promotional and screencast videos showcasing AI-powered health insurance guidance platform.",
+    fullDescription: "Created a compelling promotional video for AskStellarAi, an innovative AI-powered health insurance guidance platform. The video highlights key features including personalized recommendations, instant answers, and seamless user experience through dynamic motion graphics and engaging storytelling.",
     tags: ["Promo Video", "Screencast", "AI Platform"],
-    type: "creative",
+    type: "video",
   },
   {
+    id: "chefshot-featured",
     title: "ChefShot Ai Pro",
     subtitle: "AI-Enhanced Food Photography",
     description: "Produced engaging promotional video highlighting AI-powered food photography enhancement features.",
+    fullDescription: "Produced a visually stunning promotional video for ChefShot Ai Pro, showcasing how the app transforms ordinary food photos into professional-grade images using AI enhancement. The video demonstrates before/after comparisons and key app features through smooth transitions and appetizing visuals.",
     tags: ["Promo Video", "Motion Graphics", "AI"],
-    type: "creative",
+    type: "video",
   },
   {
+    id: "armsai-featured",
     title: "ArmsAI",
     subtitle: "Risk Assessment Agent",
     description: "Designed professional, futuristic motion graphics for an AI-powered risk assessment platform.",
+    fullDescription: "Designed a futuristic, attention-grabbing promotional content for ArmsAI, an AI-powered risk assessment platform. The content features bold motion graphics, impactful messaging, and professional visual design that communicates the platform's advanced capabilities.",
     tags: ["Motion Graphics", "Futuristic", "AI"],
-    type: "creative",
+    type: "video",
   },
   {
+    id: "astrolabe-featured",
     title: "Astrolabe Platform",
     subtitle: "All-in-one Seafarer Platform",
     description: "Crafted smooth UI animations and seamless transitions for a comprehensive maritime platform.",
+    fullDescription: "Crafted a professional promotional video for Astrolabe, a comprehensive maritime platform for seafarers. The video highlights the platform's features including job listings, certification management, and community features through smooth UI animations and professional narration.",
     tags: ["UI Animation", "Web Platform", "Transitions"],
-    type: "technical",
+    type: "software",
   },
 ];
 
 const PortfolioSection = () => {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleProjectClick = (project: Project) => {
+    setSelectedProject(project);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedProject(null);
+  };
+
   return (
     <section id="portfolio" className="section-padding">
       <div className="container mx-auto">
@@ -50,24 +74,25 @@ const PortfolioSection = () => {
 
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
-          {projects.map((project, index) => (
+          {featuredProjects.map((project, index) => (
             <div
-              key={project.title}
-              className="glass-card overflow-hidden group hover-lift"
+              key={project.id}
+              className="glass-card overflow-hidden group hover-lift cursor-pointer"
               style={{ animationDelay: `${index * 0.1}s` }}
+              onClick={() => handleProjectClick(project)}
             >
               {/* Project Thumbnail */}
               <div className="relative aspect-video bg-gradient-to-br from-muted to-secondary overflow-hidden">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
                     <div className="w-16 h-16 mx-auto rounded-full bg-primary/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
-                      {project.type === "creative" ? (
+                      {project.type === "video" ? (
                         <Play className="w-8 h-8 text-primary" />
                       ) : (
                         <ExternalLink className="w-8 h-8 text-primary" />
                       )}
                     </div>
-                    <span className="text-xs text-muted-foreground">Project Preview</span>
+                    <span className="text-xs text-muted-foreground">Click to View Details</span>
                   </div>
                 </div>
                 
@@ -85,11 +110,11 @@ const PortfolioSection = () => {
                     <p className="text-sm text-primary">{project.subtitle}</p>
                   </div>
                   <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                    project.type === "creative" 
+                    project.type === "video" 
                       ? "bg-primary/10 text-primary" 
                       : "bg-accent/10 text-accent"
                   }`}>
-                    {project.type === "creative" ? "Creative" : "Technical"}
+                    {project.type === "video" ? "Creative" : "Technical"}
                   </span>
                 </div>
 
@@ -121,6 +146,13 @@ const PortfolioSection = () => {
           </Button>
         </div>
       </div>
+
+      {/* Project Detail Modal */}
+      <ProjectDetailModal
+        project={selectedProject}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </section>
   );
 };
