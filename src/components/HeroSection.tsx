@@ -22,10 +22,9 @@ const HeroSection = () => {
           <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-heading font-bold leading-tight animate-fade-in" style={{
           animationDelay: "0.1s"
         }}>
-            Elevating{" "}
-            <span className="gradient-text glow-text">Digital Experiences</span>
+            Elevating <span className="gradient-text glow-text">Digital Experiences</span>
             <br />
-            Through <span className="gradient-text glow-text">Content Repurposing</span>,
+            Through <span className="gradient-text glow-text">Content Repurposing</span>
             <br />
             <span className="gradient-text glow-text">Promo Videos</span> & Web Solutions
           </h1>
