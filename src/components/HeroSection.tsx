@@ -19,14 +19,12 @@ const HeroSection = () => {
           </div>
 
           {/* Title */}
-          <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-heading font-bold leading-tight animate-fade-in" style={{
+          <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-heading font-bold leading-tight animate-fade-in" style={{
           animationDelay: "0.1s"
         }}>
-            Elevating <span className="gradient-text glow-text">Digital Experiences</span>
-            <br />
-            Through <span className="gradient-text glow-text">Content Repurposing</span>
-            <br />
-            <span className="gradient-text glow-text">Promo Videos</span> & Web Solutions
+            <span className="block whitespace-nowrap">Elevating <span className="gradient-text glow-text">Digital Experiences</span></span>
+            <span className="block whitespace-nowrap">Through <span className="gradient-text glow-text">Content Repurposing</span></span>
+            <span className="block whitespace-nowrap"><span className="gradient-text glow-text">Promo Videos</span> & Web Solutions</span>
           </h1>
 
           {/* Description */}
