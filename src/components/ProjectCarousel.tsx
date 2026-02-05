@@ -74,12 +74,32 @@ const ProjectCarousel = ({ projects, onProjectClick }: ProjectCarouselProps) => 
           >
             {/* Thumbnail */}
             <div className="relative aspect-video bg-gradient-to-br from-muted to-secondary overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <Play className="w-6 h-6 text-primary" />
-                </div>
-              </div>
-              <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              {project.videoUrl ? (
+                <>
+                  <video
+                    className="w-full h-full object-cover"
+                    muted
+                    playsInline
+                    preload="metadata"
+                  >
+                    <source src={project.videoUrl} type="video/mp4" />
+                  </video>
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
+                    <div className="w-12 h-12 rounded-full bg-primary/80 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <Play className="w-6 h-6 text-primary-foreground" />
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <Play className="w-6 h-6 text-primary" />
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </>
+              )}
             </div>
 
             {/* Info */}
