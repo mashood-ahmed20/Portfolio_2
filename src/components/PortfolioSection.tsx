@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { ExternalLink, Play, ArrowRight } from "lucide-react";
+import { ExternalLink, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import ProjectDetailModal from "@/components/ProjectDetailModal";
+import VideoPlayer from "@/components/VideoPlayer";
 import { Project } from "@/data/projectsData";
+import askStellarVideo from "@/assets/askstellar-video.mp4";
 
 const featuredProjects: Project[] = [
   {
@@ -14,6 +16,7 @@ const featuredProjects: Project[] = [
     fullDescription: "Created a compelling promotional video for AskStellarAi, an innovative AI-powered health insurance guidance platform. The video highlights key features including personalized recommendations, instant answers, and seamless user experience through dynamic motion graphics and engaging storytelling.",
     tags: ["Promo Video", "Screencast", "AI Platform"],
     type: "video",
+    videoUrl: askStellarVideo,
   },
   {
     id: "chefshot-featured",
@@ -82,23 +85,28 @@ const PortfolioSection = () => {
               onClick={() => handleProjectClick(project)}
             >
               {/* Project Thumbnail */}
-              <div className="relative aspect-video bg-gradient-to-br from-muted to-secondary overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-16 h-16 mx-auto rounded-full bg-primary/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
-                      {project.type === "video" ? (
-                        <Play className="w-8 h-8 text-primary" />
-                      ) : (
+              {project.videoUrl ? (
+                <VideoPlayer
+                  src={project.videoUrl}
+                  className="aspect-video"
+                  thumbnailMode
+                  onContainerClick={() => handleProjectClick(project)}
+                />
+              ) : (
+                <div className="relative aspect-video bg-gradient-to-br from-muted to-secondary overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="w-16 h-16 mx-auto rounded-full bg-primary/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
                         <ExternalLink className="w-8 h-8 text-primary" />
-                      )}
+                      </div>
+                      <span className="text-xs text-muted-foreground">Click to View Details</span>
                     </div>
-                    <span className="text-xs text-muted-foreground">Click to View Details</span>
                   </div>
+                  
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
-                
-                {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </div>
+              )}
 
               {/* Project Info */}
               <div className="p-6">
