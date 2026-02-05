@@ -6,6 +6,7 @@ import ProjectDetailModal from "@/components/ProjectDetailModal";
 import VideoPlayer from "@/components/VideoPlayer";
 import { Project } from "@/data/projectsData";
 import askStellarVideo from "@/assets/askstellar-video.mp4";
+import askStellarThumbnail from "@/assets/askstellar-thumbnail.png";
 
 const featuredProjects: Project[] = [
   {
@@ -17,6 +18,7 @@ const featuredProjects: Project[] = [
     tags: ["Promo Video", "Screencast", "AI Platform"],
     type: "video",
     videoUrl: askStellarVideo,
+    thumbnail: askStellarThumbnail,
   },
   {
     id: "chefshot-featured",
@@ -88,6 +90,7 @@ const PortfolioSection = () => {
               {project.videoUrl ? (
                 <VideoPlayer
                   src={project.videoUrl}
+                  poster={project.thumbnail}
                   className="aspect-video"
                   thumbnailMode
                   onContainerClick={() => handleProjectClick(project)}

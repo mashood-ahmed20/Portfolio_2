@@ -78,6 +78,7 @@ const ProjectCarousel = ({ projects, onProjectClick }: ProjectCarouselProps) => 
               {project.videoUrl ? (
                 <VideoPlayer
                   src={project.videoUrl}
+                  poster={project.thumbnail}
                   className="w-full h-full"
                   thumbnailMode
                   onContainerClick={() => onProjectClick(project)}
