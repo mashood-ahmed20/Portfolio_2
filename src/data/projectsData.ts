@@ -32,6 +32,7 @@ export const videoNicheLabels: Record<VideoNiche, string> = {
 };
 
 import askStellarVideo from "@/assets/askstellar-video.mp4";
+import askStellarThumbnail from "@/assets/askstellar-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos
@@ -45,6 +46,7 @@ export const videoProjects: Project[] = [
     type: "video",
     niche: "app-promos",
     videoUrl: askStellarVideo,
+    thumbnail: askStellarThumbnail,
   },
   {
     id: "chefshot-promo",

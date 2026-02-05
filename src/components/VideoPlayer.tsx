@@ -3,6 +3,7 @@ import { Play } from "lucide-react";
 
 interface VideoPlayerProps {
   src: string;
+  poster?: string;
   className?: string;
   showPlayButton?: boolean;
   thumbnailMode?: boolean;
@@ -11,6 +12,7 @@ interface VideoPlayerProps {
 
 const VideoPlayer = ({
   src,
+  poster,
   className = "",
   showPlayButton = true,
   thumbnailMode = false,
@@ -21,6 +23,7 @@ const VideoPlayer = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [showPoster, setShowPoster] = useState(!!poster);
 
   // Lazy loading - only load video when visible
   useEffect(() => {
@@ -54,6 +57,7 @@ const VideoPlayer = ({
         videoRef.current.pause();
         setIsPlaying(false);
       } else {
+        setShowPoster(false);
         videoRef.current.play();
         setIsPlaying(true);
       }
@@ -62,6 +66,7 @@ const VideoPlayer = ({
 
   const handleVideoEnd = () => {
     setIsPlaying(false);
+    setShowPoster(!!poster);
   };
 
   const handleLoadedMetadata = () => {
@@ -101,8 +106,18 @@ const VideoPlayer = ({
         </video>
       )}
 
-      {/* Loading placeholder */}
-      {!isLoaded && isVisible && (
+      {/* Poster image */}
+      {poster && showPoster && (
+        <img
+          src={poster}
+          alt="Video thumbnail"
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+        />
+      )}
+
+      {/* Loading placeholder - only show if no poster */}
+      {!isLoaded && isVisible && !poster && (
         <div className="absolute inset-0 flex items-center justify-center bg-muted/50">
           <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
         </div>

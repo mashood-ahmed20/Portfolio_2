@@ -29,6 +29,7 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
           {project.videoUrl ? (
             <VideoPlayer
               src={project.videoUrl}
+              poster={project.thumbnail}
               className="w-full h-full"
               showPlayButton={true}
             />
