@@ -25,20 +25,33 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
 
         {/* Media Area */}
         <div className="relative aspect-video bg-gradient-to-br from-muted to-secondary rounded-lg overflow-hidden my-4">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center">
-              <div className="w-20 h-20 mx-auto rounded-full bg-primary/20 flex items-center justify-center mb-3">
-                {project.type === "video" ? (
-                  <Play className="w-10 h-10 text-primary" />
-                ) : (
-                  <Code className="w-10 h-10 text-primary" />
-                )}
+          {project.videoUrl ? (
+            <video
+              className="w-full h-full object-cover"
+              muted
+              controls
+              playsInline
+              preload="metadata"
+            >
+              <source src={project.videoUrl} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center">
+                <div className="w-20 h-20 mx-auto rounded-full bg-primary/20 flex items-center justify-center mb-3">
+                  {project.type === "video" ? (
+                    <Play className="w-10 h-10 text-primary" />
+                  ) : (
+                    <Code className="w-10 h-10 text-primary" />
+                  )}
+                </div>
+                <span className="text-sm text-muted-foreground">
+                  {project.type === "video" ? "Video Preview" : "Project Preview"}
+                </span>
               </div>
-              <span className="text-sm text-muted-foreground">
-                {project.type === "video" ? "Video Preview" : "Project Preview"}
-              </span>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Project Details */}

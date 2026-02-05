@@ -31,6 +31,8 @@ export const videoNicheLabels: Record<VideoNiche, string> = {
   "content-repurposing": "Content Repurposing",
 };
 
+import askStellarVideo from "@/assets/askstellar-video.mp4";
+
 export const videoProjects: Project[] = [
   // App Promos
   {
@@ -42,6 +44,7 @@ export const videoProjects: Project[] = [
     tags: ["App Promo", "AI Platform", "Motion Graphics"],
     type: "video",
     niche: "app-promos",
+    videoUrl: askStellarVideo,
   },
   {
     id: "chefshot-promo",
