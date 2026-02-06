@@ -128,6 +128,32 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  /* Premium thin scrollbar */
+  .scrollbar-premium {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(174 80% 50% / 0.3) transparent;
+  }
+
+  .scrollbar-premium::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  .scrollbar-premium::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 8px 0;
+  }
+
+  .scrollbar-premium::-webkit-scrollbar-thumb {
+    background: hsl(174 80% 50% / 0.25);
+    border-radius: 9999px;
+    transition: background 0.2s ease;
+  }
+
+  .scrollbar-premium:hover::-webkit-scrollbar-thumb {
+    background: hsl(174 80% 50% / 0.5);
+    box-shadow: 0 0 8px hsl(174 80% 50% / 0.3);
+  }
 }
 
 @keyframes gradient-shift {
