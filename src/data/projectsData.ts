@@ -49,6 +49,16 @@ export const videoProjects: Project[] = [
     thumbnail: askStellarThumbnail,
   },
   {
+    id: "gridiron-coaching",
+    title: "GridIron Coaching",
+    subtitle: "Build Your Legacy in the Ultimate College Football Simulation",
+    description: "High-impact promo video capturing the thrill of managing a college football program.",
+    fullDescription: "GridIron Coaching is a high-impact promo video designed to capture the thrill, strategy, and emotional depth of managing a college football program. The project opens with a powerful hook, instantly introducing players to an immersive simulation experience. Through dynamic visuals and engaging pacing, it showcases core gameplay features such as choosing your school, recruiting top talent, simulating full seasons, mastering the transfer portal, and building a long-term powerhouse. Each scene is crafted to highlight progression, control, and legacy-building, keeping viewers engaged from start to finish. The final call-to-action reinforces the game's central promise: take charge, make bold decisions, and build a lasting football dynasty.",
+    tags: ["App Promo", "Gaming", "Motion Graphics"],
+    type: "video",
+    niche: "app-promos",
+  },
+  {
     id: "chefshot-promo",
     title: "ChefShot Ai Pro",
     subtitle: "AI-Enhanced Food Photography",
