@@ -49,6 +49,16 @@ export const videoProjects: Project[] = [
     thumbnail: askStellarThumbnail,
   },
   {
+    id: "influenceai-promo",
+    title: "InfluenceAI",
+    subtitle: "Your AI Growth Partner for Smarter Instagram Success",
+    description: "Conversion-focused promo video for an AI-powered Instagram growth platform.",
+    fullDescription: "InfluenceAI is a sleek, conversion-focused product promo video created to present a modern solution for Instagram growth. The video begins by addressing a common pain point — the time and effort required to grow on social media — and introduces InfluenceAI as an intelligent, always-on digital manager. Through clean dashboard visuals and smooth motion design, it demonstrates how the platform analyzes user data, optimizes posting times, generates captions, manages collaborations, and delivers actionable insights. The narrative positions InfluenceAI as more than just a tool, emphasizing automation, efficiency, and smarter growth. The video closes with a strong call-to-action, encouraging early access and empowering creators to grow strategically.",
+    tags: ["App Promo", "AI Platform", "Social Media"],
+    type: "video",
+    niche: "app-promos",
+  },
+  {
     id: "gridiron-coaching",
     title: "GridIron Coaching",
     subtitle: "Build Your Legacy in the Ultimate College Football Simulation",
