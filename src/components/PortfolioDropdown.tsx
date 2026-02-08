@@ -63,7 +63,7 @@ const PortfolioDropdown = ({ mobile = false, onNavigate }: PortfolioDropdownProp
       <div className="w-full">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center justify-between w-full text-muted-foreground hover:text-foreground transition-colors duration-200 py-2"
+          className="flex items-center justify-between w-full text-2xl font-heading font-semibold text-foreground/80 hover:text-foreground transition-colors duration-200 py-3"
         >
           <span>Portfolio</span>
           <ChevronDown
