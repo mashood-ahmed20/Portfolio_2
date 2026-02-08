@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { ArrowLeft, Play, Code, ExternalLink, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { 
@@ -13,6 +13,7 @@ import ProjectCarousel from "@/components/ProjectCarousel";
 import ProjectDetailModal from "@/components/ProjectDetailModal";
 
 const Projects = () => {
+  const [searchParams] = useSearchParams();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expandedNiches, setExpandedNiches] = useState<Record<VideoNiche, boolean>>({
@@ -23,6 +24,17 @@ const Projects = () => {
     "social-media-ads": true,
     "content-repurposing": true,
   });
+
+  // Scroll to niche section from dropdown navigation
+  useEffect(() => {
+    const scrollTarget = searchParams.get("scroll");
+    if (scrollTarget) {
+      setTimeout(() => {
+        const el = document.getElementById(`niche-${scrollTarget}`);
+        el?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 300);
+    }
+  }, [searchParams]);
 
   const handleProjectClick = (project: Project) => {
     setSelectedProject(project);
@@ -94,7 +106,7 @@ const Projects = () => {
               if (projects.length === 0) return null;
 
               return (
-                <div key={niche} className="glass-card p-6">
+                <div key={niche} id={`niche-${niche}`} className="glass-card p-6 scroll-mt-24">
                   {/* Niche Header */}
                   <button
                     onClick={() => toggleNiche(niche)}
@@ -127,7 +139,7 @@ const Projects = () => {
         </section>
 
         {/* Software Projects Section */}
-        <section>
+        <section id="niche-software" className="scroll-mt-24">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center">
               <Code className="w-6 h-6 text-accent" />
