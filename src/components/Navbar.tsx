@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import PortfolioDropdown from "@/components/PortfolioDropdown";
 
 const navLinks = [
   { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
   { name: "Services", href: "#services" },
   { name: "Skills", href: "#skills" },
-  { name: "Portfolio", href: "#all-projects" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -47,6 +47,7 @@ const Navbar = () => {
                 {link.name}
               </a>
             ))}
+            <PortfolioDropdown />
             <Button variant="hero" size="sm" asChild>
               <a href="#contact">Hire Me</a>
             </Button>
@@ -64,7 +65,7 @@ const Navbar = () => {
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-border/50 animate-fade-in">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
@@ -75,6 +76,7 @@ const Navbar = () => {
                   {link.name}
                 </a>
               ))}
+              <PortfolioDropdown mobile onNavigate={() => setIsMobileMenuOpen(false)} />
               <Button variant="hero" size="sm" className="mt-2" asChild>
                 <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
                   Hire Me
