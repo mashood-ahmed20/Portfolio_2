@@ -96,12 +96,12 @@ const ProjectCarousel = ({ projects, onProjectClick }: ProjectCarouselProps) => 
             </div>
 
             {/* Info */}
-            <div className="p-4">
+            <div className="p-4 max-h-[140px] overflow-y-auto scrollbar-premium">
               <h4 className="font-heading font-bold text-foreground group-hover:text-primary transition-colors truncate">
                 {project.title}
               </h4>
               <p className="text-sm text-primary truncate">{project.subtitle}</p>
-              <p className="text-xs text-muted-foreground mt-2 line-clamp-2">{project.description}</p>
+              <p className="text-xs text-muted-foreground mt-2">{project.description}</p>
             </div>
           </div>
         ))}

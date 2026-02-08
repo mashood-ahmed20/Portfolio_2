@@ -68,7 +68,7 @@ const Projects = () => {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-primary font-medium text-sm uppercase tracking-wider">Portfolio</span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mt-2 mb-4">
-            Complete <span className="gradient-text">Project Gallery</span>
+            My <span className="gradient-text">Portfolio</span>
           </h2>
           <p className="text-muted-foreground text-lg">
             Explore my complete portfolio of video production and software development projects.
@@ -157,12 +157,12 @@ const Projects = () => {
                 </div>
 
                 {/* Info */}
-                <div className="p-5">
+                <div className="p-5 max-h-[180px] overflow-y-auto scrollbar-premium">
                   <h4 className="text-lg font-heading font-bold text-foreground group-hover:text-accent transition-colors">
                     {project.title}
                   </h4>
                   <p className="text-sm text-accent mb-2">{project.subtitle}</p>
-                  <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{project.description}</p>
+                  <p className="text-sm text-muted-foreground mb-4">{project.description}</p>
                   
                   {/* Tags */}
                   <div className="flex flex-wrap gap-2">

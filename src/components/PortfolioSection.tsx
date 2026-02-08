@@ -77,6 +77,9 @@ const PortfolioSection = () => {
           </p>
         </div>
 
+        {/* Anchor for Portfolio nav link */}
+        <div id="all-projects" className="scroll-mt-24" />
+
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
           {featuredProjects.map((project, index) => (
@@ -112,7 +115,7 @@ const PortfolioSection = () => {
               )}
 
               {/* Project Info */}
-              <div className="p-6">
+              <div className="p-6 max-h-[220px] overflow-y-auto scrollbar-premium">
                 <div className="flex items-start justify-between gap-4 mb-3">
                   <div>
                     <h3 className="text-xl font-heading font-bold text-foreground group-hover:text-primary transition-colors">
@@ -120,7 +123,7 @@ const PortfolioSection = () => {
                     </h3>
                     <p className="text-sm text-primary">{project.subtitle}</p>
                   </div>
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                  <span className={`px-3 py-1 rounded-full text-xs font-medium shrink-0 ${
                     project.type === "video" 
                       ? "bg-primary/10 text-primary" 
                       : "bg-accent/10 text-accent"
