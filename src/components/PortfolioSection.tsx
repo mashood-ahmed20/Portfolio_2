@@ -6,39 +6,6 @@ import { Project } from "@/data/projectsData";
 import askStellarVideo from "@/assets/askstellar-video.mp4";
 import askStellarThumbnail from "@/assets/askstellar-thumbnail.png";
 
-const featuredVertical: Project[] = [
-  {
-    id: "skincare-ugc-feat",
-    title: "GlowUp Skincare",
-    subtitle: "UGC Product Review",
-    description: "",
-    fullDescription: "",
-    tags: ["UGC", "Skincare"],
-    type: "video",
-    orientation: "vertical",
-  },
-  {
-    id: "armsai-feat",
-    title: "ArmsAI",
-    subtitle: "Social Media Ad",
-    description: "",
-    fullDescription: "",
-    tags: ["Social Ad", "AI"],
-    type: "video",
-    orientation: "vertical",
-  },
-  {
-    id: "podcast-feat",
-    title: "Tech Talk Podcast",
-    subtitle: "Content Repurposing",
-    description: "",
-    fullDescription: "",
-    tags: ["Repurposing", "Podcast"],
-    type: "video",
-    orientation: "vertical",
-  },
-];
-
 const featuredHorizontal: Project[] = [
   {
     id: "askstellar-feat",
@@ -72,6 +39,16 @@ const featuredHorizontal: Project[] = [
     type: "video",
     orientation: "horizontal",
   },
+  {
+    id: "influenceai-feat",
+    title: "InfluenceAI",
+    subtitle: "AI Growth Partner for Instagram",
+    description: "",
+    fullDescription: "",
+    tags: ["App Promo", "Social Media"],
+    type: "video",
+    orientation: "horizontal",
+  },
 ];
 
 const PortfolioSection = () => {
@@ -85,34 +62,15 @@ const PortfolioSection = () => {
             Featured <span className="gradient-text">Projects</span>
           </h2>
           <p className="text-muted-foreground text-lg">
-            A selection of recent work across vertical and horizontal formats.
+            A selection of high-quality horizontal showcase work.
           </p>
         </div>
 
         <div id="all-projects" className="scroll-mt-24" />
 
-        {/* Reels / Shorts Section */}
-        <div className="mb-14">
-          <h3 className="text-xl font-heading font-bold text-foreground mb-6 flex items-center gap-3">
-            <span className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-sm">▶</span>
-            Reels / Shorts
-          </h3>
-          <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory md:grid md:grid-cols-3 lg:grid-cols-4 md:overflow-visible md:pb-0">
-            {featuredVertical.map((project) => (
-              <div key={project.id} className="min-w-[200px] snap-start md:min-w-0">
-                <ProjectVideoCard project={project} />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Horizontal Videos Section */}
+        {/* 2×2 Horizontal Grid */}
         <div className="mb-12">
-          <h3 className="text-xl font-heading font-bold text-foreground mb-6 flex items-center gap-3">
-            <span className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-sm">▶</span>
-            Promos & Screencasts
-          </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {featuredHorizontal.map((project) => (
               <ProjectVideoCard key={project.id} project={project} />
             ))}
