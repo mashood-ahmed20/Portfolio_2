@@ -147,11 +147,14 @@ const ProjectVideoCard = ({ project }: ProjectVideoCardProps) => {
   const toggleFullscreen = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     const el = videoContainerRef.current;
+    const vid = videoRef.current;
     if (!el) return;
     if (document.fullscreenElement) {
       document.exitFullscreen();
-    } else {
+    } else if (el.requestFullscreen) {
       el.requestFullscreen();
+    } else if ((vid as any)?.webkitEnterFullscreen) {
+      (vid as any).webkitEnterFullscreen();
     }
   }, []);
 
@@ -184,9 +187,11 @@ const ProjectVideoCard = ({ project }: ProjectVideoCardProps) => {
     >
       <div
         ref={videoContainerRef}
-        className={`relative overflow-hidden bg-gradient-to-br from-muted to-secondary ${
-          isVertical ? "aspect-[9/16]" : "aspect-video"
-        } ${isFullscreen ? "!aspect-auto w-full h-full" : ""}`}
+        className={`relative overflow-hidden ${
+          isFullscreen
+            ? "!aspect-auto w-screen h-screen bg-black flex items-center justify-center"
+            : `bg-gradient-to-br from-muted to-secondary ${isVertical ? "aspect-[9/16]" : "aspect-video"}`
+        }`}
         onMouseMove={handleMouseMove}
         onMouseLeave={() => { if (isPlaying && !isSeeking) setShowControls(false); }}
         onTouchStart={handleTouchStart}
@@ -194,7 +199,7 @@ const ProjectVideoCard = ({ project }: ProjectVideoCardProps) => {
         {isVisible && project.videoUrl && (
           <video
             ref={videoRef}
-            className="w-full h-full object-cover"
+            className={`w-full h-full ${isFullscreen ? "object-contain" : "object-cover"}`}
             muted={isMuted}
             playsInline
             preload="metadata"
