@@ -46,9 +46,7 @@ const HeroSection = () => {
           {/* Description */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mt-6 animate-fade-in" style={{
           animationDelay: "0.2s"
-        }}>
-            Hi, I'm Mashood Ahmed — a Video Editor and Software Engineer helping brands and creators stand out with impactful digital content.
-          </p>
+        }}>Helping brands, startups, and creators transform ideas into visually powerful digital experiences through cinematic video editing, motion design, and modern web development</p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 mt-8 animate-fade-in" style={{

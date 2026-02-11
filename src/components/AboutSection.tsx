@@ -1,9 +1,7 @@
 import { GraduationCap, Briefcase, Award, Star } from "lucide-react";
 import profilePhoto from "@/assets/profile-photo.jpg";
-
 const AboutSection = () => {
-  return (
-    <section id="about" className="section-padding bg-secondary/30">
+  return <section id="about" className="section-padding bg-secondary/30">
       <div className="container mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Image Side */}
@@ -15,11 +13,7 @@ const AboutSection = () => {
               
               {/* Main Image Container with Mask */}
               <div className="relative w-full h-full rounded-2xl overflow-hidden glass-card">
-                <img 
-                  src={profilePhoto} 
-                  alt="Mashood Ahmed - Video Editor, Motion Designer & Web Developer" 
-                  className="w-full h-full object-cover"
-                />
+                <img src={profilePhoto} alt="Mashood Ahmed - Video Editor, Motion Designer & Web Developer" className="w-full h-full object-cover" />
                 {/* Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
               </div>
@@ -41,20 +35,9 @@ const AboutSection = () => {
               </h2>
             </div>
 
-            <p className="text-muted-foreground text-lg leading-relaxed">
-              As a Software Engineering undergraduate student at UIT University, Pakistan, 
-              I bring a unique blend of creative and technical expertise to every project. 
-              With a passion for continuous learning and innovation, I've built a successful 
-              freelance career serving over 70 satisfied clients on platforms like Fiverr 
-              (Level 1 Seller) and Upwork.
-            </p>
+            <p className="text-muted-foreground text-lg leading-relaxed">Hi, I’m Mashood Ahmed, a creative video editor, motion designer, and web developer. I work with startups, agencies, and businesses to create engaging content that drives attention, conversions, and brand growth. With a passion for continuous learning and innovation, I've built a successful freelance career serving over 100+ satisfied clients on platforms like Fiverr (Level 1 Seller) and Upwork.</p>
 
-            <p className="text-muted-foreground text-lg leading-relaxed">
-              My expertise spans across the Adobe Creative Suite for stunning visual content 
-              and the MERN Stack for robust web applications. I believe in delivering quality 
-              digital solutions that help brands, startups, and creators establish a powerful 
-              online presence.
-            </p>
+            <p className="text-muted-foreground text-lg leading-relaxed">My work focuses on creating engaging promo videos, product demos, UGCs, app explainers, UI animations, and modern websites that communicate ideas clearly and professionally. I combine technical expertise with creative storytelling to deliver results that align with business goals.</p>
 
             {/* Info Cards */}
             <div className="grid sm:grid-cols-2 gap-4 pt-4">
@@ -113,8 +96,6 @@ const AboutSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default AboutSection;
