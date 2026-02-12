@@ -36,6 +36,8 @@ export const videoNicheLabels: Record<VideoNiche, string> = {
 
 import askStellarVideo from "@/assets/askstellar-video.mp4";
 import askStellarThumbnail from "@/assets/askstellar-thumbnail.png";
+import gridironVideo from "@/assets/gridiron-coaching-video.mp4";
+import gridironThumbnail from "@/assets/gridiron-coaching-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
@@ -73,6 +75,8 @@ export const videoProjects: Project[] = [
     type: "video",
     niche: "app-promos",
     orientation: "horizontal",
+    videoUrl: gridironVideo,
+    thumbnail: gridironThumbnail,
   },
   {
     id: "chefshot-promo",

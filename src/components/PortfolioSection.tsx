@@ -5,6 +5,8 @@ import ProjectVideoCard from "@/components/ProjectVideoCard";
 import { Project } from "@/data/projectsData";
 import askStellarVideo from "@/assets/askstellar-video.mp4";
 import askStellarThumbnail from "@/assets/askstellar-thumbnail.png";
+import gridironVideo from "@/assets/gridiron-coaching-video.mp4";
+import gridironThumbnail from "@/assets/gridiron-coaching-thumbnail.png";
 
 const featuredHorizontal: Project[] = [
   {
@@ -30,14 +32,16 @@ const featuredHorizontal: Project[] = [
     orientation: "horizontal",
   },
   {
-    id: "astrolabe-feat",
-    title: "Astrolabe Platform",
-    subtitle: "Seafarer Platform",
+    id: "gridiron-feat",
+    title: "GridIron Coaching",
+    subtitle: "College Football Simulation",
     description: "",
     fullDescription: "",
-    tags: ["Website Promo", "B2B"],
+    tags: ["App Promo", "Gaming"],
     type: "video",
     orientation: "horizontal",
+    videoUrl: gridironVideo,
+    thumbnail: gridironThumbnail,
   },
   {
     id: "influenceai-feat",
