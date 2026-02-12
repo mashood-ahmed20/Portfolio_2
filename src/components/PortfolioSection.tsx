@@ -80,7 +80,7 @@ const PortfolioSection = () => {
         {/* CTA */}
         <div className="text-center mt-12">
           <Button variant="heroOutline" size="lg" asChild>
-            <Link to="/projects">
+            <Link to="/portfolio">
               See All Projects
               <ArrowRight className="ml-2 w-4 h-4" />
             </Link>

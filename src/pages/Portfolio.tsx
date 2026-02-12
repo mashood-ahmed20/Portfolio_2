@@ -1,6 +1,10 @@
-import { Link } from "react-router-dom";
-import { ArrowLeft, Play, Code, ExternalLink } from "lucide-react";
+import { useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { Play, Code, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
 import { 
   videoProjects, 
   softwareProjects, 
@@ -43,25 +47,29 @@ const NicheSection = ({ niche, projects }: { niche: VideoNiche; projects: Projec
   );
 };
 
-const Projects = () => {
+const Portfolio = () => {
+  const [searchParams] = useSearchParams();
   const getProjectsByNiche = (niche: VideoNiche) =>
     videoProjects.filter(p => p.niche === niche);
 
+  // Scroll to top on mount, or to niche section if ?scroll= param exists
+  useEffect(() => {
+    const scrollTarget = searchParams.get("scroll");
+    if (scrollTarget) {
+      setTimeout(() => {
+        const el = document.getElementById(`niche-${scrollTarget}`);
+        el?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [searchParams]);
+
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-            <ArrowLeft className="w-5 h-5" />
-            <span>Back to Home</span>
-          </Link>
-          <h1 className="font-heading font-bold text-xl">All Projects</h1>
-          <div className="w-24" />
-        </div>
-      </header>
+      <Navbar />
 
-      <main className="container mx-auto px-4 py-12">
+      <main className="container mx-auto px-4 pt-28 pb-12">
         {/* Page Title */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-primary font-medium text-sm uppercase tracking-wider">Portfolio</span>
@@ -165,13 +173,15 @@ const Projects = () => {
           <Button variant="heroOutline" size="lg" asChild>
             <Link to="/#contact">
               Get In Touch
-              <ArrowLeft className="ml-2 w-4 h-4 rotate-180" />
             </Link>
           </Button>
         </div>
       </main>
+
+      <Footer />
+      <ScrollToTop />
     </div>
   );
 };
 
-export default Projects;
+export default Portfolio;

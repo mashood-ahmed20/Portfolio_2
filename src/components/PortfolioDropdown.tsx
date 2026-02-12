@@ -49,12 +49,11 @@ const PortfolioDropdown = ({ mobile = false, onNavigate }: PortfolioDropdownProp
     setIsOpen(false);
     onNavigate?.();
 
-    if (location.pathname === "/projects") {
-      // Already on projects page, scroll to section
+    if (location.pathname === "/portfolio") {
       const el = document.getElementById(`niche-${niche}`);
       el?.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
-      navigate(`/projects?scroll=${niche}`);
+      navigate(`/portfolio?scroll=${niche}`);
     }
   };
 
