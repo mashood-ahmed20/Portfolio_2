@@ -1,13 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play, Instagram, Linkedin, Facebook, Youtube } from "lucide-react";
+import { Link } from "react-router-dom";
+
 const HeroSection = () => {
-  return <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden section-padding pt-32">
+  return (
+    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden section-padding pt-32">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-glow" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-pulse-glow" style={{
-        animationDelay: "1s"
-      }} />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: "1s" }} />
       </div>
 
       {/* Social Icons - Left Side */}
@@ -35,28 +36,24 @@ const HeroSection = () => {
           </div>
 
           {/* Title */}
-          <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-heading font-bold leading-relaxed md:leading-relaxed animate-fade-in" style={{
-          animationDelay: "0.1s"
-        }}>
+          <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-heading font-bold leading-relaxed md:leading-relaxed animate-fade-in" style={{ animationDelay: "0.1s" }}>
             <span className="block whitespace-nowrap">Elevating <span className="gradient-text glow-text">Digital Experiences</span></span>
             <span className="block whitespace-nowrap">Through <span className="gradient-text glow-text">Content Repurposing</span></span>
             <span className="block whitespace-nowrap"><span className="gradient-text glow-text">Promo Videos</span> & Web Solutions</span>
           </h1>
 
           {/* Description */}
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mt-6 animate-fade-in" style={{
-          animationDelay: "0.2s"
-        }}>Helping brands, startups, and creators transform ideas into visually powerful digital experiences through cinematic video editing, motion design, and modern web development</p>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mt-6 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+            Helping brands, startups, and creators transform ideas into visually powerful digital experiences through cinematic video editing, motion design, and modern web development
+          </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 mt-8 animate-fade-in" style={{
-          animationDelay: "0.3s"
-        }}>
+          <div className="flex flex-col sm:flex-row gap-4 mt-8 animate-fade-in" style={{ animationDelay: "0.3s" }}>
             <Button variant="hero" size="xl" asChild>
-              <a href="#portfolio">
+              <Link to="/portfolio">
                 View Portfolio
                 <ArrowRight className="ml-2" />
-              </a>
+              </Link>
             </Button>
             <Button variant="heroOutline" size="xl" asChild>
               <a href="#contact">
@@ -67,9 +64,7 @@ const HeroSection = () => {
           </div>
 
           {/* Stats */}
-          <div className="flex items-center justify-center gap-8 md:gap-12 pt-12 animate-fade-in" style={{
-          animationDelay: "0.4s"
-        }}>
+          <div className="flex items-center justify-center gap-8 md:gap-12 pt-12 animate-fade-in" style={{ animationDelay: "0.4s" }}>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-heading font-bold gradient-text">100+</div>
               <div className="text-sm text-muted-foreground">Happy Clients</div>
@@ -87,6 +82,8 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default HeroSection;
