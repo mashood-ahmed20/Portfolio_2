@@ -38,6 +38,8 @@ import askStellarVideo from "@/assets/askstellar-video.mp4";
 import askStellarThumbnail from "@/assets/askstellar-thumbnail.png";
 import gridironVideo from "@/assets/gridiron-coaching-video.mp4";
 import gridironThumbnail from "@/assets/gridiron-coaching-thumbnail.png";
+import influenceaiVideo from "@/assets/influenceai-video.mp4";
+import influenceaiThumbnail from "@/assets/influenceai-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
@@ -64,6 +66,8 @@ export const videoProjects: Project[] = [
     type: "video",
     niche: "app-promos",
     orientation: "horizontal",
+    videoUrl: influenceaiVideo,
+    thumbnail: influenceaiThumbnail,
   },
   {
     id: "gridiron-coaching",

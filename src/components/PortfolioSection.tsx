@@ -7,6 +7,8 @@ import askStellarVideo from "@/assets/askstellar-video.mp4";
 import askStellarThumbnail from "@/assets/askstellar-thumbnail.png";
 import gridironVideo from "@/assets/gridiron-coaching-video.mp4";
 import gridironThumbnail from "@/assets/gridiron-coaching-thumbnail.png";
+import influenceaiVideo from "@/assets/influenceai-video.mp4";
+import influenceaiThumbnail from "@/assets/influenceai-thumbnail.png";
 
 const featuredHorizontal: Project[] = [
   {
@@ -52,6 +54,8 @@ const featuredHorizontal: Project[] = [
     tags: ["App Promo", "Social Media"],
     type: "video",
     orientation: "horizontal",
+    videoUrl: influenceaiVideo,
+    thumbnail: influenceaiThumbnail,
   },
 ];
 
