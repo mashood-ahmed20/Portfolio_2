@@ -30,7 +30,7 @@ export const videoNicheLabels: Record<VideoNiche, string> = {
   "website-promos": "Website Promos",
   "screencast": "Screencast Videos",
   "ugc": "UGC Campaigns",
-  "social-media-ads": "Social Media Ads",
+  "social-media-ads": "Promo Videos",
   "content-repurposing": "Content Repurposing",
 };
 
