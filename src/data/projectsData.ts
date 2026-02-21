@@ -60,6 +60,8 @@ import onevoiceaiVideo from "@/assets/onevoiceai-video.mp4";
 import onevoiceaiThumbnail from "@/assets/onevoiceai-thumbnail.png";
 import liivaiVideo from "@/assets/liivai-video.mp4";
 import liivaiThumbnail from "@/assets/liivai-thumbnail.png";
+import dexariVideo from "@/assets/dexari-video.mp4";
+import dexariThumbnail from "@/assets/dexari-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
@@ -116,15 +118,17 @@ export const videoProjects: Project[] = [
     thumbnail: chefshotThumbnail,
   },
   {
-    id: "fitness-app-promo",
-    title: "FitTrack Pro",
-    subtitle: "Personal Fitness Companion",
-    description: "Energetic promo for a fitness tracking application.",
-    fullDescription: "Designed an energetic and motivational promotional video for FitTrack Pro.",
-    tags: ["App Promo", "Fitness", "Health Tech"],
+    id: "dexari-promo",
+    title: "Dexari",
+    subtitle: "Smart Crypto Exchange and Marketplace",
+    description: "Dynamic app promo showcasing a smart crypto exchange and marketplace platform.",
+    fullDescription: "Created a compelling promotional video for Dexari, an innovative smart crypto exchange and marketplace platform offering freedom, power, and control over digital assets.",
+    tags: ["App Promo", "Crypto", "FinTech"],
     type: "video",
     niche: "app-promos",
     orientation: "horizontal",
+    videoUrl: dexariVideo,
+    thumbnail: dexariThumbnail,
   },
   
   // Website Promos (horizontal)
