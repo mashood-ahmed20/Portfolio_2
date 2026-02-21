@@ -52,6 +52,8 @@ import devheroaiVideo from "@/assets/devheroai-video.mp4";
 import devheroaiThumbnail from "@/assets/devheroai-thumbnail.png";
 import chefshotVideo from "@/assets/chefshot-video.mp4";
 import chefshotThumbnail from "@/assets/chefshot-thumbnail.png";
+import zeneraVideo from "@/assets/zenera-video.mp4";
+import zeneraThumbnail from "@/assets/zenera-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
@@ -245,6 +247,19 @@ export const videoProjects: Project[] = [
     orientation: "vertical",
     videoUrl: afiamVideo,
     thumbnail: afiamThumbnail,
+  },
+  {
+    id: "zenera-promo",
+    title: "Zenera",
+    subtitle: "Track Activities, Maintain Streaks, and Get Rewards",
+    description: "Engaging promo video for a habit tracking and rewards app.",
+    fullDescription: "Produced a vibrant, conversion-focused promo video for Zenera, an innovative app that helps users track daily activities, maintain streaks, and earn rewards for consistency.",
+    tags: ["Promo Video", "Productivity", "Mobile App"],
+    type: "video",
+    niche: "social-media-ads",
+    orientation: "vertical",
+    videoUrl: zeneraVideo,
+    thumbnail: zeneraThumbnail,
   },
   
   // Content Repurposing (vertical - Reels/Shorts)
