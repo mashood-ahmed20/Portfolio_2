@@ -44,6 +44,8 @@ import afiamVideo from "@/assets/afiam-video.mp4";
 import afiamThumbnail from "@/assets/afiam-thumbnail.png";
 import screenrVideo from "@/assets/screenr-video.mp4";
 import screenrThumbnail from "@/assets/screenr-thumbnail.png";
+import yeloquestVideo from "@/assets/yeloquest-video.mp4";
+import yeloquestThumbnail from "@/assets/yeloquest-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
@@ -196,15 +198,17 @@ export const videoProjects: Project[] = [
   
   // Social Media Ads (vertical - Reels/Shorts)
   {
-    id: "fashion-ad-2",
-    title: "Urban Style Co",
-    subtitle: "Fashion Brand Campaign",
-    description: "Trendy social media ad for fashion brand.",
-    fullDescription: "Created a trendy, scroll-stopping social media advertisement for Urban Style Co.",
-    tags: ["Social Ad", "Fashion", "D2C"],
+    id: "yeloquest-promo",
+    title: "Yelo Quest",
+    subtitle: "Scale Social Media with Smart Ads",
+    description: "Engaging promo video for an AI-powered social media advertising platform.",
+    fullDescription: "Produced a dynamic, conversion-focused promo video for Yelo Quest, an innovative platform that helps brands scale their social media presence with smart, targeted ads.",
+    tags: ["Promo Video", "Social Media", "Advertising"],
     type: "video",
     niche: "social-media-ads",
     orientation: "vertical",
+    videoUrl: yeloquestVideo,
+    thumbnail: yeloquestThumbnail,
   },
   {
     id: "fashion-ad",
