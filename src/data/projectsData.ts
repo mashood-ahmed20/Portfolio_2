@@ -54,6 +54,8 @@ import chefshotVideo from "@/assets/chefshot-video.mp4";
 import chefshotThumbnail from "@/assets/chefshot-thumbnail.png";
 import zeneraVideo from "@/assets/zenera-video.mp4";
 import zeneraThumbnail from "@/assets/zenera-thumbnail.png";
+import tmeVideo from "@/assets/tme-video.mp4";
+import tmeThumbnail from "@/assets/tme-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
@@ -136,15 +138,17 @@ export const videoProjects: Project[] = [
     thumbnail: screenrThumbnail,
   },
   {
-    id: "astrolabe-promo",
-    title: "Astrolabe Platform",
-    subtitle: "All-in-one Seafarer Platform",
-    description: "Professional website promo for maritime platform.",
-    fullDescription: "Crafted a professional promotional video for Astrolabe, a comprehensive maritime platform for seafarers.",
-    tags: ["Website Promo", "Maritime", "B2B"],
+    id: "tme-promo",
+    title: "The Muslim Expert (TME)",
+    subtitle: "Platform for Guidance, Connections, and Contributions for Muslims",
+    description: "Professional website promo for a platform connecting Muslim scholars, professionals, and creators.",
+    fullDescription: "Crafted a professional promotional video for The Muslim Expert (TME), an innovative platform that connects users with verified Muslim scholars, professionals, and creators for guidance, consultations, and community contributions.",
+    tags: ["Website Promo", "Community", "Platform"],
     type: "video",
     niche: "website-promos",
     orientation: "horizontal",
+    videoUrl: tmeVideo,
+    thumbnail: tmeThumbnail,
   },
   {
     id: "ecommerce-promo",

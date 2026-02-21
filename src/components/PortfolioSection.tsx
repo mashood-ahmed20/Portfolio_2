@@ -9,8 +9,8 @@ import gridironVideo from "@/assets/gridiron-coaching-video.mp4";
 import gridironThumbnail from "@/assets/gridiron-coaching-thumbnail.png";
 import influenceaiVideo from "@/assets/influenceai-video.mp4";
 import influenceaiThumbnail from "@/assets/influenceai-thumbnail.png";
-import chefshotVideo from "@/assets/chefshot-video.mp4";
-import chefshotThumbnail from "@/assets/chefshot-thumbnail.png";
+import tmeVideo from "@/assets/tme-video.mp4";
+import tmeThumbnail from "@/assets/tme-thumbnail.png";
 
 const featuredHorizontal: Project[] = [
   {
@@ -26,16 +26,16 @@ const featuredHorizontal: Project[] = [
     thumbnail: askStellarThumbnail,
   },
   {
-    id: "chefshot-feat",
-    title: "ChefShot Ai Pro",
-    subtitle: "AI Food Photography",
+    id: "tme-feat",
+    title: "The Muslim Expert (TME)",
+    subtitle: "Guidance, Connections & Contributions",
     description: "",
     fullDescription: "",
-    tags: ["App Promo", "AI"],
+    tags: ["Website Promo", "Community"],
     type: "video",
     orientation: "horizontal",
-    videoUrl: chefshotVideo,
-    thumbnail: chefshotThumbnail,
+    videoUrl: tmeVideo,
+    thumbnail: tmeThumbnail,
   },
   {
     id: "gridiron-feat",
