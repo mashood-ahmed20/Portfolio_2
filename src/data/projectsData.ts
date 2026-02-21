@@ -42,6 +42,8 @@ import influenceaiVideo from "@/assets/influenceai-video.mp4";
 import influenceaiThumbnail from "@/assets/influenceai-thumbnail.png";
 import afiamVideo from "@/assets/afiam-video.mp4";
 import afiamThumbnail from "@/assets/afiam-thumbnail.png";
+import screenrVideo from "@/assets/screenr-video.mp4";
+import screenrThumbnail from "@/assets/screenr-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
@@ -108,6 +110,19 @@ export const videoProjects: Project[] = [
   },
   
   // Website Promos (horizontal)
+  {
+    id: "screenr-promo",
+    title: "Screenr",
+    subtitle: "Hire Smarter, Faster, and Better with AI",
+    description: "Professional website promo for an AI-powered hiring platform.",
+    fullDescription: "Produced a sleek, professional promotional video for Screenr, an innovative AI-powered recruitment platform that helps companies hire smarter, faster, and better.",
+    tags: ["Website Promo", "AI", "Recruitment"],
+    type: "video",
+    niche: "website-promos",
+    orientation: "horizontal",
+    videoUrl: screenrVideo,
+    thumbnail: screenrThumbnail,
+  },
   {
     id: "astrolabe-promo",
     title: "Astrolabe Platform",
@@ -181,12 +196,12 @@ export const videoProjects: Project[] = [
   
   // Social Media Ads (vertical - Reels/Shorts)
   {
-    id: "armsai-ad",
-    title: "ArmsAI",
-    subtitle: "Risk Assessment Agent",
-    description: "Futuristic social ad for AI risk platform.",
-    fullDescription: "Designed a futuristic, attention-grabbing social media advertisement for ArmsAI.",
-    tags: ["Social Ad", "AI", "B2B"],
+    id: "fashion-ad-2",
+    title: "Urban Style Co",
+    subtitle: "Fashion Brand Campaign",
+    description: "Trendy social media ad for fashion brand.",
+    fullDescription: "Created a trendy, scroll-stopping social media advertisement for Urban Style Co.",
+    tags: ["Social Ad", "Fashion", "D2C"],
     type: "video",
     niche: "social-media-ads",
     orientation: "vertical",
