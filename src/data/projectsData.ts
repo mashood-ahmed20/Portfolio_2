@@ -48,6 +48,8 @@ import yeloquestVideo from "@/assets/yeloquest-video.mp4";
 import yeloquestThumbnail from "@/assets/yeloquest-thumbnail.png";
 import prepcartVideo from "@/assets/prepcart-video.mp4";
 import prepcartThumbnail from "@/assets/prepcart-thumbnail.png";
+import devheroaiVideo from "@/assets/devheroai-video.mp4";
+import devheroaiThumbnail from "@/assets/devheroai-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
@@ -152,15 +154,17 @@ export const videoProjects: Project[] = [
   
   // Screencast Videos (horizontal)
   {
-    id: "askstellar-screencast",
-    title: "AskStellarAi Tutorial",
-    subtitle: "Platform Walkthrough",
-    description: "Comprehensive screencast tutorial for AI platform.",
-    fullDescription: "Produced a detailed screencast tutorial for AskStellarAi.",
-    tags: ["Screencast", "Tutorial", "AI Platform"],
+    id: "devheroai-screencast",
+    title: "DevHero AI",
+    subtitle: "Create a Perfect Working Website Using Chatbots",
+    description: "Comprehensive screencast showcasing AI-powered website creation with chatbots.",
+    fullDescription: "Produced a detailed screencast for DevHero AI, an innovative platform that enables users to create perfect, fully functional websites using intelligent chatbots.",
+    tags: ["Screencast", "AI", "Web Development"],
     type: "video",
     niche: "screencast",
     orientation: "horizontal",
+    videoUrl: devheroaiVideo,
+    thumbnail: devheroaiThumbnail,
   },
   {
     id: "saas-demo",
