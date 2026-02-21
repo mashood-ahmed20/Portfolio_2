@@ -46,6 +46,8 @@ import screenrVideo from "@/assets/screenr-video.mp4";
 import screenrThumbnail from "@/assets/screenr-thumbnail.png";
 import yeloquestVideo from "@/assets/yeloquest-video.mp4";
 import yeloquestThumbnail from "@/assets/yeloquest-thumbnail.png";
+import prepcartVideo from "@/assets/prepcart-video.mp4";
+import prepcartThumbnail from "@/assets/prepcart-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
@@ -211,15 +213,17 @@ export const videoProjects: Project[] = [
     thumbnail: yeloquestThumbnail,
   },
   {
-    id: "fashion-ad",
-    title: "Urban Style Co",
-    subtitle: "Fashion Brand Campaign",
-    description: "Trendy social media ad for fashion brand.",
-    fullDescription: "Created a trendy, scroll-stopping social media advertisement for Urban Style Co.",
-    tags: ["Social Ad", "Fashion", "D2C"],
+    id: "prepcart-promo",
+    title: "Prep Cart",
+    subtitle: "Instant Cook Books Using Trending TikTok Recipes",
+    description: "Engaging promo video for an app that turns viral TikTok recipes into instant cook books.",
+    fullDescription: "Produced a vibrant, conversion-focused promo video for Prep Cart, an innovative app that transforms trending TikTok recipes into easy-to-follow cook books with just one click.",
+    tags: ["Promo Video", "Food Tech", "Mobile App"],
     type: "video",
     niche: "social-media-ads",
     orientation: "vertical",
+    videoUrl: prepcartVideo,
+    thumbnail: prepcartThumbnail,
   },
   {
     id: "afiam-promo",
