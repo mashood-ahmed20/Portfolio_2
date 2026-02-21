@@ -58,6 +58,8 @@ import tmeVideo from "@/assets/tme-video.mp4";
 import tmeThumbnail from "@/assets/tme-thumbnail.png";
 import onevoiceaiVideo from "@/assets/onevoiceai-video.mp4";
 import onevoiceaiThumbnail from "@/assets/onevoiceai-thumbnail.png";
+import liivaiVideo from "@/assets/liivai-video.mp4";
+import liivaiThumbnail from "@/assets/liivai-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
@@ -153,15 +155,17 @@ export const videoProjects: Project[] = [
     thumbnail: tmeThumbnail,
   },
   {
-    id: "ecommerce-promo",
-    title: "ShopFlow",
-    subtitle: "Modern E-commerce Platform",
-    description: "Sleek website promo showcasing e-commerce features.",
-    fullDescription: "Created a sleek promotional video for ShopFlow, a modern e-commerce platform.",
-    tags: ["Website Promo", "E-commerce", "SaaS"],
+    id: "liivai-promo",
+    title: "Liiv Ai",
+    subtitle: "Automate Document Workflows in Just Minutes",
+    description: "Professional website promo for an AI-powered document automation platform.",
+    fullDescription: "Crafted a professional promotional video for Liiv Ai, an innovative platform that automates document workflows in just minutes, saving teams days and weeks per case.",
+    tags: ["Website Promo", "AI", "Automation"],
     type: "video",
     niche: "website-promos",
     orientation: "horizontal",
+    videoUrl: liivaiVideo,
+    thumbnail: liivaiThumbnail,
   },
   
   // Screencast Videos (horizontal)
