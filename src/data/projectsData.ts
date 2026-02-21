@@ -40,6 +40,8 @@ import gridironVideo from "@/assets/gridiron-coaching-video.mp4";
 import gridironThumbnail from "@/assets/gridiron-coaching-thumbnail.png";
 import influenceaiVideo from "@/assets/influenceai-video.mp4";
 import influenceaiThumbnail from "@/assets/influenceai-thumbnail.png";
+import afiamVideo from "@/assets/afiam-video.mp4";
+import afiamThumbnail from "@/assets/afiam-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
@@ -199,6 +201,19 @@ export const videoProjects: Project[] = [
     type: "video",
     niche: "social-media-ads",
     orientation: "vertical",
+  },
+  {
+    id: "afiam-promo",
+    title: "Afiam",
+    subtitle: "Smart Way to Run a Business",
+    description: "Engaging promo video for an all-in-one business management app.",
+    fullDescription: "Produced a sleek, conversion-focused promo video for Afiam, an innovative business management platform that puts your business in your hands.",
+    tags: ["Promo Video", "Business", "Mobile App"],
+    type: "video",
+    niche: "social-media-ads",
+    orientation: "vertical",
+    videoUrl: afiamVideo,
+    thumbnail: afiamThumbnail,
   },
   
   // Content Repurposing (vertical - Reels/Shorts)
