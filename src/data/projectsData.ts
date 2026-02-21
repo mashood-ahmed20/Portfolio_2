@@ -66,19 +66,6 @@ import dexariThumbnail from "@/assets/dexari-thumbnail.png";
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
   {
-    id: "askstellar-promo",
-    title: "AskStellarAi",
-    subtitle: "Personal Health Insurance Assistant",
-    description: "Dynamic app promo showcasing AI-powered health insurance guidance.",
-    fullDescription: "Created a compelling promotional video for AskStellarAi, an innovative AI-powered health insurance guidance platform.",
-    tags: ["App Promo", "AI Platform", "Motion Graphics"],
-    type: "video",
-    niche: "app-promos",
-    orientation: "horizontal",
-    videoUrl: askStellarVideo,
-    thumbnail: askStellarThumbnail,
-  },
-  {
     id: "influenceai-promo",
     title: "InfluenceAI",
     subtitle: "AI Growth Partner for Instagram",
@@ -170,6 +157,19 @@ export const videoProjects: Project[] = [
     orientation: "horizontal",
     videoUrl: liivaiVideo,
     thumbnail: liivaiThumbnail,
+  },
+  {
+    id: "askstellar-promo",
+    title: "AskStellarAi",
+    subtitle: "Personal Health Insurance Assistant",
+    description: "Professional website promo showcasing AI-powered health insurance guidance.",
+    fullDescription: "Created a compelling promotional video for AskStellarAi, an innovative AI-powered health insurance guidance platform.",
+    tags: ["Website Promo", "AI Platform", "Motion Graphics"],
+    type: "video",
+    niche: "website-promos",
+    orientation: "horizontal",
+    videoUrl: askStellarVideo,
+    thumbnail: askStellarThumbnail,
   },
   
   // Screencast Videos (horizontal)
