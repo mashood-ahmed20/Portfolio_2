@@ -4,9 +4,9 @@ import { Menu, X } from "lucide-react";
 import PortfolioDropdown from "@/components/PortfolioDropdown";
 
 const navLinks = [
-  { name: "About", href: "#about" },
-  { name: "Services", href: "#services" },
-  { name: "Contact", href: "#contact" },
+  { name: "About", href: "/#about" },
+  { name: "Services", href: "/#services" },
+  { name: "Contact", href: "/#contact" },
 ];
 
 const Navbar = () => {
@@ -42,7 +42,7 @@ const Navbar = () => {
       >
         <div className="container mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
-            <a href="#home" className="font-heading font-bold text-xl md:text-2xl">
+            <a href="/" className="font-heading font-bold text-xl md:text-2xl">
               <span className="gradient-text">Mashood</span>
               <span className="text-foreground">.</span>
             </a>
@@ -60,7 +60,7 @@ const Navbar = () => {
               ))}
               <PortfolioDropdown />
               <Button variant="hero" size="sm" asChild>
-                <a href="#contact">Hire Me</a>
+                <a href="/#contact">Hire Me</a>
               </Button>
             </div>
 
@@ -89,7 +89,7 @@ const Navbar = () => {
           <div className="space-y-2">
             {/* About */}
             <a
-              href="#about"
+              href="/#about"
               className={`block text-2xl font-heading font-semibold text-foreground/80 hover:text-foreground py-3 transition-all duration-300 ${
                 isMobileMenuOpen ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"
               }`}
@@ -111,7 +111,7 @@ const Navbar = () => {
 
             {/* Services */}
             <a
-              href="#services"
+              href="/#services"
               className={`block text-2xl font-heading font-semibold text-foreground/80 hover:text-foreground py-3 transition-all duration-300 ${
                 isMobileMenuOpen ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"
               }`}
@@ -123,7 +123,7 @@ const Navbar = () => {
 
             {/* Contact */}
             <a
-              href="#contact"
+              href="/#contact"
               className={`block text-2xl font-heading font-semibold text-foreground/80 hover:text-foreground py-3 transition-all duration-300 ${
                 isMobileMenuOpen ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"
               }`}
@@ -141,7 +141,7 @@ const Navbar = () => {
             style={{ transitionDelay: isMobileMenuOpen ? "350ms" : "0ms" }}
           >
             <Button variant="hero" size="lg" className="w-full" asChild>
-              <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
+              <a href="/#contact" onClick={() => setIsMobileMenuOpen(false)}>
                 Hire Me
               </a>
             </Button>

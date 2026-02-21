@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { Play, Code, ExternalLink } from "lucide-react";
+import { Play, Code, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -17,6 +17,51 @@ import ProjectVideoCard from "@/components/ProjectVideoCard";
 const verticalNiches: VideoNiche[] = ["ugc", "social-media-ads", "content-repurposing"];
 const horizontalNiches: VideoNiche[] = ["app-promos", "website-promos", "screencast"];
 
+const MobileScrollWrapper = ({ children, isVertical }: { children: React.ReactNode; isVertical: boolean }) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = useCallback((direction: "left" | "right") => {
+    if (!scrollRef.current) return;
+    const cardWidth = isVertical ? 196 : scrollRef.current.clientWidth * 0.85;
+    scrollRef.current.scrollBy({
+      left: direction === "left" ? -cardWidth : cardWidth,
+      behavior: "smooth",
+    });
+  }, [isVertical]);
+
+  if (!isVertical) return <>{children}</>;
+
+  return (
+    <div className="relative group/slider">
+      {/* Left arrow - mobile only */}
+      <button
+        onClick={() => scroll("left")}
+        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-background/90 border border-border/60 flex items-center justify-center md:hidden shadow-lg backdrop-blur-sm hover:bg-primary hover:border-primary hover:text-primary-foreground transition-all duration-200"
+        aria-label="Scroll left"
+      >
+        <ChevronLeft className="w-4 h-4" />
+      </button>
+
+      {/* Right arrow - mobile only */}
+      <button
+        onClick={() => scroll("right")}
+        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-background/90 border border-border/60 flex items-center justify-center md:hidden shadow-lg backdrop-blur-sm hover:bg-primary hover:border-primary hover:text-primary-foreground transition-all duration-200"
+        aria-label="Scroll right"
+      >
+        <ChevronRight className="w-4 h-4" />
+      </button>
+
+      <div
+        ref={scrollRef}
+        className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 md:overflow-visible md:pb-0 px-6 md:px-0"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+};
+
 const NicheSection = ({ niche, projects }: { niche: VideoNiche; projects: Project[] }) => {
   const isVertical = projects[0]?.orientation === "vertical";
 
@@ -29,15 +74,15 @@ const NicheSection = ({ niche, projects }: { niche: VideoNiche; projects: Projec
         </span>
       </h4>
       {isVertical ? (
-        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 md:overflow-visible md:pb-0">
+        <MobileScrollWrapper isVertical>
           {projects.map((project) => (
             <div key={project.id} className="min-w-[180px] snap-start md:min-w-0">
               <ProjectVideoCard project={project} />
             </div>
           ))}
-        </div>
+        </MobileScrollWrapper>
       ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {projects.map((project) => (
             <ProjectVideoCard key={project.id} project={project} />
           ))}
@@ -52,7 +97,6 @@ const Portfolio = () => {
   const getProjectsByNiche = (niche: VideoNiche) =>
     videoProjects.filter(p => p.niche === niche);
 
-  // Scroll to top on mount, or to niche section if ?scroll= param exists
   useEffect(() => {
     const scrollTarget = searchParams.get("scroll");
     if (scrollTarget) {
@@ -135,7 +179,7 @@ const Portfolio = () => {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {softwareProjects.map((project) => (
               <div
                 key={project.id}
@@ -171,9 +215,9 @@ const Portfolio = () => {
         <div className="text-center mt-16">
           <p className="text-muted-foreground mb-4">Interested in working together?</p>
           <Button variant="heroOutline" size="lg" asChild>
-            <Link to="/#contact">
+            <a href="/#contact">
               Get In Touch
-            </Link>
+            </a>
           </Button>
         </div>
       </main>
