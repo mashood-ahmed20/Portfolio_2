@@ -50,6 +50,8 @@ import prepcartVideo from "@/assets/prepcart-video.mp4";
 import prepcartThumbnail from "@/assets/prepcart-thumbnail.png";
 import devheroaiVideo from "@/assets/devheroai-video.mp4";
 import devheroaiThumbnail from "@/assets/devheroai-thumbnail.png";
+import chefshotVideo from "@/assets/chefshot-video.mp4";
+import chefshotThumbnail from "@/assets/chefshot-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
@@ -102,6 +104,8 @@ export const videoProjects: Project[] = [
     type: "video",
     niche: "app-promos",
     orientation: "horizontal",
+    videoUrl: chefshotVideo,
+    thumbnail: chefshotThumbnail,
   },
   {
     id: "fitness-app-promo",

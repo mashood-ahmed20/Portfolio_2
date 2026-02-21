@@ -9,6 +9,8 @@ import gridironVideo from "@/assets/gridiron-coaching-video.mp4";
 import gridironThumbnail from "@/assets/gridiron-coaching-thumbnail.png";
 import influenceaiVideo from "@/assets/influenceai-video.mp4";
 import influenceaiThumbnail from "@/assets/influenceai-thumbnail.png";
+import chefshotVideo from "@/assets/chefshot-video.mp4";
+import chefshotThumbnail from "@/assets/chefshot-thumbnail.png";
 
 const featuredHorizontal: Project[] = [
   {
@@ -32,6 +34,8 @@ const featuredHorizontal: Project[] = [
     tags: ["App Promo", "AI"],
     type: "video",
     orientation: "horizontal",
+    videoUrl: chefshotVideo,
+    thumbnail: chefshotThumbnail,
   },
   {
     id: "gridiron-feat",
