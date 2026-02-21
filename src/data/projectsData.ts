@@ -56,6 +56,8 @@ import zeneraVideo from "@/assets/zenera-video.mp4";
 import zeneraThumbnail from "@/assets/zenera-thumbnail.png";
 import tmeVideo from "@/assets/tme-video.mp4";
 import tmeThumbnail from "@/assets/tme-thumbnail.png";
+import onevoiceaiVideo from "@/assets/onevoiceai-video.mp4";
+import onevoiceaiThumbnail from "@/assets/onevoiceai-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
@@ -177,15 +179,17 @@ export const videoProjects: Project[] = [
     thumbnail: devheroaiThumbnail,
   },
   {
-    id: "saas-demo",
-    title: "ProjectHub Demo",
-    subtitle: "Project Management Walkthrough",
-    description: "In-depth demo of project management software.",
-    fullDescription: "Created an in-depth screencast demonstration of ProjectHub.",
-    tags: ["Screencast", "Demo", "SaaS"],
+    id: "onevoiceai-screencast",
+    title: "One Voice AI",
+    subtitle: "Create Real-Like Voiceovers Using Popular Voice Models",
+    description: "Comprehensive screencast showcasing AI-powered voiceover creation with popular voice models.",
+    fullDescription: "Produced a detailed screencast for One Voice AI, an innovative platform that enables users to create realistic voiceovers using popular voice models with just a few clicks.",
+    tags: ["Screencast", "AI", "Voice Tech"],
     type: "video",
     niche: "screencast",
     orientation: "horizontal",
+    videoUrl: onevoiceaiVideo,
+    thumbnail: onevoiceaiThumbnail,
   },
   
   // UGC Videos (vertical - Reels/Shorts)

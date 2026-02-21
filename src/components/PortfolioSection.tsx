@@ -11,6 +11,8 @@ import influenceaiVideo from "@/assets/influenceai-video.mp4";
 import influenceaiThumbnail from "@/assets/influenceai-thumbnail.png";
 import tmeVideo from "@/assets/tme-video.mp4";
 import tmeThumbnail from "@/assets/tme-thumbnail.png";
+import onevoiceaiVideo from "@/assets/onevoiceai-video.mp4";
+import onevoiceaiThumbnail from "@/assets/onevoiceai-thumbnail.png";
 
 const featuredHorizontal: Project[] = [
   {
@@ -50,16 +52,16 @@ const featuredHorizontal: Project[] = [
     thumbnail: gridironThumbnail,
   },
   {
-    id: "influenceai-feat",
-    title: "InfluenceAI",
-    subtitle: "AI Growth Partner for Instagram",
+    id: "onevoiceai-feat",
+    title: "One Voice AI",
+    subtitle: "AI-Powered Voiceovers",
     description: "",
     fullDescription: "",
-    tags: ["App Promo", "Social Media"],
+    tags: ["Screencast", "AI"],
     type: "video",
     orientation: "horizontal",
-    videoUrl: influenceaiVideo,
-    thumbnail: influenceaiThumbnail,
+    videoUrl: onevoiceaiVideo,
+    thumbnail: onevoiceaiThumbnail,
   },
 ];
 
