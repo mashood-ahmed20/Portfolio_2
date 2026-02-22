@@ -66,6 +66,8 @@ import thereappVideo from "@/assets/thereapp-video.mp4";
 import thereappThumbnail from "@/assets/thereapp-thumbnail.png";
 import businessScalingVideo from "@/assets/business-scaling-video.mp4";
 import businessScalingThumbnail from "@/assets/business-scaling-thumbnail.png";
+import mizwajVideo from "@/assets/mizwaj-video.mp4";
+import mizwajThumbnail from "@/assets/mizwaj-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
@@ -219,15 +221,17 @@ export const videoProjects: Project[] = [
   
   // UGC Videos (vertical - Reels/Shorts)
   {
-    id: "skincare-ugc",
-    title: "GlowUp Skincare",
-    subtitle: "Product Review Style",
-    description: "Authentic UGC-style video for skincare brand.",
-    fullDescription: "Produced an authentic user-generated content style video for GlowUp Skincare.",
-    tags: ["UGC", "Skincare", "D2C"],
+    id: "mizwaj-ugc",
+    title: "Mizwaj App Campaign",
+    subtitle: "App Review and Promotion",
+    description: "Engaging UGC-style app review and promotion video for the Mizwaj dating app.",
+    fullDescription: "Produced an authentic user-generated content style review and promotion video for Mizwaj, a modern dating app connecting users with meaningful relationships.",
+    tags: ["UGC", "App Review", "Dating App"],
     type: "video",
     niche: "ugc",
     orientation: "vertical",
+    videoUrl: mizwajVideo,
+    thumbnail: mizwajThumbnail,
   },
   {
     id: "tech-ugc",
