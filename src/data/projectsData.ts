@@ -62,6 +62,8 @@ import liivaiVideo from "@/assets/liivai-video.mp4";
 import liivaiThumbnail from "@/assets/liivai-thumbnail.png";
 import dexariVideo from "@/assets/dexari-video.mp4";
 import dexariThumbnail from "@/assets/dexari-thumbnail.png";
+import thereappVideo from "@/assets/thereapp-video.mp4";
+import thereappThumbnail from "@/assets/thereapp-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
@@ -116,6 +118,19 @@ export const videoProjects: Project[] = [
     orientation: "horizontal",
     videoUrl: dexariVideo,
     thumbnail: dexariThumbnail,
+  },
+  {
+    id: "thereapp-promo",
+    title: "There.App",
+    subtitle: "Event Operations on a Unified Mobile-First Platform",
+    description: "Dynamic app promo showcasing a unified mobile-first platform for event operations.",
+    fullDescription: "Created a compelling promotional video for There.App, an innovative platform that consolidates event operations needs into a unified mobile-first experience for seamless event management.",
+    tags: ["App Promo", "Events", "Mobile Platform"],
+    type: "video",
+    niche: "app-promos",
+    orientation: "horizontal",
+    videoUrl: thereappVideo,
+    thumbnail: thereappThumbnail,
   },
   
   // Website Promos (horizontal)
