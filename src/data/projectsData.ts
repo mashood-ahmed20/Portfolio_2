@@ -64,6 +64,8 @@ import dexariVideo from "@/assets/dexari-video.mp4";
 import dexariThumbnail from "@/assets/dexari-thumbnail.png";
 import thereappVideo from "@/assets/thereapp-video.mp4";
 import thereappThumbnail from "@/assets/thereapp-thumbnail.png";
+import businessScalingVideo from "@/assets/business-scaling-video.mp4";
+import businessScalingThumbnail from "@/assets/business-scaling-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
@@ -295,15 +297,17 @@ export const videoProjects: Project[] = [
   
   // Content Repurposing (vertical - Reels/Shorts)
   {
-    id: "podcast-clips",
-    title: "Tech Talk Podcast",
-    subtitle: "Long-form to Short-form",
-    description: "Repurposed podcast content for social media.",
-    fullDescription: "Transformed long-form podcast content into engaging short-form clips for social media.",
-    tags: ["Content Repurposing", "Podcast", "Social Media"],
+    id: "business-scaling-tips",
+    title: "Business Scaling Tips",
+    subtitle: "How to Scale an Airbnb Business",
+    description: "Repurposed long-form content into a punchy vertical short on scaling an Airbnb business.",
+    fullDescription: "Transformed long-form business content into an engaging short-form vertical video packed with actionable tips on how to start and scale an Airbnb business.",
+    tags: ["Content Repurposing", "Business", "Short-form"],
     type: "video",
     niche: "content-repurposing",
     orientation: "vertical",
+    videoUrl: businessScalingVideo,
+    thumbnail: businessScalingThumbnail,
   },
   {
     id: "webinar-shorts",
