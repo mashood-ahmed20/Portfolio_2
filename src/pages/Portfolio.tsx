@@ -36,7 +36,7 @@ const MobileScrollWrapper = ({ children, isVertical }: { children: React.ReactNo
       {/* Left arrow - mobile only */}
       <button
         onClick={() => scroll("left")}
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-background/90 border border-border/60 flex items-center justify-center md:hidden shadow-lg backdrop-blur-sm hover:bg-primary hover:border-primary hover:text-primary-foreground transition-all duration-200"
+        className="absolute -left-1 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-background/95 border border-border/60 flex items-center justify-center md:hidden shadow-lg backdrop-blur-sm hover:bg-primary hover:border-primary hover:text-primary-foreground transition-all duration-200"
         aria-label="Scroll left"
       >
         <ChevronLeft className="w-4 h-4" />
@@ -45,7 +45,7 @@ const MobileScrollWrapper = ({ children, isVertical }: { children: React.ReactNo
       {/* Right arrow - mobile only */}
       <button
         onClick={() => scroll("right")}
-        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-background/90 border border-border/60 flex items-center justify-center md:hidden shadow-lg backdrop-blur-sm hover:bg-primary hover:border-primary hover:text-primary-foreground transition-all duration-200"
+        className="absolute -right-1 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-background/95 border border-border/60 flex items-center justify-center md:hidden shadow-lg backdrop-blur-sm hover:bg-primary hover:border-primary hover:text-primary-foreground transition-all duration-200"
         aria-label="Scroll right"
       >
         <ChevronRight className="w-4 h-4" />
@@ -53,7 +53,7 @@ const MobileScrollWrapper = ({ children, isVertical }: { children: React.ReactNo
 
       <div
         ref={scrollRef}
-        className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 md:overflow-visible md:pb-0 px-6 md:px-0"
+        className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 md:overflow-visible md:pb-0 px-2 md:px-0"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {children}

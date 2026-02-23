@@ -62,7 +62,7 @@ const PortfolioDropdown = ({ mobile = false, onNavigate }: PortfolioDropdownProp
       <div className="w-full">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center justify-between w-full text-2xl font-heading font-semibold text-foreground/80 hover:text-foreground transition-colors duration-200 py-3"
+          className="flex items-center justify-center gap-2 w-full text-3xl font-heading font-bold text-foreground/90 hover:text-primary transition-colors duration-200 py-4"
         >
           <span>Portfolio</span>
           <ChevronDown
@@ -74,14 +74,14 @@ const PortfolioDropdown = ({ mobile = false, onNavigate }: PortfolioDropdownProp
             isOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <div className="pl-4 py-2 space-y-1 border-l border-border/50">
+          <div className="py-2 space-y-1">
             {categories.map((cat) => {
               const Icon = cat.icon;
               return (
                 <button
                   key={cat.niche}
                   onClick={() => handleCategoryClick(cat.niche)}
-                  className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-all duration-200"
+                  className="flex items-center justify-center gap-2 w-full px-3 py-2.5 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-all duration-200"
                 >
                   <Icon className="w-4 h-4 text-primary/70" />
                   {cat.label}

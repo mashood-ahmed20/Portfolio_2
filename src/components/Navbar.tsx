@@ -84,14 +84,14 @@ const Navbar = () => {
             : "opacity-0 pointer-events-none"
         }`}
       >
-        <div className="h-16" /> {/* Spacer for navbar height */}
-        <div className="flex-1 flex flex-col justify-center px-8 pb-20">
-          <div className="space-y-2">
+      <div className="h-20" /> {/* Spacer for navbar height */}
+        <div className="flex-1 flex flex-col justify-center items-center px-6 pb-16">
+          <nav className="w-full max-w-xs space-y-1 text-center">
             {/* About */}
             <a
               href="/#about"
-              className={`block text-2xl font-heading font-semibold text-foreground/80 hover:text-foreground py-3 transition-all duration-300 ${
-                isMobileMenuOpen ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"
+              className={`block text-3xl font-heading font-bold text-foreground/90 hover:text-primary py-4 transition-all duration-300 ${
+                isMobileMenuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
               }`}
               style={{ transitionDelay: isMobileMenuOpen ? "100ms" : "0ms" }}
               onClick={() => setIsMobileMenuOpen(false)}
@@ -102,7 +102,7 @@ const Navbar = () => {
             {/* Portfolio Dropdown */}
             <div
               className={`transition-all duration-300 ${
-                isMobileMenuOpen ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"
+                isMobileMenuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
               }`}
               style={{ transitionDelay: isMobileMenuOpen ? "150ms" : "0ms" }}
             >
@@ -112,8 +112,8 @@ const Navbar = () => {
             {/* Services */}
             <a
               href="/#services"
-              className={`block text-2xl font-heading font-semibold text-foreground/80 hover:text-foreground py-3 transition-all duration-300 ${
-                isMobileMenuOpen ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"
+              className={`block text-3xl font-heading font-bold text-foreground/90 hover:text-primary py-4 transition-all duration-300 ${
+                isMobileMenuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
               }`}
               style={{ transitionDelay: isMobileMenuOpen ? "200ms" : "0ms" }}
               onClick={() => setIsMobileMenuOpen(false)}
@@ -124,18 +124,18 @@ const Navbar = () => {
             {/* Contact */}
             <a
               href="/#contact"
-              className={`block text-2xl font-heading font-semibold text-foreground/80 hover:text-foreground py-3 transition-all duration-300 ${
-                isMobileMenuOpen ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"
+              className={`block text-3xl font-heading font-bold text-foreground/90 hover:text-primary py-4 transition-all duration-300 ${
+                isMobileMenuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
               }`}
               style={{ transitionDelay: isMobileMenuOpen ? "250ms" : "0ms" }}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Contact
             </a>
-          </div>
+          </nav>
 
           <div
-            className={`mt-10 transition-all duration-300 ${
+            className={`mt-10 w-full max-w-xs transition-all duration-300 ${
               isMobileMenuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
             }`}
             style={{ transitionDelay: isMobileMenuOpen ? "350ms" : "0ms" }}
