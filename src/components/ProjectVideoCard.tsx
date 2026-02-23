@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Play, Pause, Maximize, Minimize, Volume2, VolumeX } from "lucide-react";
 import { Project } from "@/data/projectsData";
+import { useVideoPlayer } from "@/contexts/VideoPlayerContext";
 
 interface ProjectVideoCardProps {
   project: Project;
@@ -13,6 +14,7 @@ const formatTime = (seconds: number) => {
 };
 
 const ProjectVideoCard = ({ project }: ProjectVideoCardProps) => {
+  const { registerPlay, unregister } = useVideoPlayer();
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
@@ -99,6 +101,11 @@ const ProjectVideoCard = ({ project }: ProjectVideoCardProps) => {
     }, 3000);
   }, [isSeeking]);
 
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => unregister(project.id);
+  }, [project.id, unregister]);
+
   const togglePlay = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     if (!project.videoUrl || !videoRef.current) return;
@@ -107,12 +114,18 @@ const ProjectVideoCard = ({ project }: ProjectVideoCardProps) => {
       setIsPlaying(false);
       setShowControls(true);
     } else {
+      // Register this video — will auto-pause any other playing video
+      registerPlay(project.id, () => {
+        videoRef.current?.pause();
+        setIsPlaying(false);
+        setShowControls(false);
+      });
       setShowPoster(false);
       videoRef.current.play();
       setIsPlaying(true);
       resetHideTimer();
     }
-  }, [isPlaying, project.videoUrl, resetHideTimer]);
+  }, [isPlaying, project.videoUrl, project.id, resetHideTimer, registerPlay]);
 
   const toggleMute = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();

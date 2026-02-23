@@ -76,7 +76,7 @@ const NicheSection = ({ niche, projects }: { niche: VideoNiche; projects: Projec
       {isVertical ? (
         <MobileScrollWrapper isVertical>
           {projects.map((project) => (
-            <div key={project.id} className="min-w-[180px] snap-start md:min-w-0">
+            <div key={project.id} className="w-[170px] flex-shrink-0 snap-start md:w-auto md:flex-shrink">
               <ProjectVideoCard project={project} />
             </div>
           ))}
