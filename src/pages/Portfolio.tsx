@@ -1,59 +1,72 @@
 import { useEffect, useRef, useCallback } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { Play, Code, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
-import { 
-  videoProjects, 
-  softwareProjects, 
-  videoNicheLabels, 
-  VideoNiche, 
-  Project 
+import { useScrollReveal } from "@/hooks/useScrollReveal";
+import {
+  videoProjects,
+  softwareProjects,
+  videoNicheLabels,
+  VideoNiche,
+  Project,
 } from "@/data/projectsData";
 import ProjectVideoCard from "@/components/ProjectVideoCard";
 
 const verticalNiches: VideoNiche[] = ["ugc", "social-media-ads", "content-repurposing"];
 const horizontalNiches: VideoNiche[] = ["app-promos", "website-promos", "screencast"];
 
+/* ─── Scroll Reveal wrapper ─── */
+const RevealSection = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
+  const { ref, isVisible } = useScrollReveal(0.08);
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-700 ease-out ${className}`}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translateY(0)" : "translateY(30px)",
+        transitionDelay: `${delay}ms`,
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+
+/* ─── Mobile horizontal slider ─── */
 const MobileScrollWrapper = ({ children, isVertical }: { children: React.ReactNode; isVertical: boolean }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = useCallback((direction: "left" | "right") => {
     if (!scrollRef.current) return;
-    const cardWidth = isVertical ? 196 : scrollRef.current.clientWidth * 0.85;
-    scrollRef.current.scrollBy({
-      left: direction === "left" ? -cardWidth : cardWidth,
-      behavior: "smooth",
-    });
+    const cardWidth = isVertical ? 180 : scrollRef.current.clientWidth * 0.85;
+    scrollRef.current.scrollBy({ left: direction === "left" ? -cardWidth : cardWidth, behavior: "smooth" });
   }, [isVertical]);
 
   if (!isVertical) return <>{children}</>;
 
   return (
     <div className="relative group/slider">
-      {/* Left arrow - mobile only */}
       <button
         onClick={() => scroll("left")}
-        className="absolute -left-1 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-background/95 border border-border/60 flex items-center justify-center md:hidden shadow-lg backdrop-blur-sm hover:bg-primary hover:border-primary hover:text-primary-foreground transition-all duration-200"
+        className="absolute -left-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-card/90 border border-border/40 flex items-center justify-center md:hidden shadow-lg backdrop-blur-md hover:bg-primary hover:border-primary hover:text-primary-foreground transition-all duration-200"
         aria-label="Scroll left"
       >
         <ChevronLeft className="w-4 h-4" />
       </button>
-
-      {/* Right arrow - mobile only */}
       <button
         onClick={() => scroll("right")}
-        className="absolute -right-1 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-background/95 border border-border/60 flex items-center justify-center md:hidden shadow-lg backdrop-blur-sm hover:bg-primary hover:border-primary hover:text-primary-foreground transition-all duration-200"
+        className="absolute -right-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-card/90 border border-border/40 flex items-center justify-center md:hidden shadow-lg backdrop-blur-md hover:bg-primary hover:border-primary hover:text-primary-foreground transition-all duration-200"
         aria-label="Scroll right"
       >
         <ChevronRight className="w-4 h-4" />
       </button>
-
       <div
         ref={scrollRef}
-        className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 md:overflow-visible md:pb-0 px-2 md:px-0"
+        className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 md:gap-5 md:overflow-visible md:pb-0 px-1 md:px-0"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {children}
@@ -62,47 +75,53 @@ const MobileScrollWrapper = ({ children, isVertical }: { children: React.ReactNo
   );
 };
 
+/* ─── Niche Section ─── */
 const NicheSection = ({ niche, projects }: { niche: VideoNiche; projects: Project[] }) => {
   const isVertical = projects[0]?.orientation === "vertical";
 
   return (
-    <div id={`niche-${niche}`} className="scroll-mt-24">
-      <h4 className="text-lg font-heading font-semibold text-foreground mb-4">
-        {videoNicheLabels[niche]}
-        <span className="ml-2 text-sm text-muted-foreground font-normal">
-          ({projects.length})
-        </span>
-      </h4>
-      {isVertical ? (
-        <MobileScrollWrapper isVertical>
-          {projects.map((project) => (
-            <div key={project.id} className="w-[170px] flex-shrink-0 snap-start md:w-auto md:flex-shrink">
-              <ProjectVideoCard project={project} />
-            </div>
-          ))}
-        </MobileScrollWrapper>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {projects.map((project) => (
-            <ProjectVideoCard key={project.id} project={project} />
-          ))}
+    <RevealSection>
+      <div id={`niche-${niche}`} className="scroll-mt-24">
+        <div className="flex items-center gap-2 mb-5">
+          <div className="w-1 h-5 rounded-full bg-primary" />
+          <h4 className="text-base font-heading font-semibold text-foreground tracking-tight">
+            {videoNicheLabels[niche]}
+          </h4>
+          <span className="text-xs text-muted-foreground/50 font-mono">
+            ({projects.length})
+          </span>
         </div>
-      )}
-    </div>
+        {isVertical ? (
+          <MobileScrollWrapper isVertical>
+            {projects.map((project, i) => (
+              <div key={project.id} className="w-[170px] flex-shrink-0 snap-start md:w-auto md:flex-shrink">
+                <ProjectVideoCard project={project} index={i} />
+              </div>
+            ))}
+          </MobileScrollWrapper>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {projects.map((project, i) => (
+              <ProjectVideoCard key={project.id} project={project} index={i} />
+            ))}
+          </div>
+        )}
+      </div>
+    </RevealSection>
   );
 };
 
+/* ─── Portfolio Page ─── */
 const Portfolio = () => {
   const [searchParams] = useSearchParams();
   const getProjectsByNiche = (niche: VideoNiche) =>
-    videoProjects.filter(p => p.niche === niche);
+    videoProjects.filter((p) => p.niche === niche);
 
   useEffect(() => {
     const scrollTarget = searchParams.get("scroll");
     if (scrollTarget) {
       setTimeout(() => {
-        const el = document.getElementById(`niche-${scrollTarget}`);
-        el?.scrollIntoView({ behavior: "smooth", block: "start" });
+        document.getElementById(`niche-${scrollTarget}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 100);
     } else {
       window.scrollTo(0, 0);
@@ -113,113 +132,121 @@ const Portfolio = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      <main className="container mx-auto px-4 pt-28 pb-12">
-        {/* Page Title */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-primary font-medium text-sm uppercase tracking-wider">Portfolio</span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mt-2 mb-4">
-            My <span className="gradient-text">Portfolio</span>
-          </h2>
-          <p className="text-muted-foreground text-lg">
+      {/* ─── Hero Banner (Zaverse-inspired) ─── */}
+      <section className="relative pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden">
+        {/* Decorative glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border border-primary/10 opacity-40 pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-primary/5 blur-[100px] pointer-events-none" />
+
+        <div className="relative text-center max-w-3xl mx-auto px-4">
+          <div className="flex items-center justify-center gap-2 text-muted-foreground/50 text-xs uppercase tracking-[0.2em] mb-6">
+            <a href="/" className="hover:text-primary transition-colors">Home</a>
+            <span>·</span>
+            <span className="text-foreground/70">Portfolio</span>
+          </div>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold tracking-tight">
+            <span className="gradient-text">Portfolio</span>
+          </h1>
+          <p className="text-muted-foreground/60 text-sm md:text-base mt-4 max-w-lg mx-auto leading-relaxed">
             Browse vertical Reels/Shorts and horizontal promos — click any card to watch instantly.
           </p>
         </div>
+      </section>
 
-        {/* Reels / Shorts Section */}
-        <section className="mb-20">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-              <Play className="w-6 h-6 text-primary" />
+      <main className="container mx-auto px-4 md:px-8 pb-16">
+        {/* ─── Reels / Shorts ─── */}
+        <RevealSection className="mb-20">
+          <div className="flex items-center gap-3 mb-10">
+            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+              <Play className="w-5 h-5 text-primary" />
             </div>
             <div>
-              <h3 className="text-2xl font-heading font-bold text-foreground">Reels / Shorts</h3>
-              <p className="text-muted-foreground text-sm">Vertical format content (9:16)</p>
+              <h2 className="text-xl md:text-2xl font-heading font-bold text-foreground tracking-tight">Reels / Shorts</h2>
+              <p className="text-muted-foreground/50 text-xs mt-0.5">Vertical format content (9:16)</p>
             </div>
           </div>
-
-          <div className="space-y-10">
+          <div className="space-y-12">
             {verticalNiches.map((niche) => {
               const projects = getProjectsByNiche(niche);
               if (projects.length === 0) return null;
               return <NicheSection key={niche} niche={niche} projects={projects} />;
             })}
           </div>
-        </section>
+        </RevealSection>
 
-        {/* Horizontal Videos Section */}
-        <section className="mb-20">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-              <Play className="w-6 h-6 text-primary" />
+        {/* ─── Horizontal Videos ─── */}
+        <RevealSection className="mb-20">
+          <div className="flex items-center gap-3 mb-10">
+            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+              <Play className="w-5 h-5 text-primary" />
             </div>
             <div>
-              <h3 className="text-2xl font-heading font-bold text-foreground">Promos & Screencasts</h3>
-              <p className="text-muted-foreground text-sm">Horizontal format content (16:9)</p>
+              <h2 className="text-xl md:text-2xl font-heading font-bold text-foreground tracking-tight">Promos & Screencasts</h2>
+              <p className="text-muted-foreground/50 text-xs mt-0.5">Horizontal format content (16:9)</p>
             </div>
           </div>
-
-          <div className="space-y-10">
+          <div className="space-y-12">
             {horizontalNiches.map((niche) => {
               const projects = getProjectsByNiche(niche);
               if (projects.length === 0) return null;
               return <NicheSection key={niche} niche={niche} projects={projects} />;
             })}
           </div>
-        </section>
+        </RevealSection>
 
-        {/* Software Projects */}
-        <section id="niche-software" className="scroll-mt-24 mb-16">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center">
-              <Code className="w-6 h-6 text-accent" />
+        {/* ─── Software Projects ─── */}
+        <RevealSection>
+          <section id="niche-software" className="scroll-mt-24 mb-16">
+            <div className="flex items-center gap-3 mb-10">
+              <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+                <Code className="w-5 h-5 text-accent" />
+              </div>
+              <div>
+                <h2 className="text-xl md:text-2xl font-heading font-bold text-foreground tracking-tight">Software Projects</h2>
+                <p className="text-muted-foreground/50 text-xs mt-0.5">Full-stack web applications</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-2xl font-heading font-bold text-foreground">Software Projects</h3>
-              <p className="text-muted-foreground text-sm">Full-stack web applications</p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {softwareProjects.map((project) => (
-              <div
-                key={project.id}
-                className="glass-card overflow-hidden group cursor-pointer hover-lift"
-              >
-                <div className="relative aspect-video bg-gradient-to-br from-muted to-secondary overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-14 h-14 rounded-full bg-accent/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <ExternalLink className="w-7 h-7 text-accent" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {softwareProjects.map((project, i) => (
+                <div
+                  key={project.id}
+                  className="group relative rounded-xl overflow-hidden bg-card/40 border border-border/30 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_60px_-15px_hsl(174_80%_50%/0.15)]"
+                  style={{ animationDelay: `${i * 80}ms` }}
+                >
+                  <div className="relative aspect-video bg-gradient-to-br from-secondary/80 to-card overflow-hidden">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-full bg-accent/15 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                        <ExternalLink className="w-5 h-5 text-accent/70" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <h4 className="text-sm font-heading font-semibold text-foreground group-hover:text-accent transition-colors duration-300">
+                      {project.title}
+                    </h4>
+                    <p className="text-[11px] text-accent/60 mt-0.5">{project.subtitle}</p>
+                    <p className="text-[11px] text-muted-foreground/60 mt-1.5 leading-relaxed">{project.description}</p>
+                    <div className="flex flex-wrap gap-1.5 mt-3">
+                      {project.tags.slice(0, 3).map((tag) => (
+                        <span key={tag} className="px-2 py-0.5 rounded-full text-[9px] uppercase tracking-wider font-medium bg-secondary text-muted-foreground/60">
+                          {tag}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </div>
-                <div className="p-5">
-                  <h4 className="text-lg font-heading font-bold text-foreground group-hover:text-accent transition-colors">
-                    {project.title}
-                  </h4>
-                  <p className="text-sm text-accent mb-2">{project.subtitle}</p>
-                  <p className="text-sm text-muted-foreground mb-3">{project.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.slice(0, 3).map((tag) => (
-                      <span key={tag} className="px-2 py-1 rounded text-xs bg-secondary text-muted-foreground">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
+        </RevealSection>
 
-        {/* CTA */}
-        <div className="text-center mt-16">
-          <p className="text-muted-foreground mb-4">Interested in working together?</p>
+        {/* ─── CTA ─── */}
+        <RevealSection className="text-center mt-20">
+          <p className="text-muted-foreground/50 text-sm mb-5">Interested in working together?</p>
           <Button variant="heroOutline" size="lg" asChild>
-            <a href="/#contact">
-              Get In Touch
-            </a>
+            <a href="/#contact">Get In Touch</a>
           </Button>
-        </div>
+        </RevealSection>
       </main>
 
       <Footer />
