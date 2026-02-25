@@ -8,7 +8,7 @@ export type VideoNiche =
 
 export type VideoOrientation = "vertical" | "horizontal";
 
-export type ProjectType = "video" | "software";
+export type ProjectType = "video";
 
 export interface Project {
   id: string;
@@ -115,7 +115,7 @@ export const videoProjects: Project[] = [
     title: "Dexari",
     subtitle: "Smart Crypto Exchange and Marketplace",
     description: "Dynamic app promo showcasing a smart crypto exchange and marketplace platform.",
-    fullDescription: "Created a compelling promotional video for Dexari, an innovative smart crypto exchange and marketplace platform offering freedom, power, and control over digital assets.",
+    fullDescription: "Created a compelling promotional video for Dexari.",
     tags: ["App Promo", "Crypto", "FinTech"],
     type: "video",
     niche: "app-promos",
@@ -128,7 +128,7 @@ export const videoProjects: Project[] = [
     title: "There.App",
     subtitle: "Event Operations on a Unified Mobile-First Platform",
     description: "Dynamic app promo showcasing a unified mobile-first platform for event operations.",
-    fullDescription: "Created a compelling promotional video for There.App, an innovative platform that consolidates event operations needs into a unified mobile-first experience for seamless event management.",
+    fullDescription: "Created a compelling promotional video for There.App.",
     tags: ["App Promo", "Events", "Mobile Platform"],
     type: "video",
     niche: "app-promos",
@@ -143,7 +143,7 @@ export const videoProjects: Project[] = [
     title: "Screenr",
     subtitle: "Hire Smarter, Faster, and Better with AI",
     description: "Professional website promo for an AI-powered hiring platform.",
-    fullDescription: "Produced a sleek, professional promotional video for Screenr, an innovative AI-powered recruitment platform that helps companies hire smarter, faster, and better.",
+    fullDescription: "Produced a sleek, professional promotional video for Screenr.",
     tags: ["Website Promo", "AI", "Recruitment"],
     type: "video",
     niche: "website-promos",
@@ -156,7 +156,7 @@ export const videoProjects: Project[] = [
     title: "The Muslim Expert (TME)",
     subtitle: "Platform for Guidance, Connections, and Contributions for Muslims",
     description: "Professional website promo for a platform connecting Muslim scholars, professionals, and creators.",
-    fullDescription: "Crafted a professional promotional video for The Muslim Expert (TME), an innovative platform that connects users with verified Muslim scholars, professionals, and creators for guidance, consultations, and community contributions.",
+    fullDescription: "Crafted a professional promotional video for The Muslim Expert (TME).",
     tags: ["Website Promo", "Community", "Platform"],
     type: "video",
     niche: "website-promos",
@@ -169,7 +169,7 @@ export const videoProjects: Project[] = [
     title: "Liiv Ai",
     subtitle: "Automate Document Workflows in Just Minutes",
     description: "Professional website promo for an AI-powered document automation platform.",
-    fullDescription: "Crafted a professional promotional video for Liiv Ai, an innovative platform that automates document workflows in just minutes, saving teams days and weeks per case.",
+    fullDescription: "Crafted a professional promotional video for Liiv Ai.",
     tags: ["Website Promo", "AI", "Automation"],
     type: "video",
     niche: "website-promos",
@@ -182,7 +182,7 @@ export const videoProjects: Project[] = [
     title: "AskStellarAi",
     subtitle: "Personal Health Insurance Assistant",
     description: "Professional website promo showcasing AI-powered health insurance guidance.",
-    fullDescription: "Created a compelling promotional video for AskStellarAi, an innovative AI-powered health insurance guidance platform.",
+    fullDescription: "Created a compelling promotional video for AskStellarAi.",
     tags: ["Website Promo", "AI Platform", "Motion Graphics"],
     type: "video",
     niche: "website-promos",
@@ -197,7 +197,7 @@ export const videoProjects: Project[] = [
     title: "DevHero AI",
     subtitle: "Create a Perfect Working Website Using Chatbots",
     description: "Comprehensive screencast showcasing AI-powered website creation with chatbots.",
-    fullDescription: "Produced a detailed screencast for DevHero AI, an innovative platform that enables users to create perfect, fully functional websites using intelligent chatbots.",
+    fullDescription: "Produced a detailed screencast for DevHero AI.",
     tags: ["Screencast", "AI", "Web Development"],
     type: "video",
     niche: "screencast",
@@ -209,8 +209,8 @@ export const videoProjects: Project[] = [
     id: "onevoiceai-screencast",
     title: "One Voice AI",
     subtitle: "Create Real-Like Voiceovers Using Popular Voice Models",
-    description: "Comprehensive screencast showcasing AI-powered voiceover creation with popular voice models.",
-    fullDescription: "Produced a detailed screencast for One Voice AI, an innovative platform that enables users to create realistic voiceovers using popular voice models with just a few clicks.",
+    description: "Comprehensive screencast showcasing AI-powered voiceover creation.",
+    fullDescription: "Produced a detailed screencast for One Voice AI.",
     tags: ["Screencast", "AI", "Voice Tech"],
     type: "video",
     niche: "screencast",
@@ -219,13 +219,13 @@ export const videoProjects: Project[] = [
     thumbnail: onevoiceaiThumbnail,
   },
   
-  // UGC Videos (vertical - Reels/Shorts)
+  // UGC Videos (vertical)
   {
     id: "mizwaj-ugc",
     title: "Mizwaj App Campaign",
     subtitle: "App Review and Promotion",
     description: "Engaging UGC-style app review and promotion video for the Mizwaj dating app.",
-    fullDescription: "Produced an authentic user-generated content style review and promotion video for Mizwaj, a modern dating app connecting users with meaningful relationships.",
+    fullDescription: "Produced an authentic user-generated content style review and promotion video for Mizwaj.",
     tags: ["UGC", "App Review", "Dating App"],
     type: "video",
     niche: "ugc",
@@ -238,20 +238,20 @@ export const videoProjects: Project[] = [
     title: "TechGadget Unboxing",
     subtitle: "Product Showcase",
     description: "Engaging UGC unboxing and review video.",
-    fullDescription: "Created an engaging UGC-style unboxing and review video for a tech gadget.",
+    fullDescription: "Created an engaging UGC-style unboxing and review video.",
     tags: ["UGC", "Tech", "Unboxing"],
     type: "video",
     niche: "ugc",
     orientation: "vertical",
   },
   
-  // Social Media Ads (vertical - Reels/Shorts)
+  // Promo Videos (vertical)
   {
     id: "yeloquest-promo",
     title: "Yelo Quest",
     subtitle: "Scale Social Media with Smart Ads",
     description: "Engaging promo video for an AI-powered social media advertising platform.",
-    fullDescription: "Produced a dynamic, conversion-focused promo video for Yelo Quest, an innovative platform that helps brands scale their social media presence with smart, targeted ads.",
+    fullDescription: "Produced a dynamic, conversion-focused promo video for Yelo Quest.",
     tags: ["Promo Video", "Social Media", "Advertising"],
     type: "video",
     niche: "social-media-ads",
@@ -264,7 +264,7 @@ export const videoProjects: Project[] = [
     title: "Prep Cart",
     subtitle: "Instant Cook Books Using Trending TikTok Recipes",
     description: "Engaging promo video for an app that turns viral TikTok recipes into instant cook books.",
-    fullDescription: "Produced a vibrant, conversion-focused promo video for Prep Cart, an innovative app that transforms trending TikTok recipes into easy-to-follow cook books with just one click.",
+    fullDescription: "Produced a vibrant, conversion-focused promo video for Prep Cart.",
     tags: ["Promo Video", "Food Tech", "Mobile App"],
     type: "video",
     niche: "social-media-ads",
@@ -277,7 +277,7 @@ export const videoProjects: Project[] = [
     title: "Afiam",
     subtitle: "Smart Way to Run a Business",
     description: "Engaging promo video for an all-in-one business management app.",
-    fullDescription: "Produced a sleek, conversion-focused promo video for Afiam, an innovative business management platform that puts your business in your hands.",
+    fullDescription: "Produced a sleek, conversion-focused promo video for Afiam.",
     tags: ["Promo Video", "Business", "Mobile App"],
     type: "video",
     niche: "social-media-ads",
@@ -290,7 +290,7 @@ export const videoProjects: Project[] = [
     title: "Zenera",
     subtitle: "Track Activities, Maintain Streaks, and Get Rewards",
     description: "Engaging promo video for a habit tracking and rewards app.",
-    fullDescription: "Produced a vibrant, conversion-focused promo video for Zenera, an innovative app that helps users track daily activities, maintain streaks, and earn rewards for consistency.",
+    fullDescription: "Produced a vibrant, conversion-focused promo video for Zenera.",
     tags: ["Promo Video", "Productivity", "Mobile App"],
     type: "video",
     niche: "social-media-ads",
@@ -299,13 +299,13 @@ export const videoProjects: Project[] = [
     thumbnail: zeneraThumbnail,
   },
   
-  // Content Repurposing (vertical - Reels/Shorts)
+  // Content Repurposing (vertical)
   {
     id: "business-scaling-tips",
     title: "Business Scaling Tips",
     subtitle: "How to Scale an Airbnb Business",
     description: "Repurposed long-form content into a punchy vertical short on scaling an Airbnb business.",
-    fullDescription: "Transformed long-form business content into an engaging short-form vertical video packed with actionable tips on how to start and scale an Airbnb business.",
+    fullDescription: "Transformed long-form business content into an engaging short-form vertical video.",
     tags: ["Content Repurposing", "Business", "Short-form"],
     type: "video",
     niche: "content-repurposing",
@@ -318,7 +318,7 @@ export const videoProjects: Project[] = [
     title: "Marketing Masterclass",
     subtitle: "Webinar Highlights",
     description: "Webinar content repurposed into bite-sized clips.",
-    fullDescription: "Repurposed a 60-minute marketing webinar into a series of engaging short-form videos.",
+    fullDescription: "Repurposed a 60-minute marketing webinar into engaging short-form videos.",
     tags: ["Content Repurposing", "Webinar", "Marketing"],
     type: "video",
     niche: "content-repurposing",
@@ -326,57 +326,4 @@ export const videoProjects: Project[] = [
   },
 ];
 
-export const softwareProjects: Project[] = [
-  {
-    id: "ecommerce-platform",
-    title: "E-Commerce Platform",
-    subtitle: "Full-Stack MERN Application",
-    description: "Complete e-commerce solution with payment integration.",
-    fullDescription: "Built a comprehensive e-commerce platform using the MERN stack.",
-    tags: ["MERN Stack", "E-commerce", "Stripe", "MongoDB"],
-    type: "software",
-    images: [],
-  },
-  {
-    id: "task-management",
-    title: "TaskFlow",
-    subtitle: "Project Management Tool",
-    description: "Collaborative task management application.",
-    fullDescription: "Developed a collaborative project management tool with real-time updates.",
-    tags: ["MERN Stack", "Real-time", "Socket.io", "Collaboration"],
-    type: "software",
-    images: [],
-  },
-  {
-    id: "healthcare-portal",
-    title: "MediCare Portal",
-    subtitle: "Healthcare Management System",
-    description: "Patient management system for healthcare providers.",
-    fullDescription: "Created a comprehensive healthcare management portal for clinics and hospitals.",
-    tags: ["Java", "Spring Boot", "React", "Healthcare"],
-    type: "software",
-    images: [],
-  },
-  {
-    id: "inventory-system",
-    title: "StockSync",
-    subtitle: "Inventory Management System",
-    description: "Real-time inventory tracking solution.",
-    fullDescription: "Built a real-time inventory management system for retail businesses.",
-    tags: ["Java", "React", "MySQL", "Analytics"],
-    type: "software",
-    images: [],
-  },
-  {
-    id: "social-platform",
-    title: "ConnectHub",
-    subtitle: "Social Networking Platform",
-    description: "Feature-rich social networking application.",
-    fullDescription: "Developed a full-featured social networking platform.",
-    tags: ["MERN Stack", "Social Media", "Real-time", "MongoDB"],
-    type: "software",
-    images: [],
-  },
-];
-
-export const allProjects = [...videoProjects, ...softwareProjects];
+export const allProjects = [...videoProjects];
