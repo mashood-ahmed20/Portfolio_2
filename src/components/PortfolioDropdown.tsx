@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { ChevronDown, Play, Monitor, Video, Users, Megaphone, RefreshCw, Code } from "lucide-react";
+import { ChevronDown, Play, Monitor, Video, Users, Megaphone, RefreshCw } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const categories = [
@@ -7,9 +7,8 @@ const categories = [
   { label: "Website Promo Videos", niche: "website-promos", icon: Monitor },
   { label: "Screencast Videos", niche: "screencast", icon: Video },
   { label: "UGC Videos", niche: "ugc", icon: Users },
-  { label: "Social Media Ads", niche: "social-media-ads", icon: Megaphone },
+  { label: "Promo Videos", niche: "social-media-ads", icon: Megaphone },
   { label: "Content Repurposing", niche: "content-repurposing", icon: RefreshCw },
-  { label: "Web Development Projects", niche: "software", icon: Code },
 ];
 
 interface PortfolioDropdownProps {
@@ -34,24 +33,14 @@ const PortfolioDropdown = ({ mobile = false, onNavigate }: PortfolioDropdownProp
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleMouseEnter = () => {
-    if (mobile) return;
-    clearTimeout(timeoutRef.current);
-    setIsOpen(true);
-  };
-
-  const handleMouseLeave = () => {
-    if (mobile) return;
-    timeoutRef.current = setTimeout(() => setIsOpen(false), 200);
-  };
+  const handleMouseEnter = () => { if (!mobile) { clearTimeout(timeoutRef.current); setIsOpen(true); } };
+  const handleMouseLeave = () => { if (!mobile) { timeoutRef.current = setTimeout(() => setIsOpen(false), 200); } };
 
   const handleCategoryClick = (niche: string) => {
     setIsOpen(false);
     onNavigate?.();
-
     if (location.pathname === "/portfolio") {
-      const el = document.getElementById(`niche-${niche}`);
-      el?.scrollIntoView({ behavior: "smooth", block: "start" });
+      document.getElementById(`niche-${niche}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
       navigate(`/portfolio?scroll=${niche}`);
     }
@@ -65,15 +54,9 @@ const PortfolioDropdown = ({ mobile = false, onNavigate }: PortfolioDropdownProp
           className="flex items-center justify-center gap-2 w-full text-3xl font-heading font-bold text-foreground/90 hover:text-primary transition-colors duration-200 py-4"
         >
           <span>Portfolio</span>
-          <ChevronDown
-            className={`w-4 h-4 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-          />
+          <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
         </button>
-        <div
-          className={`overflow-hidden transition-all duration-300 ease-out ${
-            isOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
-          }`}
-        >
+        <div className={`overflow-hidden transition-all duration-300 ease-out ${isOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"}`}>
           <div className="py-2 space-y-1">
             {categories.map((cat) => {
               const Icon = cat.icon;
@@ -95,28 +78,18 @@ const PortfolioDropdown = ({ mobile = false, onNavigate }: PortfolioDropdownProp
   }
 
   return (
-    <div
-      ref={dropdownRef}
-      className="relative"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <div ref={dropdownRef} className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors duration-200 text-sm font-medium"
       >
         Portfolio
-        <ChevronDown
-          className={`w-3.5 h-3.5 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-        />
+        <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
-      {/* Dropdown */}
       <div
         className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50 transition-all duration-300 ease-out ${
-          isOpen
-            ? "opacity-100 translate-y-0 pointer-events-auto"
-            : "opacity-0 -translate-y-2 pointer-events-none"
+          isOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-2 pointer-events-none"
         }`}
       >
         <div className="w-60 bg-card/95 backdrop-blur-xl border border-border/60 rounded-xl shadow-2xl overflow-hidden">

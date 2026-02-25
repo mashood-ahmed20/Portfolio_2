@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play, Instagram, Linkedin, Facebook, Youtube } from "lucide-react";
+import { ArrowRight, Play, Instagram, Linkedin, Youtube } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const HeroSection = () => {
@@ -8,7 +8,8 @@ const HeroSection = () => {
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-glow" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: "1s" }} />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/8 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: "1s" }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-primary/5 opacity-40 pointer-events-none" />
       </div>
 
       {/* Social Icons - Left Side */}
@@ -19,9 +20,6 @@ const HeroSection = () => {
         <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-lg bg-secondary/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300">
           <Linkedin size={18} />
         </a>
-        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-lg bg-secondary/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300">
-          <Facebook size={18} />
-        </a>
         <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-lg bg-secondary/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300">
           <Youtube size={18} />
         </a>
@@ -30,21 +28,21 @@ const HeroSection = () => {
       <div className="container mx-auto relative z-10">
         <div className="flex-col text-center max-w-4xl mx-auto flex items-center justify-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border/50 text-sm text-muted-foreground animate-fade-in mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-primary/20 text-sm text-muted-foreground animate-fade-in mb-8">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
             Available for Freelance Projects
           </div>
 
           {/* Title */}
           <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-heading font-bold leading-relaxed md:leading-relaxed animate-fade-in" style={{ animationDelay: "0.1s" }}>
-            <span className="block whitespace-nowrap">Elevating <span className="gradient-text glow-text">Digital Experiences</span></span>
-            <span className="block whitespace-nowrap">Through <span className="gradient-text glow-text">Content Repurposing</span></span>
-            <span className="block whitespace-nowrap"><span className="gradient-text glow-text">Promo Videos</span> & Web Solutions</span>
+            <span className="block whitespace-nowrap">Elevating <span className="gradient-text glow-text">Brands</span> Through</span>
+            <span className="block whitespace-nowrap"><span className="gradient-text glow-text">Cinematic Video Editing</span></span>
+            <span className="block whitespace-nowrap">& <span className="gradient-text glow-text">Motion Design</span></span>
           </h1>
 
           {/* Description */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mt-6 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            Helping brands, startups, and creators transform ideas into visually powerful digital experiences through cinematic video editing, motion design, and modern web development
+            Helping brands, startups, and creators transform raw footage into visually stunning videos — promo videos, SaaS explainers, motion graphics, and short-form content that captivates and converts.
           </p>
 
           {/* CTA Buttons */}
