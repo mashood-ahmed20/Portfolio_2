@@ -80,7 +80,7 @@ const AboutSection = () => {
                   <div>
                     <h4 className="font-medium text-foreground">Achievement</h4>
                     <p className="text-sm text-muted-foreground">Level 1 Fiverr Seller</p>
-                    <p className="text-xs text-muted-foreground">70+ Happy Clients</p>
+                    <p className="text-xs text-muted-foreground">100+ Happy Clients</p>
                   </div>
                 </div>
               </div>
@@ -101,8 +101,8 @@ const AboutSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default AboutSection;
