@@ -53,13 +53,6 @@ const ProcessCard = ({ step, index }: { step: typeof steps[0]; index: number }) 
       )}
 
       <div className="glass-card p-6 hover-lift relative overflow-hidden h-full">
-        {/* Glow border effect */}
-        <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-          style={{
-            background: "linear-gradient(135deg, hsl(270 100% 65% / 0.1), hsl(300 80% 60% / 0.05))",
-          }}
-        />
-
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-xl bg-primary/15 flex items-center justify-center group-hover:bg-primary/25 transition-colors">
@@ -80,9 +73,6 @@ const ProcessCard = ({ step, index }: { step: typeof steps[0]; index: number }) 
 const EditingProcessSection = () => {
   return (
     <section id="process" className="section-padding relative overflow-hidden">
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary/5 rounded-full blur-[150px] pointer-events-none" />
-
       <div className="container mx-auto relative z-10">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">

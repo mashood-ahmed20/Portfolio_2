@@ -136,14 +136,13 @@ const ProjectVideoCard = ({ project, index = 0 }: ProjectVideoCardProps) => {
   return (
     <div
       ref={containerRef}
-      className="group relative rounded-xl overflow-hidden border transition-all duration-500 ease-out"
+      className="group relative rounded-xl overflow-hidden border border-border transition-all duration-500 ease-out bg-card/40"
       style={{
         animationDelay: `${index * 80}ms`,
-        background: "hsl(260 40% 8% / 0.4)",
-        borderColor: isHovered ? "hsl(270 100% 65% / 0.3)" : "hsl(270 100% 65% / 0.08)",
+        borderColor: isHovered ? "hsl(355 100% 65% / 0.3)" : undefined,
         transform: isHovered ? "translateY(-6px) scale(1.02)" : "translateY(0) scale(1)",
         boxShadow: isHovered
-          ? "0 20px 60px -15px hsl(270 100% 65% / 0.2), 0 0 0 1px hsl(270 100% 65% / 0.15)"
+          ? "0 20px 60px -15px hsl(355 100% 65% / 0.15)"
           : "0 4px 20px -8px hsl(0 0% 0% / 0.3)",
       }}
       onMouseEnter={() => setIsHovered(true)}
@@ -156,7 +155,7 @@ const ProjectVideoCard = ({ project, index = 0 }: ProjectVideoCardProps) => {
           isFullscreen ? "!aspect-auto w-screen h-screen bg-black flex items-center justify-center"
             : `${isVertical ? "aspect-[9/16]" : "aspect-video"}`
         }`}
-        style={{ background: "linear-gradient(135deg, hsl(260 30% 12%), hsl(260 40% 8%))" }}
+        style={{ background: "hsl(0 0% 9%)" }}
         onMouseMove={handleMouseMove}
         onMouseLeave={() => { if (isPlaying && !isSeeking) setShowControls(false); }}
         onTouchStart={handleTouchStart}
@@ -165,7 +164,7 @@ const ProjectVideoCard = ({ project, index = 0 }: ProjectVideoCardProps) => {
           <video
             ref={videoRef}
             className={`w-full h-full ${isFullscreen ? "object-contain" : "object-cover"}`}
-            muted={isMuted} playsInline preload="metadata" disablePictureInPicture
+            muted={isMuted} playsInline preload="none" disablePictureInPicture
             controlsList="nodownload noremoteplayback"
             onEnded={handleVideoEnd} onContextMenu={handleContextMenu}
             style={{ pointerEvents: "none" }}
@@ -199,19 +198,17 @@ const ProjectVideoCard = ({ project, index = 0 }: ProjectVideoCardProps) => {
             className="absolute inset-0 flex items-center justify-center cursor-pointer transition-all duration-300"
             style={{
               background: isHovered
-                ? "linear-gradient(to top, hsl(260 60% 4% / 0.5), hsl(260 60% 4% / 0.15))"
-                : "linear-gradient(to top, hsl(260 60% 4% / 0.4), hsl(260 60% 4% / 0.1))",
+                ? "linear-gradient(to top, hsl(0 0% 6% / 0.5), hsl(0 0% 6% / 0.15))"
+                : "linear-gradient(to top, hsl(0 0% 6% / 0.4), hsl(0 0% 6% / 0.1))",
             }}
             onClick={togglePlay}
           >
             <div
-              className="rounded-full flex items-center justify-center backdrop-blur-sm transition-all duration-300"
+              className="rounded-full flex items-center justify-center transition-all duration-300 bg-primary"
               style={{
-                background: "hsl(270 100% 65% / 0.9)",
                 width: isVertical ? "48px" : "56px",
                 height: isVertical ? "48px" : "56px",
                 transform: isHovered ? "scale(1.15)" : "scale(1)",
-                boxShadow: "0 0 30px hsl(270 100% 65% / 0.4)",
               }}
             >
               <Play className="w-5 h-5 text-primary-foreground ml-0.5" />
@@ -231,11 +228,11 @@ const ProjectVideoCard = ({ project, index = 0 }: ProjectVideoCardProps) => {
             className={`absolute bottom-0 left-0 right-0 px-3 pb-3 pt-10 transition-opacity duration-300 ${
               showControls ? "opacity-100" : "opacity-0 pointer-events-none"
             }`}
-            style={{ background: "linear-gradient(to top, hsl(260 60% 4% / 0.8), transparent)", pointerEvents: showControls ? "auto" : "none" }}
+            style={{ background: "linear-gradient(to top, hsl(0 0% 6% / 0.8), transparent)", pointerEvents: showControls ? "auto" : "none" }}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="relative w-full h-1 mb-2 cursor-pointer rounded-full overflow-hidden">
-              <div className="absolute inset-0" style={{ background: "hsl(270 100% 65% / 0.15)" }} />
+              <div className="absolute inset-0 bg-muted" />
               <div className="absolute top-0 left-0 h-full rounded-full bg-primary transition-[width] duration-75" style={{ width: `${progress}%` }} />
               <input type="range" min={0} max={duration || 0} step={0.1} value={currentTime} onChange={handleSeek}
                 onMouseDown={() => setIsSeeking(true)} onMouseUp={() => setIsSeeking(false)}
