@@ -20,6 +20,7 @@ const ProjectVideoCard = ({ project, index = 0 }: ProjectVideoCardProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const playingRef = useRef(false);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
@@ -35,6 +36,9 @@ const ProjectVideoCard = ({ project, index = 0 }: ProjectVideoCardProps) => {
 
   const isVertical = project.orientation === "vertical";
 
+  // Keep ref in sync to avoid stale closures
+  useEffect(() => { playingRef.current = isPlaying; }, [isPlaying]);
+
   // Lazy load
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -45,11 +49,16 @@ const ProjectVideoCard = ({ project, index = 0 }: ProjectVideoCardProps) => {
     return () => observer.disconnect();
   }, []);
 
-  // Auto-pause when out of view
+  // Auto-pause when out of view (skip if fullscreen)
   useEffect(() => {
     if (!isPlaying) return;
     const observer = new IntersectionObserver(
-      ([entry]) => { if (!entry.isIntersecting && videoRef.current) { videoRef.current.pause(); setIsPlaying(false); } },
+      ([entry]) => {
+        if (!entry.isIntersecting && videoRef.current && !document.fullscreenElement) {
+          videoRef.current.pause();
+          setIsPlaying(false);
+        }
+      },
       { threshold: 0.1 }
     );
     if (containerRef.current) observer.observe(containerRef.current);
@@ -68,11 +77,38 @@ const ProjectVideoCard = ({ project, index = 0 }: ProjectVideoCardProps) => {
     return () => { video.removeEventListener("timeupdate", onTimeUpdate); video.removeEventListener("loadedmetadata", onLoadedMetadata); video.removeEventListener("durationchange", onLoadedMetadata); };
   }, [isSeeking, isVisible]);
 
+  // Fullscreen change — handle both standard and webkit, restore scroll
   useEffect(() => {
-    const handleFsChange = () => setIsFullscreen(!!document.fullscreenElement);
+    const handleFsChange = () => {
+      const inFs = !!(document.fullscreenElement || (document as any).webkitFullscreenElement);
+      setIsFullscreen(inFs);
+      if (!inFs) {
+        // Restore body scroll on exit
+        document.body.style.overflow = "";
+        // Preserve play/pause state — don't auto-resume
+        setShowControls(true);
+      } else {
+        document.body.style.overflow = "hidden";
+      }
+    };
     document.addEventListener("fullscreenchange", handleFsChange);
-    return () => document.removeEventListener("fullscreenchange", handleFsChange);
+    document.addEventListener("webkitfullscreenchange", handleFsChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFsChange);
+      document.removeEventListener("webkitfullscreenchange", handleFsChange);
+    };
   }, []);
+
+  // Sync isPlaying with actual video state (prevents desync on mobile)
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const onPlay = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+    video.addEventListener("play", onPlay);
+    video.addEventListener("pause", onPause);
+    return () => { video.removeEventListener("play", onPlay); video.removeEventListener("pause", onPause); };
+  }, [isVisible]);
 
   const resetHideTimer = useCallback(() => {
     if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
@@ -82,16 +118,20 @@ const ProjectVideoCard = ({ project, index = 0 }: ProjectVideoCardProps) => {
 
   useEffect(() => { return () => unregister(project.id); }, [project.id, unregister]);
 
-  const togglePlay = useCallback((e: React.MouseEvent) => {
+  const togglePlay = useCallback((e: React.MouseEvent | React.TouchEvent) => {
     e.stopPropagation();
     if (!project.videoUrl || !videoRef.current) return;
-    if (isPlaying) {
-      videoRef.current.pause(); setIsPlaying(false); setShowControls(true);
+    const video = videoRef.current;
+    if (playingRef.current) {
+      video.pause();
+      setShowControls(true);
     } else {
-      registerPlay(project.id, () => { videoRef.current?.pause(); setIsPlaying(false); setShowControls(false); });
-      setShowPoster(false); videoRef.current.play(); setIsPlaying(true); resetHideTimer();
+      registerPlay(project.id, () => { videoRef.current?.pause(); });
+      setShowPoster(false);
+      video.play().catch(() => {});
+      resetHideTimer();
     }
-  }, [isPlaying, project.videoUrl, project.id, resetHideTimer, registerPlay]);
+  }, [project.videoUrl, project.id, resetHideTimer, registerPlay]);
 
   const toggleMute = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
@@ -121,9 +161,17 @@ const ProjectVideoCard = ({ project, index = 0 }: ProjectVideoCardProps) => {
     const el = videoContainerRef.current;
     const vid = videoRef.current;
     if (!el) return;
-    if (document.fullscreenElement) { document.exitFullscreen(); }
-    else if (el.requestFullscreen) { el.requestFullscreen(); }
-    else if ((vid as any)?.webkitEnterFullscreen) { (vid as any).webkitEnterFullscreen(); }
+    const fsEl = document.fullscreenElement || (document as any).webkitFullscreenElement;
+    if (fsEl) {
+      if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+      else if ((document as any).webkitExitFullscreen) (document as any).webkitExitFullscreen();
+    } else if (el.requestFullscreen) {
+      el.requestFullscreen().catch(() => {});
+    } else if ((el as any).webkitRequestFullscreen) {
+      (el as any).webkitRequestFullscreen();
+    } else if ((vid as any)?.webkitEnterFullscreen) {
+      (vid as any).webkitEnterFullscreen();
+    }
   }, []);
 
   const handleVideoEnd = () => { setIsPlaying(false); setShowPoster(!!project.thumbnail); setShowControls(false); };
@@ -164,9 +212,14 @@ const ProjectVideoCard = ({ project, index = 0 }: ProjectVideoCardProps) => {
           <video
             ref={videoRef}
             className={`w-full h-full ${isFullscreen ? "object-contain" : "object-cover"}`}
-            muted={isMuted} playsInline preload="none" disablePictureInPicture
+            muted={isMuted}
+            playsInline
+            {...({ "webkit-playsinline": "" } as any)}
+            preload="metadata"
+            disablePictureInPicture
             controlsList="nodownload noremoteplayback"
-            onEnded={handleVideoEnd} onContextMenu={handleContextMenu}
+            onEnded={handleVideoEnd}
+            onContextMenu={handleContextMenu}
             style={{ pointerEvents: "none" }}
           >
             <source src={project.videoUrl} type="video/mp4" />
@@ -220,7 +273,7 @@ const ProjectVideoCard = ({ project, index = 0 }: ProjectVideoCardProps) => {
         )}
 
         {project.videoUrl && isPlaying && (
-          <div className="absolute inset-0 cursor-pointer" onClick={togglePlay} style={{ pointerEvents: "auto" }} />
+          <div className="absolute inset-0 cursor-pointer" onClick={togglePlay} onTouchEnd={togglePlay} style={{ pointerEvents: "auto" }} />
         )}
 
         {project.videoUrl && isPlaying && (
@@ -230,8 +283,9 @@ const ProjectVideoCard = ({ project, index = 0 }: ProjectVideoCardProps) => {
             }`}
             style={{ background: "linear-gradient(to top, hsl(0 0% 6% / 0.8), transparent)", pointerEvents: showControls ? "auto" : "none" }}
             onClick={(e) => e.stopPropagation()}
+            onTouchEnd={(e) => e.stopPropagation()}
           >
-            <div className="relative w-full h-1 mb-2 cursor-pointer rounded-full overflow-hidden">
+            <div className="relative w-full h-2 mb-2 cursor-pointer rounded-full overflow-hidden">
               <div className="absolute inset-0 bg-muted" />
               <div className="absolute top-0 left-0 h-full rounded-full bg-primary transition-[width] duration-75" style={{ width: `${progress}%` }} />
               <input type="range" min={0} max={duration || 0} step={0.1} value={currentTime} onChange={handleSeek}
@@ -239,24 +293,24 @@ const ProjectVideoCard = ({ project, index = 0 }: ProjectVideoCardProps) => {
                 onTouchStart={() => setIsSeeking(true)} onTouchEnd={() => setIsSeeking(false)}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
             </div>
-            <div className="flex items-center gap-1.5">
-              <button onClick={togglePlay} className="w-7 h-7 flex items-center justify-center text-foreground/90 hover:text-primary transition-colors">
-                {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 ml-0.5" />}
+            <div className="flex items-center gap-2">
+              <button onClick={togglePlay} className="w-8 h-8 flex items-center justify-center text-foreground/90 hover:text-primary transition-colors touch-manipulation">
+                {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
               </button>
               <span className="text-[10px] text-foreground/60 font-mono tabular-nums select-none">
                 {formatTime(currentTime)} / {formatTime(duration)}
               </span>
               <div className="flex-1" />
               <div className="flex items-center gap-1 group/vol">
-                <button onClick={toggleMute} className="w-7 h-7 flex items-center justify-center text-foreground/90 hover:text-primary transition-colors">
-                  {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                <button onClick={toggleMute} className="w-8 h-8 flex items-center justify-center text-foreground/90 hover:text-primary transition-colors touch-manipulation">
+                  {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                 </button>
                 <input type="range" min={0} max={1} step={0.05} value={isMuted ? 0 : volume} onChange={handleVolumeChange}
                   onClick={(e) => e.stopPropagation()}
                   className="w-0 group-hover/vol:w-14 transition-all duration-200 accent-primary h-0.5 cursor-pointer opacity-0 group-hover/vol:opacity-100" />
               </div>
-              <button onClick={toggleFullscreen} className="w-7 h-7 flex items-center justify-center text-foreground/90 hover:text-primary transition-colors">
-                {isFullscreen ? <Minimize className="w-3.5 h-3.5" /> : <Maximize className="w-3.5 h-3.5" />}
+              <button onClick={toggleFullscreen} className="w-8 h-8 flex items-center justify-center text-foreground/90 hover:text-primary transition-colors touch-manipulation">
+                {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
               </button>
             </div>
           </div>
