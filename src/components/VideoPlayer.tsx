@@ -21,11 +21,11 @@ const VideoPlayer = ({
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [showPoster, setShowPoster] = useState(!!poster);
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
-  // Lazy loading - only load video when visible
+  // Lazy visibility detection
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -36,31 +36,39 @@ const VideoPlayer = ({
       },
       { threshold: 0.1, rootMargin: "50px" }
     );
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
+    if (containerRef.current) observer.observe(containerRef.current);
     return () => observer.disconnect();
   }, []);
 
   const handlePlay = (e: React.MouseEvent) => {
     e.stopPropagation();
-    
+
     if (thumbnailMode && onContainerClick) {
       onContainerClick();
       return;
     }
 
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        setShowPoster(false);
-        videoRef.current.play();
-        setIsPlaying(true);
-      }
+    if (isPlaying && videoRef.current) {
+      videoRef.current.pause();
+      setIsPlaying(false);
+      return;
+    }
+
+    // Load video element on first click
+    if (!videoLoaded) {
+      setVideoLoaded(true);
+      setShowPoster(false);
+      // Wait for video element to mount then play
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          videoRef.current?.play();
+          setIsPlaying(true);
+        }, 50);
+      });
+    } else if (videoRef.current) {
+      setShowPoster(false);
+      videoRef.current.play();
+      setIsPlaying(true);
     }
   };
 
@@ -69,11 +77,6 @@ const VideoPlayer = ({
     setShowPoster(!!poster);
   };
 
-  const handleLoadedMetadata = () => {
-    setIsLoaded(true);
-  };
-
-  // Disable right-click context menu on video
   const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault();
     return false;
@@ -82,31 +85,30 @@ const VideoPlayer = ({
   return (
     <div
       ref={containerRef}
-      className={`relative overflow-hidden bg-gradient-to-br from-muted to-secondary ${className}`}
+      className={`relative overflow-hidden bg-card ${className}`}
       onClick={thumbnailMode ? onContainerClick : handlePlay}
       onContextMenu={handleContextMenu}
     >
-      {isVisible && (
+      {/* Only render video element after user clicks play */}
+      {isVisible && videoLoaded && (
         <video
           ref={videoRef}
           className="w-full h-full object-cover"
           muted
           playsInline
-          preload="metadata"
+          preload="none"
           controls={!thumbnailMode && isPlaying}
           controlsList="nodownload nofullscreen noremoteplayback"
           disablePictureInPicture
           onEnded={handleVideoEnd}
-          onLoadedMetadata={handleLoadedMetadata}
           onContextMenu={handleContextMenu}
           style={{ pointerEvents: thumbnailMode ? "none" : "auto" }}
         >
           <source src={src} type="video/mp4" />
-          Your browser does not support the video tag.
         </video>
       )}
 
-      {/* Poster image */}
+      {/* Poster / thumbnail shown until play */}
       {poster && showPoster && (
         <img
           src={poster}
@@ -116,10 +118,10 @@ const VideoPlayer = ({
         />
       )}
 
-      {/* Loading placeholder - only show if no poster */}
-      {!isLoaded && isVisible && !poster && (
+      {/* Placeholder when no poster */}
+      {!videoLoaded && isVisible && !poster && (
         <div className="absolute inset-0 flex items-center justify-center bg-muted/50">
-          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          <Play className="w-10 h-10 text-muted-foreground/40" />
         </div>
       )}
 
@@ -137,7 +139,6 @@ const VideoPlayer = ({
         </div>
       )}
 
-      {/* Invisible overlay to prevent download in thumbnail mode */}
       {thumbnailMode && (
         <div className="absolute inset-0" style={{ pointerEvents: "auto" }} />
       )}
