@@ -76,6 +76,12 @@ import quintraVideo from "@/assets/quintra-video.mp4";
 import quintraThumbnail from "@/assets/quintra-thumbnail.png";
 import wemetVideo from "@/assets/wemet-video.mp4";
 import wemetThumbnail from "@/assets/wemet-thumbnail.png";
+import scienceForPeopleVideo from "@/assets/scienceforpeople-video.mp4";
+import scienceForPeopleThumbnail from "@/assets/scienceforpeople-thumbnail.png";
+import weddingWebsitesVideo from "@/assets/weddingwebsites-video.mp4";
+import weddingWebsitesThumbnail from "@/assets/weddingwebsites-thumbnail.png";
+import layoverLoopVideo from "@/assets/layoverloop-video.mp4";
+import layoverLoopThumbnail from "@/assets/layoverloop-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
@@ -130,6 +136,19 @@ export const videoProjects: Project[] = [
     orientation: "horizontal",
     videoUrl: wemetVideo,
     thumbnail: wemetThumbnail,
+  },
+  {
+    id: "layoverloop-promo",
+    title: "LayoverLoop",
+    subtitle: "Layover and Travel Tips for Smart Travelers",
+    description: "Engaging app promo for a travel companion app focused on layovers and travel tips.",
+    fullDescription: "Produced a polished promotional video for LayoverLoop, an app that helps travelers make the most of their layovers with smart tips and curated travel guidance.",
+    tags: ["App Promo", "Travel", "Mobile App"],
+    type: "video",
+    niche: "app-promos",
+    orientation: "horizontal",
+    videoUrl: layoverLoopVideo,
+    thumbnail: layoverLoopThumbnail,
   },
   {
     id: "influenceai-promo",
@@ -210,6 +229,32 @@ export const videoProjects: Project[] = [
     orientation: "horizontal",
     videoUrl: screenrVideo,
     thumbnail: screenrThumbnail,
+  },
+  {
+    id: "scienceforpeople-promo",
+    title: "Science For People",
+    subtitle: "All-in-One Tools for HR, Hiring, and Leadership",
+    description: "Professional website promo showcasing an all-in-one platform for HR, hiring, and leadership tools.",
+    fullDescription: "Crafted a sleek, professional promotional video for Science For People, a unified platform that brings HR, hiring, and leadership tools together in one place.",
+    tags: ["Website Promo", "HR Tech", "SaaS"],
+    type: "video",
+    niche: "website-promos",
+    orientation: "horizontal",
+    videoUrl: scienceForPeopleVideo,
+    thumbnail: scienceForPeopleThumbnail,
+  },
+  {
+    id: "weddingwebsites-promo",
+    title: "WeddingWebsites.ie",
+    subtitle: "Wedding Planner Websites with Guests and RSVPs",
+    description: "Elegant website promo for a wedding planning platform with guest management and online RSVPs.",
+    fullDescription: "Created a refined promotional video for WeddingWebsites.ie, a platform that helps couples build beautiful wedding websites with guest lists and online RSVPs.",
+    tags: ["Website Promo", "Wedding", "SaaS"],
+    type: "video",
+    niche: "website-promos",
+    orientation: "horizontal",
+    videoUrl: weddingWebsitesVideo,
+    thumbnail: weddingWebsitesThumbnail,
   },
   {
     id: "tme-promo",
