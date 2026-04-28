@@ -1,5 +1,6 @@
 export type VideoNiche = 
   | "app-promos" 
+  | "saas-explainer"
   | "website-promos" 
   | "screencast" 
   | "ugc" 
@@ -27,6 +28,7 @@ export interface Project {
 
 export const videoNicheLabels: Record<VideoNiche, string> = {
   "app-promos": "App Promos",
+  "saas-explainer": "SaaS Explainer Videos",
   "website-promos": "Website Promos",
   "screencast": "Screencast Videos",
   "ugc": "UGC Campaigns",
@@ -82,6 +84,10 @@ import weddingWebsitesVideo from "@/assets/weddingwebsites-video.mp4";
 import weddingWebsitesThumbnail from "@/assets/weddingwebsites-thumbnail.png";
 import layoverLoopVideo from "@/assets/layoverloop-video.mp4";
 import layoverLoopThumbnail from "@/assets/layoverloop-thumbnail.png";
+import hemmaVideo from "@/assets/hemma-video.mp4";
+import hemmaThumbnail from "@/assets/hemma-thumbnail.png";
+import screenrSaasVideo from "@/assets/screenr-saas-video.mp4";
+import screenrSaasThumbnail from "@/assets/screenr-saas-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
