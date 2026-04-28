@@ -27,7 +27,15 @@ const RevealSection = ({ children, className = "" }: { children: React.ReactNode
   );
 };
 
-const MobileScrollWrapper = ({ children, isVertical }: { children: React.ReactNode; isVertical: boolean }) => {
+const MobileScrollWrapper = ({
+  children,
+  isVertical,
+  desktopGridClass,
+}: {
+  children: React.ReactNode;
+  isVertical: boolean;
+  desktopGridClass?: string;
+}) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const scroll = useCallback((dir: "left" | "right") => {
     if (!scrollRef.current) return;
@@ -35,18 +43,29 @@ const MobileScrollWrapper = ({ children, isVertical }: { children: React.ReactNo
     scrollRef.current.scrollBy({ left: dir === "left" ? -w : w, behavior: "smooth" });
   }, [isVertical]);
 
-  if (!isVertical) return <>{children}</>;
+  const desktopClasses =
+    desktopGridClass ?? "md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 md:gap-5";
 
   return (
     <div className="relative">
-      <button onClick={() => scroll("left")}
+      <button
+        onClick={() => scroll("left")}
         className="absolute -left-1 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full glass-card flex items-center justify-center md:hidden"
-        aria-label="Scroll left"><ChevronLeft className="w-4 h-4" /></button>
-      <button onClick={() => scroll("right")}
+        aria-label="Scroll left"
+      >
+        <ChevronLeft className="w-4 h-4" />
+      </button>
+      <button
+        onClick={() => scroll("right")}
         className="absolute -right-1 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full glass-card flex items-center justify-center md:hidden"
-        aria-label="Scroll right"><ChevronRight className="w-4 h-4" /></button>
-      <div ref={scrollRef}
-        className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 md:gap-5 md:overflow-visible md:pb-0 px-1 md:px-0">
+        aria-label="Scroll right"
+      >
+        <ChevronRight className="w-4 h-4" />
+      </button>
+      <div
+        ref={scrollRef}
+        className={`flex gap-3 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory md:overflow-visible md:pb-0 px-1 md:px-0 ${desktopClasses}`}
+      >
         {children}
       </div>
     </div>
@@ -79,11 +98,19 @@ const NicheSection = ({ niche, projects }: { niche: VideoNiche; projects: Projec
           </MobileScrollWrapper>
         ) : (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <MobileScrollWrapper
+              isVertical={false}
+              desktopGridClass="md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-5"
+            >
               {visibleProjects.map((project, i) => (
-                <ProjectVideoCard key={project.id} project={project} index={i} />
+                <div
+                  key={project.id}
+                  className="w-[85vw] max-w-[360px] flex-shrink-0 snap-start md:w-auto md:max-w-none md:flex-shrink"
+                >
+                  <ProjectVideoCard project={project} index={i} />
+                </div>
               ))}
-            </div>
+            </MobileScrollWrapper>
             {hasMore && (
               <div className="flex justify-center mt-8">
                 <Button
