@@ -221,7 +221,35 @@ export const videoProjects: Project[] = [
     videoUrl: thereappVideo,
     thumbnail: thereappThumbnail,
   },
-  
+
+  // SaaS Explainer Videos (horizontal)
+  {
+    id: "hemma-saas",
+    title: "Hemma",
+    subtitle: "Sell, Rent, or Mortgage Houses in One Place",
+    description: "Sleek SaaS explainer video for a platform to sell, rent, or mortgage houses.",
+    fullDescription: "Produced a polished SaaS explainer video for Hemma, a modern real-estate platform that brings selling, renting, and mortgaging houses into a single experience.",
+    tags: ["SaaS Explainer", "Real Estate", "PropTech"],
+    type: "video",
+    niche: "saas-explainer",
+    orientation: "horizontal",
+    videoUrl: hemmaVideo,
+    thumbnail: hemmaThumbnail,
+  },
+  {
+    id: "screenr-saas",
+    title: "Screenr",
+    subtitle: "AI Hiring Assistant with Smart Analytics",
+    description: "Conversion-focused SaaS explainer for an AI-powered hiring and analytics platform.",
+    fullDescription: "Crafted a sleek SaaS explainer video for Screenr, an AI hiring assistant that streamlines candidate screening and delivers actionable hiring analytics.",
+    tags: ["SaaS Explainer", "AI", "HR Tech"],
+    type: "video",
+    niche: "saas-explainer",
+    orientation: "horizontal",
+    videoUrl: screenrSaasVideo,
+    thumbnail: screenrSaasThumbnail,
+  },
+
   // Website Promos (horizontal)
   {
     id: "screenr-promo",
