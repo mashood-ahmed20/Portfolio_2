@@ -112,7 +112,7 @@ const NicheSection = ({ niche, projects }: { niche: VideoNiche; projects: Projec
               ))}
             </MobileScrollWrapper>
             {hasMore && (
-              <div className="flex justify-center mt-8">
+              <div className="hidden md:flex justify-center mt-8">
                 <Button
                   variant="heroOutline"
                   size="lg"
