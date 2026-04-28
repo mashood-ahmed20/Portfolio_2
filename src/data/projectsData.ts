@@ -68,9 +68,69 @@ import businessScalingVideo from "@/assets/business-scaling-video.mp4";
 import businessScalingThumbnail from "@/assets/business-scaling-thumbnail.png";
 import mizwajVideo from "@/assets/mizwaj-video.mp4";
 import mizwajThumbnail from "@/assets/mizwaj-thumbnail.png";
+import twoSixteenVideo from "@/assets/216-video.mp4";
+import twoSixteenThumbnail from "@/assets/216-thumbnail.png";
+import agrarNextVideo from "@/assets/agrarnext-video.mp4";
+import agrarNextThumbnail from "@/assets/agrarnext-thumbnail.png";
+import quintraVideo from "@/assets/quintra-video.mp4";
+import quintraThumbnail from "@/assets/quintra-thumbnail.png";
+import wemetVideo from "@/assets/wemet-video.mp4";
+import wemetThumbnail from "@/assets/wemet-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
+  {
+    id: "216-promo",
+    title: "216",
+    subtitle: "Support for Children",
+    description: "Heartfelt app promo for a platform supporting children's growth and independence journey.",
+    fullDescription: "Created a meaningful promotional video for 216, an app dedicated to supporting children through their development journey toward independence.",
+    tags: ["App Promo", "Family", "Mobile App"],
+    type: "video",
+    niche: "app-promos",
+    orientation: "horizontal",
+    videoUrl: twoSixteenVideo,
+    thumbnail: twoSixteenThumbnail,
+  },
+  {
+    id: "agrarnext-promo",
+    title: "Agrar Next",
+    subtitle: "Smart Livestock Management for Farmers",
+    description: "Modern app promo showcasing a livestock management platform built for farmers.",
+    fullDescription: "Produced a clean, conversion-focused promotional video for Agrar Next, a smart farming app that helps farmers manage their livestock with ease.",
+    tags: ["App Promo", "AgriTech", "Mobile App"],
+    type: "video",
+    niche: "app-promos",
+    orientation: "horizontal",
+    videoUrl: agrarNextVideo,
+    thumbnail: agrarNextThumbnail,
+  },
+  {
+    id: "quintra-promo",
+    title: "Quintra",
+    subtitle: "AI-Powered Trading and Portfolio Analysis",
+    description: "Sleek app promo for an AI trading assistant and portfolio analysis platform.",
+    fullDescription: "Crafted a premium promotional video for Quintra, an AI-powered trading app that analyzes portfolios and guides smarter investment decisions.",
+    tags: ["App Promo", "FinTech", "AI"],
+    type: "video",
+    niche: "app-promos",
+    orientation: "horizontal",
+    videoUrl: quintraVideo,
+    thumbnail: quintraThumbnail,
+  },
+  {
+    id: "wemet-promo",
+    title: "WEMET",
+    subtitle: "Lead Capture App for Professionals",
+    description: "Dynamic app promo for a professional lead capture and networking platform.",
+    fullDescription: "Produced a polished promotional video for WEMET, an app that turns real-world meetings into business opportunities by capturing and managing professional leads.",
+    tags: ["App Promo", "Networking", "Productivity"],
+    type: "video",
+    niche: "app-promos",
+    orientation: "horizontal",
+    videoUrl: wemetVideo,
+    thumbnail: wemetThumbnail,
+  },
   {
     id: "influenceai-promo",
     title: "InfluenceAI",
