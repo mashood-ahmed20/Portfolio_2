@@ -15,7 +15,7 @@ import {
 import ProjectVideoCard from "@/components/ProjectVideoCard";
 
 const verticalNiches: VideoNiche[] = ["ugc", "social-media-ads", "content-repurposing"];
-const horizontalNiches: VideoNiche[] = ["app-promos", "website-promos", "screencast"];
+const horizontalNiches: VideoNiche[] = ["app-promos", "saas-explainer", "website-promos", "screencast"];
 
 const RevealSection = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
   const { ref, isVisible } = useScrollReveal(0.08);
