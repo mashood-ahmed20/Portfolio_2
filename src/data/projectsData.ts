@@ -1,5 +1,6 @@
 export type VideoNiche = 
   | "app-promos" 
+  | "saas-explainer"
   | "website-promos" 
   | "screencast" 
   | "ugc" 
@@ -27,6 +28,7 @@ export interface Project {
 
 export const videoNicheLabels: Record<VideoNiche, string> = {
   "app-promos": "App Promos",
+  "saas-explainer": "SaaS Explainer Videos",
   "website-promos": "Website Promos",
   "screencast": "Screencast Videos",
   "ugc": "UGC Campaigns",
@@ -82,6 +84,10 @@ import weddingWebsitesVideo from "@/assets/weddingwebsites-video.mp4";
 import weddingWebsitesThumbnail from "@/assets/weddingwebsites-thumbnail.png";
 import layoverLoopVideo from "@/assets/layoverloop-video.mp4";
 import layoverLoopThumbnail from "@/assets/layoverloop-thumbnail.png";
+import hemmaVideo from "@/assets/hemma-video.mp4";
+import hemmaThumbnail from "@/assets/hemma-thumbnail.png";
+import screenrSaasVideo from "@/assets/screenr-saas-video.mp4";
+import screenrSaasThumbnail from "@/assets/screenr-saas-thumbnail.png";
 
 export const videoProjects: Project[] = [
   // App Promos (horizontal)
@@ -215,7 +221,35 @@ export const videoProjects: Project[] = [
     videoUrl: thereappVideo,
     thumbnail: thereappThumbnail,
   },
-  
+
+  // SaaS Explainer Videos (horizontal)
+  {
+    id: "hemma-saas",
+    title: "Hemma",
+    subtitle: "Sell, Rent, or Mortgage Houses in One Place",
+    description: "Sleek SaaS explainer video for a platform to sell, rent, or mortgage houses.",
+    fullDescription: "Produced a polished SaaS explainer video for Hemma, a modern real-estate platform that brings selling, renting, and mortgaging houses into a single experience.",
+    tags: ["SaaS Explainer", "Real Estate", "PropTech"],
+    type: "video",
+    niche: "saas-explainer",
+    orientation: "horizontal",
+    videoUrl: hemmaVideo,
+    thumbnail: hemmaThumbnail,
+  },
+  {
+    id: "screenr-saas",
+    title: "Screenr",
+    subtitle: "AI Hiring Assistant with Smart Analytics",
+    description: "Conversion-focused SaaS explainer for an AI-powered hiring and analytics platform.",
+    fullDescription: "Crafted a sleek SaaS explainer video for Screenr, an AI hiring assistant that streamlines candidate screening and delivers actionable hiring analytics.",
+    tags: ["SaaS Explainer", "AI", "HR Tech"],
+    type: "video",
+    niche: "saas-explainer",
+    orientation: "horizontal",
+    videoUrl: screenrSaasVideo,
+    thumbnail: screenrSaasThumbnail,
+  },
+
   // Website Promos (horizontal)
   {
     id: "screenr-promo",
