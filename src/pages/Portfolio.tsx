@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Play, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -55,6 +55,12 @@ const MobileScrollWrapper = ({ children, isVertical }: { children: React.ReactNo
 
 const NicheSection = ({ niche, projects }: { niche: VideoNiche; projects: Project[] }) => {
   const isVertical = projects[0]?.orientation === "vertical";
+  const PAGE_SIZE = 3;
+  const INITIAL_COUNT = 6;
+  const isPaginated = niche === "app-promos";
+  const [visibleCount, setVisibleCount] = useState(isPaginated ? INITIAL_COUNT : projects.length);
+  const visibleProjects = isPaginated ? projects.slice(0, visibleCount) : projects;
+  const hasMore = isPaginated && visibleCount < projects.length;
   return (
     <RevealSection>
       <div id={`niche-${niche}`} className="scroll-mt-24">
@@ -72,11 +78,24 @@ const NicheSection = ({ niche, projects }: { niche: VideoNiche; projects: Projec
             ))}
           </MobileScrollWrapper>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {projects.map((project, i) => (
-              <ProjectVideoCard key={project.id} project={project} index={i} />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {visibleProjects.map((project, i) => (
+                <ProjectVideoCard key={project.id} project={project} index={i} />
+              ))}
+            </div>
+            {hasMore && (
+              <div className="flex justify-center mt-8">
+                <Button
+                  variant="heroOutline"
+                  size="lg"
+                  onClick={() => setVisibleCount((c) => Math.min(c + PAGE_SIZE, projects.length))}
+                >
+                  Show More
+                </Button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </RevealSection>
