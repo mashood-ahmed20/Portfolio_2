@@ -232,6 +232,9 @@ const ProjectVideoCard = ({ project, index = 0 }: ProjectVideoCardProps) => {
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-700"
             style={{ transform: isHovered ? "scale(1.05)" : "scale(1)" }}
             loading="lazy"
+            decoding="async"
+            width={1280}
+            height={720}
           />
         )}
 
