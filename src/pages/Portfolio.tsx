@@ -13,6 +13,7 @@ import {
   Project,
 } from "@/data/projectsData";
 import ProjectVideoCard from "@/components/ProjectVideoCard";
+import SEO from "@/components/SEO";
 
 const verticalNiches: VideoNiche[] = ["ugc", "social-media-ads", "content-repurposing"];
 const horizontalNiches: VideoNiche[] = ["app-promos", "saas-explainer", "website-promos", "screencast"];
@@ -142,6 +143,11 @@ const Portfolio = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Portfolio — Video Editing & Motion Design Work"
+        description="Explore Mashood Ahmed's portfolio of cinematic promos, SaaS explainers, app promos, UGC and short-form motion design work."
+        canonical="/portfolio"
+      />
       <Navbar />
 
       {/* Hero Banner */}

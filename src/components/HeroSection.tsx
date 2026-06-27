@@ -1,6 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play, Instagram, Linkedin, Youtube } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useCountUp } from "@/hooks/useCountUp";
+
+const HeroStat = ({ target, suffix = "+", label, decimals = 0 }: { target: number; suffix?: string; label: string; decimals?: number }) => {
+  const { count, ref } = useCountUp(target * Math.pow(10, decimals), 1500);
+  const display = decimals ? (count / Math.pow(10, decimals)).toFixed(decimals) : count;
+  return (
+    <div ref={ref} className="text-center">
+      <div className="text-3xl md:text-4xl font-heading font-bold text-primary">{display}{suffix}</div>
+      <div className="text-sm text-muted-foreground">{label}</div>
+    </div>
+  );
+};
 
 const HeroSection = () => {
   return (
@@ -56,20 +68,11 @@ const HeroSection = () => {
 
           {/* Stats */}
           <div className="flex items-center justify-center gap-8 md:gap-12 pt-12 animate-fade-in" style={{ animationDelay: "0.4s" }}>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-heading font-bold text-primary">100+</div>
-              <div className="text-sm text-muted-foreground">Happy Clients</div>
-            </div>
+            <HeroStat target={100} label="Happy Clients" />
             <div className="w-px h-12 bg-border" />
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-heading font-bold text-primary">1.5+</div>
-              <div className="text-sm text-muted-foreground">Years Experience</div>
-            </div>
+            <HeroStat target={1.5} decimals={1} label="Years Experience" />
             <div className="w-px h-12 bg-border" />
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-heading font-bold text-primary">70+</div>
-              <div className="text-sm text-muted-foreground">Projects Done</div>
-            </div>
+            <HeroStat target={70} label="Projects Done" />
           </div>
         </div>
       </div>

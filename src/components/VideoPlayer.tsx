@@ -115,6 +115,9 @@ const VideoPlayer = ({
           alt="Video thumbnail"
           className="absolute inset-0 w-full h-full object-cover"
           loading="lazy"
+          decoding="async"
+          width={1280}
+          height={720}
         />
       )}
 
