@@ -1,20 +1,20 @@
 /**
- * Header — Dnyxstudios-style minimal nav.
- * Logo (left) | Home · Portfolio · Contact (center) | Let's Talk (right)
- * Dark mode toggle removed. Sticky, scroll shadow, mobile hamburger.
+ * Header — pixel-matched to Dnyxstudios.
+ * Logo (left) | Home · Our Work · Contact (center) | Get Started (right)
+ * No border, transparent bg that blends with page, no dark-mode toggle.
  */
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
-  { name: "Home",      href: "/#home" },
-  { name: "Our Work",  href: "/portfolio" },
-  { name: "Contact",   href: "/#contact" },
+  { name: "Home",     href: "/#home" },
+  { name: "Our Work", href: "/portfolio" },
+  { name: "Contact",  href: "/#contact" },
 ];
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled,   setScrolled]   = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   /* ── Scroll shadow ── */
   useEffect(() => {
@@ -24,7 +24,10 @@ export default function Header() {
       raf = requestAnimationFrame(() => setScrolled(window.scrollY > 8));
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(raf); };
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   /* ── Body scroll lock ── */
@@ -39,56 +42,56 @@ export default function Header() {
     <header
       className={`
         sticky top-0 z-50
-        bg-white dark:bg-black
-        border-b border-gray-100 dark:border-gray-900
+        bg-background dark:bg-black
         transition-all duration-300
-        ${scrolled ? "shadow-sm" : ""}
+        ${scrolled ? "shadow-[0_1px_3px_rgba(0,0,0,0.06)]" : ""}
       `}
     >
-      {/* ── Desktop bar ─────────────────────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14 lg:h-16">
+        <div className="flex items-center justify-between h-[60px]">
 
-          {/* Logo */}
+          {/* ── Logo ── */}
           <a
             href="/#home"
             aria-label="Mashood — Home"
-            className="text-xl lg:text-2xl font-bold
+            className="text-[1.25rem] font-bold tracking-tight
                        text-black dark:text-white
-                       hover:text-[#007AFF] dark:hover:text-[#007AFF]
                        transition-colors duration-200
                        focus:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF] rounded"
           >
             Mashood
           </a>
 
-          {/* Desktop nav — centered */}
+          {/* ── Desktop nav — centered ── */}
           <nav
             aria-label="Primary navigation"
-            className="hidden md:flex items-center gap-8"
+            className="hidden md:flex items-center gap-7"
           >
             {NAV_LINKS.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className={`text-sm font-medium transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF] rounded ${
-                  link.name === "Home"
-                    ? "text-[#007AFF]"
-                    : "text-gray-600 dark:text-gray-400 hover:text-[#007AFF] dark:hover:text-[#007AFF]"
-                }`}
+                className={`
+                  text-[0.9rem] font-medium transition-colors duration-200
+                  focus:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF] rounded
+                  ${link.name === "Home"
+                    ? "text-[#007AFF] underline underline-offset-4 decoration-[#007AFF]"
+                    : "text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white"
+                  }
+                `}
               >
                 {link.name}
               </a>
             ))}
           </nav>
 
-          {/* Desktop CTA */}
+          {/* ── Desktop CTA ── */}
           <div className="hidden md:flex items-center">
             <a
               href="/#contact"
-              className="bg-[#007AFF] hover:bg-[#005FCC]
+              className="bg-[#007AFF] hover:bg-[#0066DD]
                          text-white text-sm font-semibold
-                         px-5 py-2 rounded-full
+                         px-6 py-2.5 rounded-full
                          transition-all duration-300
                          focus:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF] focus-visible:ring-offset-2
                          dark:focus-visible:ring-offset-black"
@@ -97,7 +100,7 @@ export default function Header() {
             </a>
           </div>
 
-          {/* Mobile hamburger */}
+          {/* ── Mobile hamburger ── */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
@@ -115,16 +118,16 @@ export default function Header() {
         </div>
       </div>
 
-      {/* ── Mobile panel ─────────────────────────────────────────────────── */}
+      {/* ── Mobile panel ── */}
       <div
         id="mobile-nav"
         role="navigation"
         aria-label="Mobile navigation"
         className={`
-          md:hidden border-t border-gray-100 dark:border-gray-900
-          bg-white dark:bg-black
+          md:hidden
+          bg-background dark:bg-black
           overflow-hidden transition-all duration-300 ease-out
-          ${mobileOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"}
+          ${mobileOpen ? "max-h-72 opacity-100 border-t border-gray-200 dark:border-gray-800" : "max-h-0 opacity-0"}
         `}
       >
         <div className="px-4 sm:px-6 py-4 flex flex-col gap-1">
@@ -133,11 +136,15 @@ export default function Header() {
               key={link.name}
               href={link.href}
               onClick={close}
-              className={`px-3 py-3 rounded-lg text-base font-medium transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF] focus-visible:ring-inset ${
-                link.name === "Home"
-                  ? "text-[#007AFF] bg-blue-50 dark:bg-blue-900/20"
+              className={`
+                px-3 py-3 rounded-lg text-base font-medium
+                transition-colors duration-200
+                focus:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF] focus-visible:ring-inset
+                ${link.name === "Home"
+                  ? "text-[#007AFF]"
                   : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-900 hover:text-[#007AFF] dark:hover:text-[#007AFF]"
-              }`}
+                }
+              `}
             >
               {link.name}
             </a>
@@ -146,7 +153,7 @@ export default function Header() {
           <a
             href="/#contact"
             onClick={close}
-            className="mt-2 bg-[#007AFF] hover:bg-[#005FCC]
+            className="mt-2 bg-[#007AFF] hover:bg-[#0066DD]
                        text-white font-semibold text-sm
                        px-6 py-3 rounded-full text-center
                        transition-all duration-300
