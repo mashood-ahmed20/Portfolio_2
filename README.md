@@ -1,73 +1,183 @@
-# Welcome to your Lovable project
+# Mashood Ahmed — Portfolio
 
-## Project info
+> **Motion Design & Full-Stack Web Developer**  
+> Video editing, motion graphics, SaaS explainers, and web development.
 
-**URL**: https://lovable.dev/projects/7ac4149b-c856-4732-ba45-08637a0543ef
+Live: [mashoodsportfolio.vercel.app](https://mashoodsportfolio.vercel.app)
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+| Layer | Technology |
+|-------|-----------|
+| Framework | React 18 + TypeScript 5 |
+| Build Tool | Vite 5 |
+| Styling | Tailwind CSS 3 + shadcn-ui |
+| Routing | React Router v6 |
+| Form Email | EmailJS (lazy-loaded) |
+| Icons | lucide-react |
+| Animations | CSS Keyframes + Intersection Observer |
+| Deployment | Vercel |
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/7ac4149b-c856-4732-ba45-08637a0543ef) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## Getting Started
 
-**Use your preferred IDE**
+### Prerequisites
+- Node.js 18+ or Bun
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+```bash
+# Clone the repo
+git clone https://github.com/YOUR_USERNAME/mashoodsportfolio.git
+cd mashoodsportfolio
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+# Install dependencies
+npm install
+# or
+bun install
 ```
 
-**Edit a file directly in GitHub**
+### Environment Variables
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+# Copy the example env file
+cp .env.example .env.local
 
-**Use GitHub Codespaces**
+# Fill in your EmailJS credentials
+# Get them from: https://www.emailjs.com/
+VITE_EMAILJS_SERVICE_ID=service_xxxxxxx
+VITE_EMAILJS_TEMPLATE_ID=template_xxxxxxx
+VITE_EMAILJS_PUBLIC_KEY=your_public_key_here
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+> **Note:** The current ContactSection has the EmailJS keys hardcoded for simplicity. Move them to env vars for production security.
 
-## What technologies are used for this project?
+### Development
 
-This project is built with:
+```bash
+npm run dev
+# App runs at http://localhost:8080
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Production Build
 
-## How can I deploy this project?
+```bash
+npm run build
+npm run preview
+```
 
-Simply open [Lovable](https://lovable.dev/projects/7ac4149b-c856-4732-ba45-08637a0543ef) and click on Share -> Publish.
+### Bundle Analysis
 
-## Can I connect a custom domain to my Lovable project?
+```bash
+npm run build:visualize
+# Opens dist/stats.html — shows chunk sizes and dependencies
+```
 
-Yes, you can!
+---
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Performance Architecture
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+### Code Splitting
+- `TestimonialsSection` — lazy loaded (React.lazy)
+- `FAQSection` — lazy loaded (React.lazy)
+- `Portfolio` page — lazy loaded (React.lazy)
+- `EmailJS` — lazy imported only on form submit
+
+### Manual Chunks (Vite config)
+| Chunk | Contents |
+|-------|----------|
+| `vendor-react` | react, react-dom |
+| `ui-radix` | all @radix-ui primitives |
+| `emailjs` | @emailjs/browser |
+| `charts` | recharts, d3-* |
+| `vendor` | remaining node_modules |
+
+### CSS Optimizations
+- Tailwind CSS tree-shakes unused utilities automatically
+- GPU-only keyframes (transform + opacity)
+- `prefers-reduced-motion` wrapper disables all animations
+- `font-display: swap` via Google Fonts URL param
+
+### Asset Caching
+- `/assets/*` — immutable cache (1 year) via Vercel headers
+- `/` HTML — no-cache (revalidates on deploy)
+
+---
+
+## SEO
+
+- **JSON-LD** Person + Service schema in `<head>`
+- **Open Graph** & Twitter Card meta tags
+- **robots.txt** at `/robots.txt`
+- **sitemap.xml** at `/sitemap.xml`
+- Semantic HTML: `<header>`, `<nav>`, `<main>`, `<section>`, `<footer>`
+- Single `<h1>` per page
+
+---
+
+## Deployment (Vercel)
+
+1. Push to GitHub
+2. Import repo in [Vercel Dashboard](https://vercel.com/dashboard)
+3. Vercel auto-detects Vite — no extra config needed
+4. Add env vars in Vercel dashboard (Settings → Environment Variables)
+5. Deploy 🚀
+
+The `vercel.json` file configures:
+- Immutable caching for hashed assets
+- Security headers (X-Content-Type-Options, X-Frame-Options, etc.)
+- SPA rewrites for client-side routing
+
+---
+
+## Performance Budget
+
+| Metric | Target |
+|--------|--------|
+| Lighthouse Performance | ≥ 90 |
+| FCP | < 1.5s |
+| LCP | < 2.5s |
+| CLS | < 0.1 |
+| Bundle (gzipped) | < 250KB |
+
+---
+
+## Project Structure
+
+```
+src/
+├── assets/          # Static assets (profile photo)
+├── components/      # All React components
+│   ├── ui/          # shadcn-ui primitives
+│   ├── HeroSection.tsx
+│   ├── AboutSection.tsx
+│   ├── ServicesSection.tsx
+│   ├── WhyChooseMe.tsx      ← NEW
+│   ├── PortfolioSection.tsx
+│   ├── EditingProcessSection.tsx
+│   ├── TestimonialsSection.tsx (lazy)
+│   ├── ContactSection.tsx
+│   ├── FAQSection.tsx       ← NEW (lazy)
+│   ├── Navbar.tsx
+│   ├── Footer.tsx
+│   ├── ErrorBoundary.tsx    ← NEW
+│   └── SEO.tsx
+├── contexts/        # React contexts
+├── data/            # Project data (projectsData.ts)
+├── hooks/           # Custom hooks
+│   ├── useScrollReveal.ts   ← Improved
+│   └── useCountUp.ts
+├── pages/
+│   ├── Index.tsx            ← Updated
+│   ├── Portfolio.tsx
+│   └── NotFound.tsx
+├── index.css               ← Optimized
+└── main.tsx                ← + Web Vitals
+```
+
+---
+
+© 2026 Mashood Ahmed — All rights reserved.

@@ -14,43 +14,98 @@ const UpworkIcon = () => (
 );
 
 const Footer = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
-    <footer className="py-8 px-4 md:px-8 border-t border-border/50">
-      <div className="container mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="text-center md:text-left">
-            <a href="#home" className="font-heading font-bold text-xl">
-              <span className="gradient-text">Mashood</span>
-              <span className="text-foreground">.</span>
+    /* Dark footer — like Dnyxstudios */
+    <footer className="bg-[#191919] dark:bg-black text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Main footer row — 12-col grid */}
+        <div className="grid grid-cols-12 gap-6 py-12 border-b border-white/10">
+
+          {/* Brand col-span-12 md:col-span-5 */}
+          <div className="col-span-12 md:col-span-5">
+            <a href="/" className="font-bold text-xl text-white tracking-tight">
+              Mashood<span className="text-[#007AFF]">.</span>
             </a>
-            <p className="text-sm text-muted-foreground mt-1">Video Editor • Motion Designer</p>
+            <p className="text-sm text-gray-400 mt-3 leading-relaxed max-w-xs">
+              Premium video editing &amp; motion design for brands, startups, and creators who want to stand out.
+            </p>
           </div>
 
-          <div className="flex items-center gap-4">
-            <a href="https://www.fiverr.com/s/pdYbBdY" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-secondary hover:bg-primary/10 hover:text-primary transition-colors" aria-label="Fiverr">
-              <FiverrIcon />
-            </a>
-            <a href="https://www.upwork.com/freelancers/~019b9b27ee7d1ec8c4?mp_source=share" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-secondary hover:bg-primary/10 hover:text-primary transition-colors" aria-label="Upwork">
-              <UpworkIcon />
-            </a>
-            <a href="https://www.linkedin.com/in/mashood-ahmed-sheikh-436166250" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-secondary hover:bg-primary/10 hover:text-primary transition-colors" aria-label="LinkedIn">
-              <Linkedin className="w-5 h-5" />
-            </a>
-            <button onClick={scrollToTop} className="p-2 rounded-lg bg-primary/10 hover:bg-primary/20 transition-colors ml-4" aria-label="Scroll to top">
-              <ArrowUp className="w-5 h-5 text-primary" />
+          {/* Links col-span-6 md:col-span-3 */}
+          <div className="col-span-6 md:col-span-3">
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-4">Pages</h4>
+            <ul className="space-y-3">
+              {[
+                { label: "Home",      href: "/" },
+                { label: "Portfolio", href: "/portfolio" },
+                { label: "Services",  href: "/#services" },
+                { label: "Contact",   href: "/#contact" },
+              ].map(({ label, href }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    className="text-sm text-gray-400 hover:text-white transition-colors duration-150
+                               focus:outline-none focus:ring-2 focus:ring-[#007AFF] rounded"
+                  >
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Social + scroll-up col-span-6 md:col-span-4 */}
+          <div className="col-span-6 md:col-span-4">
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-4">Follow Me</h4>
+            <div className="flex gap-3">
+              <a
+                href="https://www.fiverr.com/s/pdYbBdY"
+                target="_blank" rel="noopener noreferrer"
+                className="p-2 rounded-lg bg-white/5 hover:bg-[#007AFF]/20 hover:text-[#007AFF] transition-colors"
+                aria-label="Fiverr"
+              >
+                <FiverrIcon />
+              </a>
+              <a
+                href="https://www.upwork.com/freelancers/~019b9b27ee7d1ec8c4?mp_source=share"
+                target="_blank" rel="noopener noreferrer"
+                className="p-2 rounded-lg bg-white/5 hover:bg-[#007AFF]/20 hover:text-[#007AFF] transition-colors"
+                aria-label="Upwork"
+              >
+                <UpworkIcon />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/mashood-ahmed-sheikh-436166250"
+                target="_blank" rel="noopener noreferrer"
+                className="p-2 rounded-lg bg-white/5 hover:bg-[#007AFF]/20 hover:text-[#007AFF] transition-colors"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="w-5 h-5" />
+              </a>
+            </div>
+
+            <button
+              onClick={scrollToTop}
+              className="mt-6 flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors
+                         focus:outline-none focus:ring-2 focus:ring-[#007AFF] rounded"
+              aria-label="Scroll to top"
+            >
+              <ArrowUp className="w-4 h-4" />
+              Back to top
             </button>
           </div>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-border/30 text-center">
-          <p className="text-sm text-muted-foreground">
+        {/* Copyright */}
+        <div className="py-6 text-center">
+          <p className="text-sm text-gray-600">
             © {new Date().getFullYear()} Mashood Ahmed. All rights reserved.
           </p>
         </div>
+
       </div>
     </footer>
   );

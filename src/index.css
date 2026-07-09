@@ -1,49 +1,63 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   DESIGN TOKENS — Light mode (default)
+   ───────────────────────────────────────────────────────────────────────────── */
 @layer base {
   :root {
-    --background: 0 0% 6%;
-    --foreground: 0 0% 100%;
-
-    --card: 0 0% 12%;
-    --card-foreground: 0 0% 100%;
-
-    --popover: 0 0% 12%;
-    --popover-foreground: 0 0% 100%;
-
-    --primary: 355 100% 65%;
+    --background: 0 0% 96.5%;          /* #F5F5F7 */
+    --foreground: 0 0% 9.8%;           /* #191919 */
+    --card:            0 0% 100%;
+    --card-foreground: 0 0% 9.8%;
+    --popover:            0 0% 100%;
+    --popover-foreground: 0 0% 9.8%;
+    --primary:            211 100% 50%; /* #007AFF */
     --primary-foreground: 0 0% 100%;
-
-    --secondary: 0 0% 9%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 0 0% 14%;
-    --muted-foreground: 0 0% 70%;
-
-    --accent: 355 100% 56%;
+    --secondary:            0 0% 100%;
+    --secondary-foreground: 0 0% 9.8%;
+    --muted:            0 0% 94%;
+    --muted-foreground: 0 0% 43%;       /* #6E6E73 */
+    --accent:            211 100% 50%;
     --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 84% 60%;
+    --destructive:            0 84% 60%;
     --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 90%;                 /* #E6E6E6 */
+    --input:  0 0% 90%;
+    --ring:   211 100% 50%;
+    --radius: 1rem;
+  }
 
-    --border: 0 0% 16%;
-    --input: 0 0% 16%;
-    --ring: 355 100% 65%;
-
-    --radius: 0.75rem;
-
-    /* Custom design tokens */
-    --shadow-card: 0 8px 32px hsl(0 0% 0% / 0.4);
-    
-    --font-heading: 'Syne', sans-serif;
-    --font-body: 'Inter', sans-serif;
+  /* ── Dark mode token overrides ── */
+  .dark {
+    --background: 0 0% 4%;             /* #0A0A0A */
+    --foreground: 0 0% 98%;            /* #FAFAFA */
+    --card:            0 0% 7%;        /* #111111 */
+    --card-foreground: 0 0% 98%;
+    --popover:            0 0% 7%;
+    --popover-foreground: 0 0% 98%;
+    --primary:            211 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary:            0 0% 10%;  /* #1A1A1A */
+    --secondary-foreground: 0 0% 98%;
+    --muted:            0 0% 15%;      /* #262626 */
+    --muted-foreground: 0 0% 63%;      /* #A1A1A1 */
+    --accent:            211 100% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive:            0 63% 31%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 20%;                /* #333333 */
+    --input:  0 0% 20%;
+    --ring:   211 100% 50%;
   }
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   BASE RESET
+   ───────────────────────────────────────────────────────────────────────────── */
 @layer base {
   * {
     @apply border-border;
@@ -55,133 +69,169 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-body);
-    background: hsl(0 0% 6%);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Heading scale — spec §5 */
+  h1 { @apply text-5xl lg:text-6xl font-bold leading-tight; }
+  h2 { @apply text-4xl lg:text-5xl font-bold leading-tight; }
+  h3 { @apply text-2xl lg:text-3xl font-semibold leading-snug; }
+  h4 { @apply text-xl lg:text-2xl font-semibold leading-snug; }
+
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    @apply text-foreground;
   }
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   COMPONENT LIBRARY
+   ───────────────────────────────────────────────────────────────────────────── */
 @layer components {
+
+  /* ── Container (max-w-7xl with responsive px) ── */
+  .container-grid {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* ── Section padding — tighter vertical rhythm ── */
+  .section-padding {
+    @apply py-10 lg:py-14 px-4 sm:px-6 lg:px-8;
+  }
+
+  /* ── Section header block ── */
+  .section-header {
+    @apply grid grid-cols-12 gap-6 mb-8;
+  }
+
+  .section-header > div {
+    @apply col-span-12;
+  }
+
+  /* ── Card — spec §8 ── */
   .glass-card {
-    @apply backdrop-blur-sm rounded-xl;
-    background: hsl(0 0% 12% / 0.6);
-    border: 1px solid hsl(0 0% 16%);
-    box-shadow: var(--shadow-card);
+    @apply p-6 rounded-lg border border-gray-200 dark:border-gray-800
+           bg-white dark:bg-gray-950
+           hover:shadow-lg transition-all duration-300;
   }
 
-  .glow-text {
-    /* no glow — clean look */
+  /* ── Testimonial card (slight elevation) ── */
+  .testimonial-card {
+    @apply p-6 rounded-xl border border-gray-100 dark:border-gray-800
+           bg-white dark:bg-gray-950
+           shadow-[0_4px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.3)];
   }
 
-  .glow-box {
-    box-shadow: 0 0 30px hsl(355 100% 65% / 0.15);
+  /* ── Blue eyebrow label ── */
+  .section-label {
+    @apply text-[#007AFF] text-xs font-semibold uppercase tracking-widest;
   }
 
+  /* ── Blue accent text ── */
   .gradient-text {
-    color: hsl(355 100% 65%);
+    color: #007AFF;
   }
 
+  /* ── Hover lift (GPU-accelerated) ── */
   .hover-lift {
     @apply transition-all duration-300;
+    will-change: transform;
   }
 
   .hover-lift:hover {
-    @apply -translate-y-2;
-    box-shadow: 0 0 20px hsl(355 100% 65% / 0.1);
+    transform: translateY(-4px);
+    @apply shadow-lg;
   }
 
-  .skill-bar {
-    @apply h-2 rounded-full bg-muted overflow-hidden;
+  /* ── Form inputs — spec §14 ── */
+  .form-input {
+    @apply w-full border border-gray-300 dark:border-gray-700
+           px-4 py-3 rounded-lg text-base
+           bg-white dark:bg-gray-900
+           text-black dark:text-white
+           placeholder-gray-400 dark:placeholder-gray-500
+           focus:outline-none focus:ring-2 focus:ring-[#007AFF]
+           transition-all duration-200;
   }
 
-  .skill-bar-fill {
-    @apply h-full rounded-full bg-primary;
+  .form-label {
+    @apply block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300;
   }
 
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient-shift 3s ease infinite;
-  }
+  /* ── Section alternating backgrounds ── */
+  .section-white { @apply bg-white dark:bg-gray-950; }
+  .section-grey  { @apply bg-gray-50 dark:bg-gray-900; }
 
-  .section-padding {
-    @apply py-20 md:py-28 px-4 md:px-8;
-  }
+  /* ── Skill bar ── */
+  .skill-bar      { @apply h-2 rounded-full bg-muted overflow-hidden; }
+  .skill-bar-fill { @apply h-full rounded-full bg-[#007AFF]; }
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   KEYFRAMES — transform + opacity ONLY (GPU-accelerated)
+   ───────────────────────────────────────────────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%       { opacity: 0.8; transform: scale(1.05); }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.97); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+.animate-float      { animation: float 4s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+.animate-slide-in   { animation: slideIn 0.5s ease-out forwards; }
+.animate-scale-in   { animation: scaleIn 0.4s ease-out forwards; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   UTILITIES
+   ───────────────────────────────────────────────────────────────────────────── */
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+  .text-balance { text-wrap: balance; }
 
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-
-  .scrollbar-premium {
-    scrollbar-width: thin;
-    scrollbar-color: hsl(355 100% 65% / 0.3) transparent;
-  }
-
-  .scrollbar-premium::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  .scrollbar-premium::-webkit-scrollbar-track {
-    background: transparent;
-    margin: 8px 0;
-  }
-
-  .scrollbar-premium::-webkit-scrollbar-thumb {
-    background: hsl(355 100% 65% / 0.25);
-    border-radius: 9999px;
-  }
-
-  .scrollbar-premium:hover::-webkit-scrollbar-thumb {
-    background: hsl(355 100% 65% / 0.5);
-  }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
 }
 
-@keyframes gradient-shift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+/* ─────────────────────────────────────────────────────────────────────────────
+   ANIMATIONS
+   ───────────────────────────────────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
 }
 
-@keyframes pulse-glow {
-  0%, 100% {
-    opacity: 0.5;
-    transform: scale(1);
+/* ─────────────────────────────────────────────────────────────────────────────
+   ACCESSIBILITY — prefers-reduced-motion
+   ───────────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.05);
-  }
+  html { scroll-behavior: auto; }
 }
 
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}

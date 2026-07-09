@@ -2,7 +2,7 @@ import { useEffect, useRef, useCallback, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Play, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Navbar from "@/components/Navbar";
+import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
@@ -148,7 +148,7 @@ const Portfolio = () => {
         description="Explore Mashood Ahmed's portfolio of cinematic promos, SaaS explainers, app promos, UGC and short-form motion design work."
         canonical="/portfolio"
       />
-      <Navbar />
+      <Header />
 
       {/* Hero Banner */}
       <section className="relative pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden">

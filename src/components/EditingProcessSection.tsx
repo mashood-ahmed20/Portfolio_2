@@ -72,23 +72,30 @@ const ProcessCard = ({ step, index }: { step: typeof steps[0]; index: number }) 
 
 const EditingProcessSection = () => {
   return (
-    <section id="process" className="section-padding relative overflow-hidden">
-      <div className="container mx-auto relative z-10">
+    <section id="process" className="section-padding section-grey relative overflow-hidden">
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-primary font-medium text-sm uppercase tracking-wider">My Workflow</span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mt-2 mb-4">
-            How The <span className="gradient-text">Editing Process</span> Works
+        <div className="text-center max-w-3xl mx-auto mb-8">
+          <span className="section-label">My Workflow</span>
+          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mt-2 mb-3">
+            How The <span className="text-[#007AFF]">Editing Process</span> Works
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-base text-gray-600 dark:text-gray-400 leading-relaxed">
             A streamlined 5-step process designed for efficiency, clarity, and exceptional results.
           </p>
         </div>
 
-        {/* Steps Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+        {/* Steps — 12-col: each step is col-span-12 sm:col-span-6 lg:col-span-2 (5 steps * 2 = 10 cols, last gets 4) */}
+        <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-6">
           {steps.map((step, index) => (
-            <ProcessCard key={step.step} step={step} index={index} />
+            <div
+              key={step.step}
+              className={`col-span-1 md:col-span-3 ${
+                index < 4 ? "lg:col-span-2" : "lg:col-span-4"
+              }`}
+            >
+              <ProcessCard step={step} index={index} />
+            </div>
           ))}
         </div>
       </div>

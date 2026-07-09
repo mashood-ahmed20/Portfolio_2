@@ -4,15 +4,15 @@ import { Link } from "react-router-dom";
 import ProjectVideoCard from "@/components/ProjectVideoCard";
 import { Project } from "@/data/projectsData";
 import askStellarVideo from "@/assets/askstellar-video.mp4";
-import askStellarThumbnail from "@/assets/askstellar-thumbnail.png";
+import askStellarThumbnail from "@/assets/askstellar-thumbnail.webp";
 import gridironVideo from "@/assets/gridiron-coaching-video.mp4";
-import gridironThumbnail from "@/assets/gridiron-coaching-thumbnail.png";
+import gridironThumbnail from "@/assets/gridiron-coaching-thumbnail.webp";
 import influenceaiVideo from "@/assets/influenceai-video.mp4";
-import influenceaiThumbnail from "@/assets/influenceai-thumbnail.png";
+import influenceaiThumbnail from "@/assets/influenceai-thumbnail.webp";
 import tmeVideo from "@/assets/tme-video.mp4";
-import tmeThumbnail from "@/assets/tme-thumbnail.png";
+import tmeThumbnail from "@/assets/tme-thumbnail.webp";
 import onevoiceaiVideo from "@/assets/onevoiceai-video.mp4";
-import onevoiceaiThumbnail from "@/assets/onevoiceai-thumbnail.png";
+import onevoiceaiThumbnail from "@/assets/onevoiceai-thumbnail.webp";
 
 const featuredHorizontal: Project[] = [
   {
@@ -67,26 +67,28 @@ const featuredHorizontal: Project[] = [
 
 const PortfolioSection = () => {
   return (
-    <section id="portfolio" className="section-padding">
-      <div className="container mx-auto">
+    <section id="portfolio" className="section-padding section-grey">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-primary font-medium text-sm uppercase tracking-wider">My Work</span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mt-2 mb-4">
-            Featured <span className="gradient-text">Projects</span>
+        <div className="text-center max-w-3xl mx-auto mb-8">
+          <span className="section-label">My Work</span>
+          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mt-2 mb-3">
+            Featured <span className="text-[#007AFF]">Projects</span>
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-base text-gray-600 dark:text-gray-400 leading-relaxed">
             A selection of high-quality horizontal showcase work.
           </p>
         </div>
 
         <div id="all-projects" className="scroll-mt-24" />
 
-        {/* 2×2 Horizontal Grid */}
-        <div className="mb-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Pattern B: 2-column video card grid */}
+        <div className="mb-10">
+          <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-6">
             {featuredHorizontal.map((project) => (
-              <ProjectVideoCard key={project.id} project={project} />
+              <div key={project.id} className="col-span-1 md:col-span-3 lg:col-span-6">
+                <ProjectVideoCard project={project} />
+              </div>
             ))}
           </div>
         </div>

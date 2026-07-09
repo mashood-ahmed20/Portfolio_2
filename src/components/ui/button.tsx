@@ -5,24 +5,28 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-semibold ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline: "border border-border bg-transparent text-foreground hover:bg-secondary hover:border-primary/50",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "text-foreground hover:bg-secondary hover:text-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-        hero: "bg-primary text-primary-foreground font-semibold hover:bg-accent hover:-translate-y-0.5",
-        heroOutline: "border-2 border-primary/50 bg-transparent text-foreground hover:bg-primary/10 hover:border-primary",
+        // Solid blue — primary CTA (matches Dnyxstudios "Get Started" / "Start Your Project")
+        default: "bg-[#007AFF] text-white rounded-full hover:bg-[#1E6EF4] hover:-translate-y-0.5 active:translate-y-0",
+        destructive: "bg-destructive text-destructive-foreground rounded-full hover:bg-destructive/90",
+        // Light border pill — secondary CTA (matches "View Our Work →")
+        outline: "border border-[#E6E6E6] bg-white text-[#191919] rounded-full hover:border-[#007AFF] hover:text-[#007AFF] hover:-translate-y-0.5",
+        secondary: "bg-[#F5F5F7] text-[#191919] rounded-full hover:bg-[#E8E8EA]",
+        ghost: "text-[#191919] hover:bg-[#F5F5F7] rounded-full",
+        link: "text-[#007AFF] underline-offset-4 hover:underline p-0 h-auto",
+        // Hero CTA — solid blue pill (same as default but with stronger shadow)
+        hero: "bg-[#007AFF] text-white rounded-full font-semibold hover:bg-[#1E6EF4] hover:-translate-y-0.5 hover:shadow-[0_4px_16px_rgba(0,122,255,0.35)] active:translate-y-0",
+        // Hero outline — light border pill matching "View Our Work →"
+        heroOutline: "border border-[#DADADA] bg-white text-[#191919] rounded-full hover:border-[#007AFF] hover:text-[#007AFF] hover:-translate-y-0.5",
       },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-12 rounded-lg px-8 text-base",
-        xl: "h-14 rounded-xl px-10 text-lg",
+        default: "h-10 px-5 py-2",
+        sm: "h-9 px-4 text-xs",
+        lg: "h-12 px-7 text-base",
+        xl: "h-13 px-9 text-base",
         icon: "h-10 w-10",
       },
     },
@@ -32,6 +36,7 @@ const buttonVariants = cva(
     },
   },
 );
+
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
