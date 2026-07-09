@@ -1,20 +1,30 @@
 /**
- * Header — pixel-matched to Dnyxstudios.
- * Logo (left) | Home · Our Work · Contact (center) | Get Started (right)
- * No border, transparent bg that blends with page, no dark-mode toggle.
+ * Header — Dnyxstudios-style with dark mode toggle.
+ * Logo (left) | Home · Portfolio · Contact (center) | Dark toggle + Let's Talk (right)
  */
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
-
-const NAV_LINKS = [
-  { name: "Home",     href: "/#home" },
-  { name: "Our Work", href: "/portfolio" },
-  { name: "Contact",  href: "/#contact" },
-];
+import { Menu, X, Moon, Sun } from "lucide-react";
 
 export default function Header() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isDark, setIsDark] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  /* ── Dark mode — read localStorage then system preference ── */
+  useEffect(() => {
+    const stored = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const dark = stored === "dark" || (!stored && prefersDark);
+    setIsDark(dark);
+    document.documentElement.classList.toggle("dark", dark);
+  }, []);
+
+  const toggleDarkMode = () => {
+    const next = !isDark;
+    setIsDark(next);
+    document.documentElement.classList.toggle("dark", next);
+    localStorage.setItem("theme", next ? "dark" : "light");
+  };
 
   /* ── Scroll shadow ── */
   useEffect(() => {
@@ -32,136 +42,167 @@ export default function Header() {
 
   /* ── Body scroll lock ── */
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
-  }, [mobileOpen]);
-
-  const close = () => setMobileOpen(false);
+  }, [mobileMenuOpen]);
 
   return (
     <header
       className={`
         sticky top-0 z-50
-        bg-background dark:bg-black
+        bg-white dark:bg-black
+        border-b border-gray-200 dark:border-gray-800
         transition-all duration-300
-        ${scrolled ? "shadow-[0_1px_3px_rgba(0,0,0,0.06)]" : ""}
+        ${scrolled ? "shadow-sm" : ""}
       `}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-[60px]">
+        <div className="grid grid-cols-12 gap-6 py-4 items-center">
 
-          {/* ── Logo ── */}
-          <a
-            href="/#home"
-            aria-label="Mashood — Home"
-            className="text-[1.25rem] font-bold tracking-tight
-                       text-black dark:text-white
-                       transition-colors duration-200
-                       focus:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF] rounded"
-          >
-            Mashood
-          </a>
-
-          {/* ── Desktop nav — centered ── */}
-          <nav
-            aria-label="Primary navigation"
-            className="hidden md:flex items-center gap-7"
-          >
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className={`
-                  text-[0.9rem] font-medium transition-colors duration-200
-                  focus:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF] rounded
-                  ${link.name === "Home"
-                    ? "text-[#007AFF] underline underline-offset-4 decoration-[#007AFF]"
-                    : "text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white"
-                  }
-                `}
-              >
-                {link.name}
-              </a>
-            ))}
-          </nav>
-
-          {/* ── Desktop CTA ── */}
-          <div className="hidden md:flex items-center">
+          {/* Column 1-2: Logo */}
+          <div className="col-span-6 md:col-span-2">
             <a
-              href="/#contact"
-              className="bg-[#007AFF] hover:bg-[#0066DD]
-                         text-white text-sm font-semibold
-                         px-6 py-2.5 rounded-full
-                         transition-all duration-300
-                         focus:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF] focus-visible:ring-offset-2
-                         dark:focus-visible:ring-offset-black"
+              href="/#home"
+              className="text-2xl lg:text-3xl font-bold
+                         text-black dark:text-white
+                         hover:text-blue-600 transition-colors duration-200"
             >
-              Get Started
+              Mashood
             </a>
           </div>
 
-          {/* ── Mobile hamburger ── */}
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-nav"
-            className="md:hidden p-1.5 rounded-lg
-                       text-black dark:text-white
-                       hover:bg-gray-100 dark:hover:bg-gray-900
-                       transition-colors duration-200
-                       focus:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF]"
-          >
-            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
+          {/* Column 3-7: Navigation (hidden on mobile) */}
+          <nav className="hidden md:flex md:col-span-3 lg:col-span-5 justify-center gap-8">
+            <a
+              href="/#home"
+              className="text-gray-700 dark:text-gray-300
+                         hover:text-blue-600 dark:hover:text-blue-400
+                         transition-colors duration-200 font-medium"
+            >
+              Home
+            </a>
+            <a
+              href="/portfolio"
+              className="text-gray-700 dark:text-gray-300
+                         hover:text-blue-600 dark:hover:text-blue-400
+                         transition-colors duration-200 font-medium"
+            >
+              Portfolio
+            </a>
+            <a
+              href="/#contact"
+              className="text-gray-700 dark:text-gray-300
+                         hover:text-blue-600 dark:hover:text-blue-400
+                         transition-colors duration-200 font-medium"
+            >
+              Contact
+            </a>
+          </nav>
+
+          {/* Column 8-12: Dark Mode Toggle & CTA */}
+          <div className="col-span-6 md:col-span-7 lg:col-span-5 flex items-center justify-end gap-4">
+
+            {/* Dark Mode Toggle */}
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 rounded-lg
+                         border border-gray-300 dark:border-gray-700
+                         hover:bg-gray-100 dark:hover:bg-gray-900
+                         transition-colors duration-200"
+              aria-label="Toggle dark mode"
+            >
+              {isDark ? (
+                <Sun size={20} className="text-yellow-500" />
+              ) : (
+                <Moon size={20} className="text-gray-700" />
+              )}
+            </button>
+
+            {/* CTA Button (hidden on mobile) */}
+            <a
+              href="/#contact"
+              className="hidden md:inline-block
+                         bg-blue-600 hover:bg-blue-700
+                         dark:bg-blue-600 dark:hover:bg-blue-700
+                         text-white font-semibold
+                         px-6 py-2.5 rounded-lg
+                         transition-all duration-300
+                         focus:outline-none focus:ring-2 focus:ring-blue-500
+                         focus:ring-offset-2 dark:focus:ring-offset-black"
+            >
+              Let's Talk
+            </a>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-1.5 rounded-lg
+                         text-black dark:text-white
+                         hover:bg-gray-100 dark:hover:bg-gray-900
+                         transition-colors duration-200
+                         focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileMenuOpen}
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
 
         </div>
-      </div>
 
-      {/* ── Mobile panel ── */}
-      <div
-        id="mobile-nav"
-        role="navigation"
-        aria-label="Mobile navigation"
-        className={`
-          md:hidden
-          bg-background dark:bg-black
-          overflow-hidden transition-all duration-300 ease-out
-          ${mobileOpen ? "max-h-72 opacity-100 border-t border-gray-200 dark:border-gray-800" : "max-h-0 opacity-0"}
-        `}
-      >
-        <div className="px-4 sm:px-6 py-4 flex flex-col gap-1">
-          {NAV_LINKS.map((link) => (
+        {/* Mobile Menu */}
+        <div
+          className={`
+            md:hidden overflow-hidden transition-all duration-300 ease-out
+            ${mobileMenuOpen
+              ? "max-h-72 opacity-100 border-t border-gray-200 dark:border-gray-800"
+              : "max-h-0 opacity-0"
+            }
+          `}
+        >
+          <div className="py-4 flex flex-col gap-3">
             <a
-              key={link.name}
-              href={link.href}
-              onClick={close}
-              className={`
-                px-3 py-3 rounded-lg text-base font-medium
-                transition-colors duration-200
-                focus:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF] focus-visible:ring-inset
-                ${link.name === "Home"
-                  ? "text-[#007AFF]"
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-900 hover:text-[#007AFF] dark:hover:text-[#007AFF]"
-                }
-              `}
+              href="/#home"
+              className="px-3 py-2.5 rounded-lg text-base font-medium
+                         text-gray-700 dark:text-gray-300
+                         hover:text-blue-600 hover:bg-gray-50 dark:hover:bg-gray-900
+                         transition-colors duration-200"
+              onClick={() => setMobileMenuOpen(false)}
             >
-              {link.name}
+              Home
             </a>
-          ))}
-
-          <a
-            href="/#contact"
-            onClick={close}
-            className="mt-2 bg-[#007AFF] hover:bg-[#0066DD]
-                       text-white font-semibold text-sm
-                       px-6 py-3 rounded-full text-center
-                       transition-all duration-300
-                       focus:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF] focus-visible:ring-offset-2
-                       dark:focus-visible:ring-offset-black"
-          >
-            Get Started
-          </a>
+            <a
+              href="/portfolio"
+              className="px-3 py-2.5 rounded-lg text-base font-medium
+                         text-gray-700 dark:text-gray-300
+                         hover:text-blue-600 hover:bg-gray-50 dark:hover:bg-gray-900
+                         transition-colors duration-200"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Portfolio
+            </a>
+            <a
+              href="/#contact"
+              className="px-3 py-2.5 rounded-lg text-base font-medium
+                         text-gray-700 dark:text-gray-300
+                         hover:text-blue-600 hover:bg-gray-50 dark:hover:bg-gray-900
+                         transition-colors duration-200"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Contact
+            </a>
+            <a
+              href="/#contact"
+              className="mt-1 bg-blue-600 hover:bg-blue-700
+                         text-white font-semibold
+                         px-6 py-2.5 rounded-lg
+                         w-full text-center
+                         transition-all duration-300"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Let's Talk
+            </a>
+          </div>
         </div>
       </div>
     </header>
