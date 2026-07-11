@@ -238,22 +238,34 @@ const WhatIDoSection = () => {
           from { opacity: 0; transform: translateY(28px); }
           to   { opacity: 1; transform: translateY(0);    }
         }
+        /* Light mode */
         video::-webkit-media-controls {
-          background-color: rgba(0, 0, 0, 0.9);
+          background-color: rgba(255, 255, 255, 0.95);
         }
         video::-webkit-media-controls-panel {
-          background-color: rgba(0, 0, 0, 0.9);
+          background-color: rgba(255, 255, 255, 0.95);
         }
-        video::-webkit-media-controls-time-remaining-display {
-          color: white;
-        }
-        video::-webkit-media-controls-current-time-display {
-          color: white;
-        }
+        video::-webkit-media-controls-time-remaining-display { color: #111; }
+        video::-webkit-media-controls-current-time-display   { color: #111; }
         video::-webkit-media-controls-volume-slider {
-          background-color: rgba(255, 255, 255, 0.3);
+          background-color: rgba(0, 0, 0, 0.15);
         }
         video::-moz-media-controls-panel {
+          background-color: rgba(255, 255, 255, 0.95);
+        }
+        /* Dark mode */
+        .dark video::-webkit-media-controls {
+          background-color: rgba(0, 0, 0, 0.9);
+        }
+        .dark video::-webkit-media-controls-panel {
+          background-color: rgba(0, 0, 0, 0.9);
+        }
+        .dark video::-webkit-media-controls-time-remaining-display { color: #fff; }
+        .dark video::-webkit-media-controls-current-time-display   { color: #fff; }
+        .dark video::-webkit-media-controls-volume-slider {
+          background-color: rgba(255, 255, 255, 0.3);
+        }
+        .dark video::-moz-media-controls-panel {
           background-color: rgba(0, 0, 0, 0.9);
         }
       `}</style>

@@ -264,31 +264,57 @@ video::-moz-media-controls-panel {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   VIDEO CONTROLS — dark panel styling
+   VIDEO CONTROLS — theme-aware panel styling
+   Light mode → white panel / dark text
+   Dark  mode → black panel / white text  (.dark class on <html>)
    ───────────────────────────────────────────────────────────────────────────── */
 
-/* Chrome / Safari / Edge (WebKit) */
+/* ── Light mode (default) ── */
 video::-webkit-media-controls {
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(255, 255, 255, 0.95);
 }
 
 video::-webkit-media-controls-panel {
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(255, 255, 255, 0.95);
 }
 
 video::-webkit-media-controls-time-remaining-display {
-  color: white;
+  color: #111;
 }
 
 video::-webkit-media-controls-current-time-display {
-  color: white;
+  color: #111;
 }
 
 video::-webkit-media-controls-volume-slider {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+video::-moz-media-controls-panel {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+/* ── Dark mode — .dark class on <html> ── */
+.dark video::-webkit-media-controls {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.dark video::-webkit-media-controls-panel {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.dark video::-webkit-media-controls-time-remaining-display {
+  color: #fff;
+}
+
+.dark video::-webkit-media-controls-current-time-display {
+  color: #fff;
+}
+
+.dark video::-webkit-media-controls-volume-slider {
   background-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Firefox */
-video::-moz-media-controls-panel {
+.dark video::-moz-media-controls-panel {
   background-color: rgba(0, 0, 0, 0.9);
 }
