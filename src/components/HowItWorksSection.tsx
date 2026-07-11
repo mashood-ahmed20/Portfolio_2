@@ -172,8 +172,9 @@ const HowItWorksSection = () => {
                   decoding="async"
                   className={`
                     absolute inset-0 w-full h-full
-                    object-contain p-3 lg:p-4
+                    object-contain
                     transition-all duration-500 ease-out
+                    ${idx === 3 ? "p-0 lg:p-1" : "p-3 lg:p-4"}
                     ${activeStep === idx
                       ? "opacity-100 translate-y-0 scale-100"
                       : "opacity-0 translate-y-3 scale-95 pointer-events-none"
