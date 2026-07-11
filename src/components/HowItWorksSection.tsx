@@ -153,7 +153,16 @@ const HowItWorksSection = () => {
             className="col-span-1 md:col-span-3 lg:col-span-7
                        flex items-center justify-center"
           >
-            <div className="relative w-full">
+            {/* Fixed-height card — same size for all 4 steps */}
+            <div
+              className="relative w-full h-72 lg:h-80
+                         rounded-2xl overflow-hidden
+                         bg-white dark:bg-white
+                         border border-gray-100 dark:border-gray-200
+                         shadow-lg shadow-gray-200/60 dark:shadow-black/30
+                         flex items-center justify-center
+                         p-3 lg:p-4"
+            >
               {processSteps.map((step, idx) => (
                 <img
                   key={step.id}
@@ -162,11 +171,12 @@ const HowItWorksSection = () => {
                   loading="lazy"
                   decoding="async"
                   className={`
-                    w-full h-auto object-contain rounded-2xl shadow-lg
+                    absolute inset-0 w-full h-full
+                    object-contain p-3 lg:p-4
                     transition-all duration-500 ease-out
                     ${activeStep === idx
-                      ? "opacity-100 translate-y-0 pointer-events-auto"
-                      : "opacity-0 translate-y-2 pointer-events-none absolute inset-0"
+                      ? "opacity-100 translate-y-0 scale-100"
+                      : "opacity-0 translate-y-3 scale-95 pointer-events-none"
                     }
                   `}
                 />
