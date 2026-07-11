@@ -60,10 +60,6 @@ export default defineConfig(({ mode }) => ({
           if (id.includes("swiper")) {
             return "swiper";
           }
-          // React + React-DOM stay in vendor
-          if (id.includes("node_modules/react") || id.includes("node_modules/react-dom")) {
-            return "vendor-react";
-          }
           // EmailJS — isolated
           if (id.includes("@emailjs")) {
             return "emailjs";
