@@ -37,6 +37,8 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+    // Ensure only a single copy of React is ever bundled
+    dedupe: ["react", "react-dom"],
   },
   build: {
     // Use esbuild (faster) or terser for production minification
@@ -48,6 +50,17 @@ export default defineConfig(({ mode }) => ({
       output: {
         // Manual chunk splitting to keep main bundle lean
         manualChunks(id) {
+          // React MUST be in the same chunk as libraries that call React.forwardRef
+          // Keep react/react-dom in vendor (NOT in a separate chunk) to avoid
+          // load-order issues where React is undefined when Radix UI initialises.
+          if (
+            id.includes("node_modules/react/") ||
+            id.includes("node_modules/react-dom/") ||
+            id.includes("node_modules/react-is/") ||
+            id.includes("node_modules/scheduler/")
+          ) {
+            return "vendor";
+          }
           // Radix UI primitives → ui-radix chunk
           if (id.includes("@radix-ui")) {
             return "ui-radix";
