@@ -58,9 +58,9 @@ const Navbar = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+          <div className="relative flex items-center h-16">
 
-            {/* Logo */}
+            {/* Logo — pinned left */}
             <a
               href="/"
               className="font-bold text-lg text-gray-900 dark:text-white tracking-tight"
@@ -69,8 +69,8 @@ const Navbar = () => {
               Mashood<span className="text-[#007AFF]">.</span>
             </a>
 
-            {/* Desktop nav links */}
-            <div className="hidden md:flex items-center gap-7">
+            {/* Desktop nav links — absolutely centered */}
+            <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-7">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
@@ -83,8 +83,8 @@ const Navbar = () => {
               <PortfolioDropdown />
             </div>
 
-            {/* Right: dark toggle + CTA */}
-            <div className="hidden md:flex items-center gap-3">
+            {/* Right: dark toggle + CTA — pinned right */}
+            <div className="hidden md:flex items-center gap-3 ml-auto">
               <button
                 onClick={toggleDark}
                 aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
@@ -100,7 +100,7 @@ const Navbar = () => {
             </div>
 
             {/* Mobile: dark toggle + hamburger */}
-            <div className="flex md:hidden items-center gap-2">
+            <div className="flex md:hidden items-center gap-2 ml-auto">
               <button
                 onClick={toggleDark}
                 aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
