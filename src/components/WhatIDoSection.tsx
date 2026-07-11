@@ -238,8 +238,23 @@ const WhatIDoSection = () => {
           from { opacity: 0; transform: translateY(28px); }
           to   { opacity: 1; transform: translateY(0);    }
         }
+        video::-webkit-media-controls {
+          background-color: rgba(0, 0, 0, 0.9);
+        }
         video::-webkit-media-controls-panel {
-          background: rgba(0,0,0,0.85);
+          background-color: rgba(0, 0, 0, 0.9);
+        }
+        video::-webkit-media-controls-time-remaining-display {
+          color: white;
+        }
+        video::-webkit-media-controls-current-time-display {
+          color: white;
+        }
+        video::-webkit-media-controls-volume-slider {
+          background-color: rgba(255, 255, 255, 0.3);
+        }
+        video::-moz-media-controls-panel {
+          background-color: rgba(0, 0, 0, 0.9);
         }
       `}</style>
 
