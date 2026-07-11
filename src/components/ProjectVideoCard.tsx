@@ -289,31 +289,31 @@ const ProjectVideoCard = ({ project, index = 0 }: ProjectVideoCardProps) => {
             onClick={(e) => e.stopPropagation()}
             onTouchEnd={(e) => e.stopPropagation()}
           >
-            <div className="relative w-full h-2 mb-2 cursor-pointer rounded-full overflow-hidden">
-              <div className="absolute inset-0 bg-muted" />
-              <div className="absolute top-0 left-0 h-full rounded-full bg-primary transition-[width] duration-75" style={{ width: `${progress}%` }} />
+            <div className="relative w-full h-1.5 mb-2 cursor-pointer rounded-full overflow-hidden">
+              <div className="absolute inset-0 bg-white/20" />
+              <div className="absolute top-0 left-0 h-full rounded-full bg-[#007AFF] transition-[width] duration-75" style={{ width: `${progress}%` }} />
               <input type="range" min={0} max={duration || 0} step={0.1} value={currentTime} onChange={handleSeek}
                 onMouseDown={() => setIsSeeking(true)} onMouseUp={() => setIsSeeking(false)}
                 onTouchStart={() => setIsSeeking(true)} onTouchEnd={() => setIsSeeking(false)}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
             </div>
             <div className="flex items-center gap-2">
-              <button onClick={togglePlay} className="w-8 h-8 flex items-center justify-center text-foreground/90 hover:text-primary transition-colors touch-manipulation">
+              <button onClick={togglePlay} className="w-8 h-8 flex items-center justify-center text-white hover:text-[#007AFF] transition-colors touch-manipulation">
                 {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
               </button>
-              <span className="text-[10px] text-foreground/60 font-mono tabular-nums select-none">
+              <span className="text-[10px] text-white/70 font-mono tabular-nums select-none">
                 {formatTime(currentTime)} / {formatTime(duration)}
               </span>
               <div className="flex-1" />
               <div className="flex items-center gap-1 group/vol">
-                <button onClick={toggleMute} className="w-8 h-8 flex items-center justify-center text-foreground/90 hover:text-primary transition-colors touch-manipulation">
+                <button onClick={toggleMute} className="w-8 h-8 flex items-center justify-center text-white hover:text-[#007AFF] transition-colors touch-manipulation">
                   {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                 </button>
                 <input type="range" min={0} max={1} step={0.05} value={isMuted ? 0 : volume} onChange={handleVolumeChange}
                   onClick={(e) => e.stopPropagation()}
-                  className="w-0 group-hover/vol:w-14 transition-all duration-200 accent-primary h-0.5 cursor-pointer opacity-0 group-hover/vol:opacity-100" />
+                  className="w-0 group-hover/vol:w-14 transition-all duration-200 accent-[#007AFF] h-0.5 cursor-pointer opacity-0 group-hover/vol:opacity-100" />
               </div>
-              <button onClick={toggleFullscreen} className="w-8 h-8 flex items-center justify-center text-foreground/90 hover:text-primary transition-colors touch-manipulation">
+              <button onClick={toggleFullscreen} className="w-8 h-8 flex items-center justify-center text-white hover:text-[#007AFF] transition-colors touch-manipulation">
                 {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
               </button>
             </div>
