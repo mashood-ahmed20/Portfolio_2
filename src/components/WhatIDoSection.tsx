@@ -1,30 +1,248 @@
 /**
  * WhatIDoSection — 2×2 project card grid with video lightbox modal.
- * Click a card → modal opens → video auto-plays with native controls.
- * Click outside modal or X button → modal closes.
+ * Custom controls bar: fully theme-aware (light/dark), no native browser UI.
  */
-import { useState, useCallback, useEffect, memo, useRef } from "react";
-import { ArrowRight, Play, X } from "lucide-react";
+import {
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  memo,
+} from "react";
+import {
+  ArrowRight,
+  Play,
+  Pause,
+  X,
+  Volume2,
+  VolumeX,
+  Maximize,
+  Minimize,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { featuredProjects, type FeaturedProject } from "@/data/projects";
 
-/* ── Video Modal / Lightbox ─────────────────────────────────────────────── */
+/* ── Helpers ────────────────────────────────────────────────────────────────── */
+function fmtTime(s: number): string {
+  if (!isFinite(s)) return "0:00";
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return `${m}:${sec.toString().padStart(2, "0")}`;
+}
+
+/* ── Custom Video Controls Bar ──────────────────────────────────────────────── */
+interface ControlsProps {
+  videoRef: React.RefObject<HTMLVideoElement>;
+  containerRef: React.RefObject<HTMLDivElement>;
+}
+
+const VideoControls = memo(({ videoRef, containerRef }: ControlsProps) => {
+  const [playing, setPlaying]         = useState(true);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration]       = useState(0);
+  const [muted, setMuted]             = useState(false);
+  const [fullscreen, setFullscreen]   = useState(false);
+  const [visible, setVisible]         = useState(true);
+  const hideTimer                     = useRef<ReturnType<typeof setTimeout>>();
+
+  /* Auto-hide controls after 3 s of inactivity */
+  const showControls = useCallback(() => {
+    setVisible(true);
+    clearTimeout(hideTimer.current);
+    hideTimer.current = setTimeout(() => {
+      if (videoRef.current && !videoRef.current.paused) setVisible(false);
+    }, 3000);
+  }, [videoRef]);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+
+    const onTime     = () => setCurrentTime(v.currentTime);
+    const onMeta     = () => setDuration(v.duration);
+    const onPlay     = () => { setPlaying(true);  showControls(); };
+    const onPause    = () => { setPlaying(false); setVisible(true); };
+    const onFsChange = () => setFullscreen(!!document.fullscreenElement);
+
+    v.addEventListener("timeupdate",        onTime);
+    v.addEventListener("loadedmetadata",    onMeta);
+    v.addEventListener("play",              onPlay);
+    v.addEventListener("pause",             onPause);
+    document.addEventListener("fullscreenchange", onFsChange);
+
+    /* kick auto-hide on mount */
+    showControls();
+
+    return () => {
+      v.removeEventListener("timeupdate",     onTime);
+      v.removeEventListener("loadedmetadata", onMeta);
+      v.removeEventListener("play",           onPlay);
+      v.removeEventListener("pause",          onPause);
+      document.removeEventListener("fullscreenchange", onFsChange);
+      clearTimeout(hideTimer.current);
+    };
+  }, [videoRef, showControls]);
+
+  const togglePlay = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.paused ? v.play() : v.pause();
+  };
+
+  const toggleMute = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = !v.muted;
+    setMuted(v.muted);
+  };
+
+  const seek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.currentTime = Number(e.target.value);
+    setCurrentTime(Number(e.target.value));
+  };
+
+  const toggleFullscreen = () => {
+    const c = containerRef.current;
+    if (!c) return;
+    if (!document.fullscreenElement) {
+      c.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen().catch(() => {});
+    }
+  };
+
+  const pct = duration > 0 ? (currentTime / duration) * 100 : 0;
+
+  return (
+    <div
+      className="video-controls-bar"
+      style={{
+        position:   "absolute",
+        bottom:     0,
+        left:       0,
+        right:      0,
+        opacity:    visible ? 1 : 0,
+        transition: "opacity 0.3s ease",
+        pointerEvents: visible ? "auto" : "none",
+        /* theme surface — white in light, near-black in dark */
+        background: "var(--vc-bg)",
+        padding:    "10px 14px 12px",
+        display:    "flex",
+        flexDirection: "column",
+        gap:        "6px",
+      }}
+      onMouseMove={showControls}
+      onMouseEnter={showControls}
+    >
+      {/* Progress scrubber */}
+      <div style={{ position: "relative", height: "4px", cursor: "pointer" }}>
+        {/* Track */}
+        <div
+          style={{
+            position:     "absolute",
+            inset:        0,
+            borderRadius: "9999px",
+            background:   "var(--vc-track)",
+          }}
+        />
+        {/* Fill */}
+        <div
+          style={{
+            position:     "absolute",
+            left:         0,
+            top:          0,
+            bottom:       0,
+            width:        `${pct}%`,
+            borderRadius: "9999px",
+            background:   "#007AFF",
+            pointerEvents:"none",
+          }}
+        />
+        <input
+          type="range"
+          min={0}
+          max={duration || 100}
+          step={0.1}
+          value={currentTime}
+          onChange={seek}
+          onMouseMove={showControls}
+          aria-label="Seek"
+          style={{
+            position:   "absolute",
+            inset:      "-6px 0",
+            width:      "100%",
+            opacity:    0,
+            cursor:     "pointer",
+            margin:     0,
+          }}
+        />
+      </div>
+
+      {/* Bottom row */}
+      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        {/* Play / Pause */}
+        <button
+          onClick={togglePlay}
+          aria-label={playing ? "Pause" : "Play"}
+          style={{ color: "var(--vc-icon)", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex" }}
+        >
+          {playing
+            ? <Pause  size={18} fill="currentColor" />
+            : <Play   size={18} fill="currentColor" />}
+        </button>
+
+        {/* Mute */}
+        <button
+          onClick={toggleMute}
+          aria-label={muted ? "Unmute" : "Mute"}
+          style={{ color: "var(--vc-icon)", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex" }}
+        >
+          {muted
+            ? <VolumeX size={18} />
+            : <Volume2 size={18} />}
+        </button>
+
+        {/* Time */}
+        <span style={{ color: "var(--vc-time)", fontSize: "12px", fontVariantNumeric: "tabular-nums", userSelect: "none" }}>
+          {fmtTime(currentTime)} / {fmtTime(duration)}
+        </span>
+
+        {/* Spacer */}
+        <div style={{ flex: 1 }} />
+
+        {/* Fullscreen */}
+        <button
+          onClick={toggleFullscreen}
+          aria-label={fullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+          style={{ color: "var(--vc-icon)", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex" }}
+        >
+          {fullscreen
+            ? <Minimize size={16} />
+            : <Maximize size={16} />}
+        </button>
+      </div>
+    </div>
+  );
+});
+VideoControls.displayName = "VideoControls";
+
+/* ── Video Modal / Lightbox ─────────────────────────────────────────────────── */
 interface ModalProps {
   project: FeaturedProject;
   onClose: () => void;
 }
 
 const VideoModal = memo(({ project, onClose }: ModalProps) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef     = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  /* Close on Escape key */
+  /* Close on Escape */
   useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
+    const handleKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", handleKey);
-    /* Prevent body scroll while open */
     document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", handleKey);
@@ -33,34 +251,40 @@ const VideoModal = memo(({ project, onClose }: ModalProps) => {
   }, [onClose]);
 
   return (
-    /* Backdrop — click outside to close */
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-10
-                 bg-black/85 animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-10 bg-black/85 animate-fade-in"
       role="dialog"
       aria-modal="true"
       aria-label={`${project.title} video`}
       onClick={onClose}
     >
-      {/* Modal panel — stop click bubbling */}
+      {/* Modal panel */}
       <div
         className="relative w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl bg-black"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* 16:9 container */}
-        <div className="aspect-video">
+        {/* 16:9 video + custom controls */}
+        <div
+          ref={containerRef}
+          className="aspect-video relative overflow-hidden bg-black"
+        >
+          {/* bare video — no native controls */}
           <video
             ref={videoRef}
             src={project.videoUrl}
-            controls
             autoPlay
             playsInline
-            controlsList="nodownload"
             className="w-full h-full"
-            style={{ backgroundColor: "#000" }}
+            onClick={() => videoRef.current?.paused
+              ? videoRef.current.play()
+              : videoRef.current?.pause()}
+            style={{ display: "block", cursor: "pointer" }}
           >
             Your browser does not support the video tag.
           </video>
+
+          {/* Custom controls overlay */}
+          <VideoControls videoRef={videoRef} containerRef={containerRef} />
         </div>
 
         {/* Title bar below video */}
@@ -96,7 +320,7 @@ const VideoModal = memo(({ project, onClose }: ModalProps) => {
 });
 VideoModal.displayName = "VideoModal";
 
-/* ── Single project card ─────────────────────────────────────────────────── */
+/* ── Single project card ─────────────────────────────────────────────────────── */
 interface CardProps {
   project: FeaturedProject;
   index: number;
@@ -106,11 +330,6 @@ interface CardProps {
 const ProjectCard = memo(({ project, index, onPlay }: CardProps) => {
   const navigate = useNavigate();
 
-  const handleCardClick = () => {
-    /* Open video modal */
-    onPlay(project);
-  };
-
   const handleViewProject = (e: React.MouseEvent) => {
     e.stopPropagation();
     navigate(`/portfolio?scroll=${project.niche}`);
@@ -118,27 +337,23 @@ const ProjectCard = memo(({ project, index, onPlay }: CardProps) => {
 
   return (
     <div
-      className="group rounded-xl overflow-hidden
-                 focus-within:ring-2 focus-within:ring-[#007AFF]"
+      className="group rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-[#007AFF]"
       style={{
-        opacity: 0,
+        opacity:   0,
         transform: "translateY(28px)",
         animation: `fadeSlideUp 0.55s ease-out ${index * 0.1}s forwards`,
       }}
     >
-      {/* ── Thumbnail + hover overlay ── */}
+      {/* Thumbnail + hover overlay */}
       <button
-        onClick={handleCardClick}
-        className="relative block w-full h-72 sm:h-80 overflow-hidden bg-gray-100 dark:bg-gray-800
-                   cursor-pointer focus:outline-none"
+        onClick={() => onPlay(project)}
+        className="relative block w-full h-72 sm:h-80 overflow-hidden bg-gray-100 dark:bg-gray-800 cursor-pointer focus:outline-none"
         aria-label={`Play ${project.title} video`}
       >
         <img
           src={project.thumbnail}
           alt={`${project.title} — ${project.subtitle}`}
-          className="w-full h-full object-cover
-                     transition-transform duration-500 ease-out
-                     group-hover:scale-110"
+          className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
           loading="lazy"
           decoding="async"
         />
@@ -153,44 +368,23 @@ const ProjectCard = memo(({ project, index, onPlay }: CardProps) => {
           </span>
         </div>
 
-        {/* Play button — centre, shown on hover */}
-        <div
-          className="absolute inset-0 flex items-center justify-center
-                     bg-black/40 opacity-0 group-hover:opacity-100
-                     transition-opacity duration-300"
-        >
-          <div
-            className="w-16 h-16 rounded-full bg-[#007AFF] hover:bg-[#005FCC]
-                       flex items-center justify-center shadow-xl
-                       transition-colors duration-300
-                       scale-90 group-hover:scale-100 transition-transform"
-          >
+        {/* Play button on hover */}
+        <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="w-16 h-16 rounded-full bg-[#007AFF] hover:bg-[#005FCC] flex items-center justify-center shadow-xl transition-colors duration-300 scale-90 group-hover:scale-100">
             <Play size={26} className="text-white fill-white ml-1" aria-hidden="true" />
           </div>
         </div>
 
-        {/* Gradient + info overlay on hover */}
-        <div
-          className="absolute inset-0
-                     bg-gradient-to-t from-black/80 via-black/30 to-transparent
-                     opacity-0 group-hover:opacity-100
-                     transition-opacity duration-300
-                     flex flex-col justify-end p-5 pointer-events-none"
-        >
+        {/* Gradient + description on hover */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5 pointer-events-none">
           <p className="text-gray-200 text-sm leading-relaxed line-clamp-2">
             {project.description}
           </p>
         </div>
       </button>
 
-      {/* ── Card footer ── */}
-      <div
-        className="bg-white dark:bg-gray-900
-                   border-t border-gray-100 dark:border-gray-800
-                   px-5 py-4
-                   transition-colors duration-200
-                   group-hover:bg-gray-50 dark:group-hover:bg-gray-800"
-      >
+      {/* Card footer */}
+      <div className="bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 px-5 py-4 transition-colors duration-200 group-hover:bg-gray-50 dark:group-hover:bg-gray-800">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <h3 className="font-semibold text-black dark:text-white text-base truncate">
@@ -200,15 +394,10 @@ const ProjectCard = memo(({ project, index, onPlay }: CardProps) => {
               {project.subtitle}
             </p>
           </div>
-
-          {/* "View project" button — navigates to /portfolio */}
           <button
             onClick={handleViewProject}
             aria-label={`View ${project.title} project details`}
-            className="flex items-center gap-1 text-xs font-semibold text-[#007AFF]
-                       hover:text-[#005FCC] transition-colors duration-200
-                       flex-shrink-0 mt-0.5 focus:outline-none
-                       focus-visible:ring-2 focus-visible:ring-[#007AFF] rounded"
+            className="flex items-center gap-1 text-xs font-semibold text-[#007AFF] hover:text-[#005FCC] transition-colors duration-200 flex-shrink-0 mt-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF] rounded"
           >
             View
             <ArrowRight size={13} aria-hidden="true" />
@@ -220,7 +409,7 @@ const ProjectCard = memo(({ project, index, onPlay }: CardProps) => {
 });
 ProjectCard.displayName = "ProjectCard";
 
-/* ── Section ─────────────────────────────────────────────────────────────── */
+/* ── Section ─────────────────────────────────────────────────────────────────── */
 const WhatIDoSection = () => {
   const [activeProject, setActiveProject] = useState<FeaturedProject | null>(null);
 
@@ -232,41 +421,33 @@ const WhatIDoSection = () => {
 
   return (
     <>
-      {/* Keyframe for staggered card entrance */}
       <style>{`
         @keyframes fadeSlideUp {
           from { opacity: 0; transform: translateY(28px); }
           to   { opacity: 1; transform: translateY(0);    }
         }
-        /* Light mode */
-        video::-webkit-media-controls {
-          background-color: rgba(255, 255, 255, 0.95);
+
+        /* ── Custom video controls — CSS variables for light/dark theme ── */
+        :root {
+          --vc-bg:    rgba(255, 255, 255, 0.97);
+          --vc-icon:  #111111;
+          --vc-time:  #444444;
+          --vc-track: rgba(0, 0, 0, 0.15);
         }
-        video::-webkit-media-controls-panel {
-          background-color: rgba(255, 255, 255, 0.95);
+        .dark {
+          --vc-bg:    rgba(10, 10, 10, 0.95);
+          --vc-icon:  #ffffff;
+          --vc-time:  #aaaaaa;
+          --vc-track: rgba(255, 255, 255, 0.2);
         }
-        video::-webkit-media-controls-time-remaining-display { color: #111; }
-        video::-webkit-media-controls-current-time-display   { color: #111; }
-        video::-webkit-media-controls-volume-slider {
-          background-color: rgba(0, 0, 0, 0.15);
-        }
-        video::-moz-media-controls-panel {
-          background-color: rgba(255, 255, 255, 0.95);
-        }
-        /* Dark mode */
-        .dark video::-webkit-media-controls {
-          background-color: rgba(0, 0, 0, 0.9);
-        }
-        .dark video::-webkit-media-controls-panel {
-          background-color: rgba(0, 0, 0, 0.9);
-        }
-        .dark video::-webkit-media-controls-time-remaining-display { color: #fff; }
-        .dark video::-webkit-media-controls-current-time-display   { color: #fff; }
-        .dark video::-webkit-media-controls-volume-slider {
-          background-color: rgba(255, 255, 255, 0.3);
-        }
-        .dark video::-moz-media-controls-panel {
-          background-color: rgba(0, 0, 0, 0.9);
+
+        /* Fullscreen: controls bar still themed */
+        :fullscreen .video-controls-bar,
+        :-webkit-full-screen .video-controls-bar {
+          background: rgba(10, 10, 10, 0.85);
+          --vc-icon:  #ffffff;
+          --vc-time:  #aaaaaa;
+          --vc-track: rgba(255, 255, 255, 0.2);
         }
       `}</style>
 
@@ -277,7 +458,7 @@ const WhatIDoSection = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* ── Section header — full-width col-span-12 ── */}
+          {/* Section header */}
           <div className="grid grid-cols-12 gap-6 mb-12">
             <div
               ref={headerRef}
@@ -302,23 +483,20 @@ const WhatIDoSection = () => {
             </div>
           </div>
 
-          {/* ── Project cards — 2×2 grid ── */}
+          {/* Project cards */}
           <div
             ref={gridRef}
             className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-6 mb-12"
           >
             {gridVisible &&
               featuredProjects.map((project, index) => (
-                <div
-                  key={project.id}
-                  className="col-span-1 md:col-span-3 lg:col-span-6"
-                >
+                <div key={project.id} className="col-span-1 md:col-span-3 lg:col-span-6">
                   <ProjectCard project={project} index={index} onPlay={openModal} />
                 </div>
               ))}
           </div>
 
-          {/* ── CTA — full-width col-span-12 ── */}
+          {/* CTA */}
           <div className="grid grid-cols-12 gap-6">
             <div
               className="col-span-12 text-center"
@@ -349,7 +527,7 @@ const WhatIDoSection = () => {
         </div>
       </section>
 
-      {/* ── Video lightbox modal — rendered via portal-like fixed positioning ── */}
+      {/* Video lightbox modal */}
       {activeProject && (
         <VideoModal project={activeProject} onClose={closeModal} />
       )}
