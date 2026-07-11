@@ -253,9 +253,10 @@ const ProjectVideoCard = ({ project, index = 0 }: ProjectVideoCardProps) => {
           <div
             className="absolute inset-0 flex items-center justify-center cursor-pointer transition-all duration-300"
             style={{
+              /* Subtle gradient visible on both light and dark video content */
               background: isHovered
-                ? "linear-gradient(to top, hsl(0 0% 6% / 0.5), hsl(0 0% 6% / 0.15))"
-                : "linear-gradient(to top, hsl(0 0% 6% / 0.4), hsl(0 0% 6% / 0.1))",
+                ? "linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)"
+                : "linear-gradient(to top, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.06) 50%, transparent 100%)",
             }}
             onClick={togglePlay}
           >

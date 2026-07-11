@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from "react";
-import { Play } from "lucide-react";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { Play, Pause, Volume2, VolumeX, Maximize, Minimize } from "lucide-react";
 
 interface VideoPlayerProps {
   src: string;
@@ -10,6 +10,13 @@ interface VideoPlayerProps {
   onContainerClick?: () => void;
 }
 
+const formatTime = (s: number) => {
+  if (!isFinite(s) || s < 0) return "0:00";
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return `${m}:${sec.toString().padStart(2, "0")}`;
+};
+
 const VideoPlayer = ({
   src,
   poster,
@@ -18,21 +25,29 @@ const VideoPlayer = ({
   thumbnailMode = false,
   onContainerClick,
 }: VideoPlayerProps) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const [showPoster, setShowPoster] = useState(!!poster);
+  const videoRef       = useRef<HTMLVideoElement>(null);
+  const containerRef   = useRef<HTMLDivElement>(null);
+  const hideTimerRef   = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const playingRef     = useRef(false);
+
+  const [isPlaying,   setIsPlaying]   = useState(false);
+  const [isMuted,     setIsMuted]     = useState(false);
+  const [isVisible,   setIsVisible]   = useState(false);
+  const [showPoster,  setShowPoster]  = useState(!!poster);
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration,    setDuration]    = useState(0);
+  const [showControls, setShowControls] = useState(false);
+  const [isSeeking,   setIsSeeking]   = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => { playingRef.current = isPlaying; }, [isPlaying]);
 
   // Lazy visibility detection
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
+        if (entry.isIntersecting) { setIsVisible(true); observer.disconnect(); }
       },
       { threshold: 0.1, rootMargin: "50px" }
     );
@@ -40,75 +55,153 @@ const VideoPlayer = ({
     return () => observer.disconnect();
   }, []);
 
-  const handlePlay = (e: React.MouseEvent) => {
+  // Time / metadata listeners
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const onTime = () => { if (!isSeeking) setCurrentTime(video.currentTime); };
+    const onMeta = () => setDuration(video.duration);
+    const onPlay  = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+    video.addEventListener("timeupdate",     onTime);
+    video.addEventListener("loadedmetadata", onMeta);
+    video.addEventListener("durationchange", onMeta);
+    video.addEventListener("play",           onPlay);
+    video.addEventListener("pause",          onPause);
+    return () => {
+      video.removeEventListener("timeupdate",     onTime);
+      video.removeEventListener("loadedmetadata", onMeta);
+      video.removeEventListener("durationchange", onMeta);
+      video.removeEventListener("play",           onPlay);
+      video.removeEventListener("pause",          onPause);
+    };
+  }, [isSeeking, videoLoaded]);
+
+  // Fullscreen change
+  useEffect(() => {
+    const handleFs = () => {
+      const inFs = !!(document.fullscreenElement || (document as any).webkitFullscreenElement);
+      setIsFullscreen(inFs);
+      if (!inFs) {
+        document.body.style.overflow = "";
+        setShowControls(true);
+      } else {
+        document.body.style.overflow = "hidden";
+      }
+    };
+    document.addEventListener("fullscreenchange",        handleFs);
+    document.addEventListener("webkitfullscreenchange",  handleFs);
+    return () => {
+      document.removeEventListener("fullscreenchange",       handleFs);
+      document.removeEventListener("webkitfullscreenchange", handleFs);
+    };
+  }, []);
+
+  const resetHideTimer = useCallback(() => {
+    if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+    setShowControls(true);
+    hideTimerRef.current = setTimeout(() => {
+      if (playingRef.current && !isSeeking) setShowControls(false);
+    }, 3000);
+  }, [isSeeking]);
+
+  const handlePlay = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
 
-    if (thumbnailMode && onContainerClick) {
-      onContainerClick();
+    if (thumbnailMode && onContainerClick) { onContainerClick(); return; }
+
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (playingRef.current) {
+      video.pause();
+      setShowControls(true);
       return;
     }
 
-    if (isPlaying && videoRef.current) {
-      videoRef.current.pause();
-      setIsPlaying(false);
-      return;
-    }
-
-    // Load video element on first click
     if (!videoLoaded) {
       setVideoLoaded(true);
       setShowPoster(false);
-      // Wait for video element to mount then play
       requestAnimationFrame(() => {
         setTimeout(() => {
-          videoRef.current?.play();
-          setIsPlaying(true);
+          videoRef.current?.play().catch(() => {});
+          resetHideTimer();
         }, 50);
       });
-    } else if (videoRef.current) {
+    } else {
       setShowPoster(false);
-      videoRef.current.play();
-      setIsPlaying(true);
+      video.play().catch(() => {});
+      resetHideTimer();
     }
-  };
+  }, [thumbnailMode, onContainerClick, videoLoaded, resetHideTimer]);
+
+  const toggleMute = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = !video.muted;
+    setIsMuted(video.muted);
+  }, []);
+
+  const handleSeek = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    e.stopPropagation();
+    const val = parseFloat(e.target.value);
+    setCurrentTime(val);
+    if (videoRef.current) videoRef.current.currentTime = val;
+  }, []);
+
+  const toggleFullscreen = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    const el = containerRef.current;
+    if (!el) return;
+    const fsEl = document.fullscreenElement || (document as any).webkitFullscreenElement;
+    if (fsEl) {
+      if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+      else if ((document as any).webkitExitFullscreen) (document as any).webkitExitFullscreen();
+    } else if (el.requestFullscreen) {
+      el.requestFullscreen().catch(() => {});
+    } else if ((el as any).webkitRequestFullscreen) {
+      (el as any).webkitRequestFullscreen();
+    }
+  }, []);
 
   const handleVideoEnd = () => {
     setIsPlaying(false);
     setShowPoster(!!poster);
+    setShowControls(false);
   };
 
-  const handleContextMenu = (e: React.MouseEvent) => {
-    e.preventDefault();
-    return false;
-  };
+  const handleContextMenu = (e: React.MouseEvent) => e.preventDefault();
+  const handleMouseMove = () => { if (playingRef.current) resetHideTimer(); };
+
+  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
     <div
       ref={containerRef}
-      className={`relative overflow-hidden bg-card ${className}`}
-      onClick={thumbnailMode ? onContainerClick : handlePlay}
+      className={`relative overflow-hidden ${className}`}
+      onClick={thumbnailMode ? onContainerClick : undefined}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => { if (playingRef.current && !isSeeking) setShowControls(false); }}
       onContextMenu={handleContextMenu}
     >
-      {/* Only render video element after user clicks play */}
+      {/* Video element — no native controls */}
       {isVisible && videoLoaded && (
         <video
           ref={videoRef}
           className="w-full h-full object-cover"
-          muted
           playsInline
           preload="none"
-          controls={!thumbnailMode && isPlaying}
-          controlsList="nodownload nofullscreen noremoteplayback"
           disablePictureInPicture
           onEnded={handleVideoEnd}
           onContextMenu={handleContextMenu}
-          style={{ pointerEvents: thumbnailMode ? "none" : "auto" }}
+          style={{ pointerEvents: "none", display: "block" }}
         >
           <source src={src} type="video/mp4" />
         </video>
       )}
 
-      {/* Poster / thumbnail shown until play */}
+      {/* Poster / thumbnail */}
       {poster && showPoster && (
         <img
           src={poster}
@@ -121,23 +214,105 @@ const VideoPlayer = ({
         />
       )}
 
-      {/* Placeholder when no poster */}
+      {/* Placeholder when no poster and not yet loaded */}
       {!videoLoaded && isVisible && !poster && (
-        <div className="absolute inset-0 flex items-center justify-center bg-muted/50">
-          <Play className="w-10 h-10 text-muted-foreground/40" />
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800">
+          <Play className="w-10 h-10 text-gray-400 dark:text-gray-600" />
         </div>
       )}
 
-      {/* Play button overlay */}
+      {/* Play button overlay — visible when paused / thumbnail mode */}
       {showPlayButton && (!isPlaying || thumbnailMode) && (
         <div
-          className={`absolute inset-0 flex items-center justify-center transition-colors cursor-pointer ${
-            thumbnailMode ? "bg-black/20 hover:bg-black/10" : "bg-black/30 hover:bg-black/20"
-          }`}
+          className="absolute inset-0 flex items-center justify-center cursor-pointer transition-opacity duration-300"
+          style={{
+            /* Subtle gradient — no hard opaque fill in either theme */
+            background: "linear-gradient(to top, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.08) 50%, transparent 100%)",
+          }}
           onClick={handlePlay}
         >
-          <div className="w-16 h-16 rounded-full bg-primary/80 flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-lg">
-            <Play className="w-8 h-8 text-primary-foreground ml-1" />
+          <div className="w-14 h-14 rounded-full bg-[#007AFF] hover:bg-[#005FCC] flex items-center justify-center shadow-xl transition-transform duration-300 hover:scale-110">
+            <Play className="w-6 h-6 text-white fill-white ml-0.5" />
+          </div>
+        </div>
+      )}
+
+      {/* Invisible click-to-pause layer while playing */}
+      {isPlaying && !thumbnailMode && (
+        <div
+          className="absolute inset-0"
+          style={{ pointerEvents: "auto" }}
+          onClick={handlePlay}
+        />
+      )}
+
+      {/* Custom controls bar — shown while playing */}
+      {!thumbnailMode && isPlaying && (
+        <div
+          className={`absolute bottom-0 left-0 right-0 px-3 pb-3 pt-10 transition-opacity duration-300 ${
+            showControls ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+          style={{
+            background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%)",
+            pointerEvents: showControls ? "auto" : "none",
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Progress bar */}
+          <div className="relative w-full h-1.5 mb-2.5 cursor-pointer rounded-full overflow-hidden bg-white/20">
+            <div
+              className="absolute top-0 left-0 h-full rounded-full bg-[#007AFF] transition-[width] duration-75"
+              style={{ width: `${progress}%` }}
+            />
+            <input
+              type="range"
+              min={0}
+              max={duration || 0}
+              step={0.1}
+              value={currentTime}
+              onChange={handleSeek}
+              onMouseDown={() => setIsSeeking(true)}
+              onMouseUp={() => setIsSeeking(false)}
+              aria-label="Seek"
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+            />
+          </div>
+
+          {/* Controls row */}
+          <div className="flex items-center gap-2">
+            {/* Play/Pause */}
+            <button
+              onClick={handlePlay}
+              aria-label={isPlaying ? "Pause" : "Play"}
+              className="w-8 h-8 flex items-center justify-center text-white hover:text-[#007AFF] transition-colors"
+            >
+              {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
+            </button>
+
+            {/* Mute */}
+            <button
+              onClick={toggleMute}
+              aria-label={isMuted ? "Unmute" : "Mute"}
+              className="w-8 h-8 flex items-center justify-center text-white hover:text-[#007AFF] transition-colors"
+            >
+              {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+            </button>
+
+            {/* Time */}
+            <span className="text-[11px] text-white/75 font-mono tabular-nums select-none">
+              {formatTime(currentTime)} / {formatTime(duration)}
+            </span>
+
+            <div className="flex-1" />
+
+            {/* Fullscreen */}
+            <button
+              onClick={toggleFullscreen}
+              aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+              className="w-8 h-8 flex items-center justify-center text-white hover:text-[#007AFF] transition-colors"
+            >
+              {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+            </button>
           </div>
         </div>
       )}
