@@ -1,7 +1,11 @@
 /**
  * Process steps data for the "How It Works" section.
- * Images served from /public/how-it-works/ (no Vite import needed).
+ * Images imported from src/assets/ via Vite for proper bundling & hashing.
  */
+import intakeFormImg from '@/assets/01.png';
+import storyboardImg from '@/assets/02.jpg';
+import productionImg from '@/assets/03.jpg';
+import revisionImg from '@/assets/04.jpg';
 
 export interface ProcessStep {
   id: number;
@@ -19,7 +23,7 @@ export const processSteps: ProcessStep[] = [
     title: "Intake Form",
     description:
       "We send a structured intake form. You share your brief, brand assets, UI references (Figma links, screenshots), and inspiration videos.",
-    image: "/how-it-works/step-01-intake.png",
+    image: intakeFormImg,
     imageAlt: "Clipboard with checklist — Intake Form step",
   },
   {
@@ -28,7 +32,7 @@ export const processSteps: ProcessStep[] = [
     title: "Storyboard & Script",
     description:
       "I build a full storyboard in Figma and refine the script with you until the concept is locked.",
-    image: "/how-it-works/step-02-storyboard.png",
+    image: storyboardImg,
     imageAlt: "Designer working on storyboard — Storyboard & Script step",
   },
   {
@@ -37,7 +41,7 @@ export const processSteps: ProcessStep[] = [
     title: "Production",
     description:
       "Our team edits the full video: motion graphics, UI animation, sound design, and voiceover sync.",
-    image: "/how-it-works/step-04-production.png",
+    image: productionImg,
     imageAlt: "Video editor at workstation — Production step",
   },
   {
@@ -46,7 +50,7 @@ export const processSteps: ProcessStep[] = [
     title: "Revision & Delivery",
     description:
       "You review the draft and leave timestamped comments. We apply one comprehensive revision round, then deliver the final file.",
-    image: "/how-it-works/step-05-revision.png",
+    image: revisionImg,
     imageAlt: "Audio engineer with headphones — Revision & Delivery step",
   },
 ];
